@@ -9,6 +9,7 @@
 #include "Portal.h"
 #include "Coin.h"
 #include "Platform.h"
+#include "BoxColor.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -138,6 +139,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		break;
 	}
+
+	case OBJECT_TYPE_BOXCOLOR:
+	{
+		int width = atoi(tokens[3].c_str());
+		int height = atoi(tokens[4].c_str());
+		int spriteId = atoi(tokens[5].c_str());
+		obj = new CBoxColor(x, y, width, height, spriteId);
+	}
+	break;
 
 	case OBJECT_TYPE_PORTAL:
 	{

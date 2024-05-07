@@ -75,6 +75,9 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BoxColor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -146,6 +149,9 @@
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BoxColor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="brick.txt" />
@@ -159,6 +165,7 @@
     <Text Include="scene0005.txt" />
     <Text Include="scene-level1.txt" />
     <Text Include="land.txt" />
+    <Text Include="boxcolor.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="mario.ico">
