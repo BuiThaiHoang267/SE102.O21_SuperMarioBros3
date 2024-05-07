@@ -1,19 +1,28 @@
 # list of object assets to load in this scene
 [ASSETS]
 mario.txt
-coin.txt
-cloud.txt
 brick.txt
 land.txt
 boxcolor.txt
+background.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
 # See OBJECT_TYPE constants in AssetIDs.h
 
-# MARIO
-0	30	120
+
+#fix colliton for first object
+6	48	-48	48	48	70000	0
+
+#Obj background
+7	74	120	128	64	200000	
+
+#Box color
+#type	x	y	width	height	
+6	307	112	56	80	70001	8
+6	271	128	48	48	70000	0
+
 
 #Platform
 #type	x	y	width	height	amount	begin mid end
@@ -25,9 +34,9 @@ boxcolor.txt
 5 	1672	160	16	15	39	60000	61000	62000
 5 	2264	160	16	15	39	60000	61000	62000
 
-#Box color
-#type	x	y	width	height	spriteid
-6	100	160	48	48	70000
+
+# MARIO
+0	30	120
 
 
 

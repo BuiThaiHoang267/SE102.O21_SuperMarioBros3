@@ -10,6 +10,7 @@
 #include "Coin.h"
 #include "Platform.h"
 #include "BoxColor.h"
+#include "ObjectBackground.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -145,7 +146,17 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		int width = atoi(tokens[3].c_str());
 		int height = atoi(tokens[4].c_str());
 		int spriteId = atoi(tokens[5].c_str());
-		obj = new CBoxColor(x, y, width, height, spriteId);
+		int paddingRight = atoi(tokens[6].c_str());
+		obj = new CBoxColor(x, y, width, height, spriteId,paddingRight);
+	}
+	break;
+
+	case OBJECT_TYPE_OBJECTBACKGROUND:
+	{
+		int width = atoi(tokens[3].c_str());
+		int height = atoi(tokens[4].c_str());
+		int spriteId = atoi(tokens[5].c_str());
+		obj = new CObjectBackground(x, y, width, height, spriteId);
 	}
 	break;
 
