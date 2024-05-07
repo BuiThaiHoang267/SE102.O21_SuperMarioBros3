@@ -20,3 +20,4 @@ height	240
 20	textures\misc.png
 30	textures\sprite01.png
 40	textures\sprite02.png
+50	textures\sprite03.png
