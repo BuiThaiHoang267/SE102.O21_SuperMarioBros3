@@ -5,6 +5,8 @@ brick.txt
 land.txt
 boxcolor.txt
 background.txt
+giftbox.txt
+specials.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -40,7 +42,6 @@ background.txt
 6	264	128	48	48	70000	0
 6	300	112	56	80	70001	8
 
-
 6	439	128	80	48	71000	0
 6	563	136	104	32	71001	8
 6	495	112	64	80	71002	0
@@ -55,6 +56,18 @@ background.txt
 5 	1544	160	16	15	5	60000	61000	62000
 5 	1672	160	16	15	36	60000	61000	62000
 5 	2264	160	16	15	35	60000	61000	62000
+
+#Mushroom
+9	183	96
+
+#Giftbox
+8	183	96
+8	199	96
+8	231	48
+8	247	48
+8	663	128
+8	711	96
+8	423	64
 
 # MARIO
 0	30	120

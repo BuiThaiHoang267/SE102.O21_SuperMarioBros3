@@ -137,9 +137,11 @@
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GiftBox.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="ObjectBackground.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="PlayScene.cpp" />
@@ -163,9 +165,11 @@
     <ClInclude Include="debug.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GiftBox.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Mario.h" />
+    <ClInclude Include="Mushroom.h" />
     <ClInclude Include="ObjectBackground.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayScene.h" />
@@ -184,6 +188,7 @@
     <Text Include="brick.txt" />
     <Text Include="cloud.txt" />
     <Text Include="coin.txt" />
+    <Text Include="giftbox.txt" />
     <Text Include="goomba.txt" />
     <Text Include="land.txt" />
     <Text Include="mario-sample.txt" />
@@ -192,6 +197,7 @@
     <Text Include="scene0005.txt" />
     <Text Include="scene01.txt" />
     <Text Include="scene02.txt" />
+    <Text Include="specials.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="mario.ico" />

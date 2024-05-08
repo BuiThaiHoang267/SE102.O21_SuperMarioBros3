@@ -7,6 +7,8 @@
 #include "Goomba.h"
 #include "Coin.h"
 #include "Portal.h"
+#include "Mushroom.h"
+#include "GiftBox.h"
 
 #include "Collision.h"
 
@@ -54,6 +56,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
+	/*else if (dynamic_cast<CGiftBox*>(e->obj))
+		OnCollisionWithGiftBox(e);*/
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -100,6 +104,11 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	CPortal* p = (CPortal*)e->obj;
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
+}
+
+void CMario::OnCollisionWithGiftBox(LPCOLLISIONEVENT e) {
+	CGiftBox* m = (CGiftBox*)e->obj;
+	m->OpenGiftBox();
 }
 
 //

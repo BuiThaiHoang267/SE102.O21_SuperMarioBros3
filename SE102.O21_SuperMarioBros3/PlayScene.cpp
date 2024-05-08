@@ -11,6 +11,8 @@
 #include "Platform.h"
 #include "BoxColor.h"
 #include "ObjectBackground.h"
+#include "GiftBox.h"
+#include "Mushroom.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -119,8 +121,10 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[INFO] Player object has been created!\n");
 		break;
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x,y); break;
+	case OBJECT_TYPE_GIFTBOX: obj = new CGiftBox(x, y); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
+	case OBJECT_TYPE_MUSHROOM: obj = new CMushroom(x, y); break;
 
 	case OBJECT_TYPE_PLATFORM:
 	{
@@ -168,7 +172,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CPortal(x, y, r, b, scene_id);
 	}
 	break;
-
 
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
