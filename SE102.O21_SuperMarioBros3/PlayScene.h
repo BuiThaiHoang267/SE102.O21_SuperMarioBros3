@@ -16,6 +16,7 @@ protected:
 	LPGAMEOBJECT player;					
 
 	vector<LPGAMEOBJECT> objects;
+	vector<LPGAMEOBJECT> objectsBgr;
 
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);

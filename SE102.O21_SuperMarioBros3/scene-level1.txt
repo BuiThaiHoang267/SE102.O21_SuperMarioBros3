@@ -14,9 +14,6 @@ specials.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 
-#fix colliton for first object
-6	48	-48	48	48	70000	0
-
 #Obj background start
 7	79	120	128	64	200000
 7	910	104	128	64	200000	
@@ -56,9 +53,6 @@ specials.txt
 5 	1544	160	16	15	5	60000	61000	62000
 5 	1672	160	16	15	36	60000	61000	62000
 5 	2264	160	16	15	35	60000	61000	62000
-
-#Mushroom
-9	183	96
 
 #Giftbox
 8	183	96

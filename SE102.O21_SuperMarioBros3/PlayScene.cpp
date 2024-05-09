@@ -116,62 +116,90 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			return;
 		}
 		obj = new CMario(x,y); 
-		player = (CMario*)obj;  
+		player = (CMario*)obj;
+		objects.push_back(obj);
 
 		DebugOut(L"[INFO] Player object has been created!\n");
 		break;
-	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x,y); break;
-	case OBJECT_TYPE_GIFTBOX: obj = new CGiftBox(x, y); break;
-	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
-	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
-	case OBJECT_TYPE_MUSHROOM: obj = new CMushroom(x, y); break;
+	case OBJECT_TYPE_GOOMBA:
+		{
+			obj = new CGoomba(x, y);
+			objects.push_back(obj);
+		}
+		break;
+	case OBJECT_TYPE_GIFTBOX: 
+		{
+			obj = new CGiftBox(x, y);
+			objects.push_back(obj);
+		}
+		break;
+	case OBJECT_TYPE_BRICK: 
+		{
+			obj = new CBrick(x, y);
+			objects.push_back(obj);
+		}
+		break;
+	case OBJECT_TYPE_COIN: 
+		{
+			obj = new CCoin(x, y);
+			objects.push_back(obj);
+		}
+		break;
+	case OBJECT_TYPE_MUSHROOM: 
+		{
+			obj = new CMushroom(x, y);
+			objects.push_back(obj);
+		}
+		break;
 
 	case OBJECT_TYPE_PLATFORM:
-	{
+		{
+			float cell_width = (float)atof(tokens[3].c_str());
+			float cell_height = (float)atof(tokens[4].c_str());
+			int length = atoi(tokens[5].c_str());
+			int sprite_begin = atoi(tokens[6].c_str());
+			int sprite_middle = atoi(tokens[7].c_str());
+			int sprite_end = atoi(tokens[8].c_str());
 
-		float cell_width = (float)atof(tokens[3].c_str());
-		float cell_height = (float)atof(tokens[4].c_str());
-		int length = atoi(tokens[5].c_str());
-		int sprite_begin = atoi(tokens[6].c_str());
-		int sprite_middle = atoi(tokens[7].c_str());
-		int sprite_end = atoi(tokens[8].c_str());
-
-		obj = new CPlatform(
-			x, y,
-			cell_width, cell_height, length,
-			sprite_begin, sprite_middle, sprite_end
-		);
-
+			obj = new CPlatform(
+				x, y,
+				cell_width, cell_height, length,
+				sprite_begin, sprite_middle, sprite_end
+			);
+			objects.push_back(obj);
+		}
 		break;
-	}
 
 	case OBJECT_TYPE_BOXCOLOR:
-	{
-		int width = atoi(tokens[3].c_str());
-		int height = atoi(tokens[4].c_str());
-		int spriteId = atoi(tokens[5].c_str());
-		int paddingRight = atoi(tokens[6].c_str());
-		obj = new CBoxColor(x, y, width, height, spriteId,paddingRight);
-	}
-	break;
+		{
+			int width = atoi(tokens[3].c_str());
+			int height = atoi(tokens[4].c_str());
+			int spriteId = atoi(tokens[5].c_str());
+			int paddingRight = atoi(tokens[6].c_str());
+			obj = new CBoxColor(x, y, width, height, spriteId,paddingRight);
+			objectsBgr.push_back(obj);
+		}
+		break;
 
 	case OBJECT_TYPE_OBJECTBACKGROUND:
-	{
-		int width = atoi(tokens[3].c_str());
-		int height = atoi(tokens[4].c_str());
-		int spriteId = atoi(tokens[5].c_str());
-		obj = new CObjectBackground(x, y, width, height, spriteId);
-	}
-	break;
+		{
+			int width = atoi(tokens[3].c_str());
+			int height = atoi(tokens[4].c_str());
+			int spriteId = atoi(tokens[5].c_str());
+			obj = new CObjectBackground(x, y, width, height, spriteId);
+			objectsBgr.push_back(obj);
+		}
+		break;
 
 	case OBJECT_TYPE_PORTAL:
-	{
-		float r = (float)atof(tokens[3].c_str());
-		float b = (float)atof(tokens[4].c_str());
-		int scene_id = atoi(tokens[5].c_str());
-		obj = new CPortal(x, y, r, b, scene_id);
-	}
-	break;
+		{
+			float r = (float)atof(tokens[3].c_str());
+			float b = (float)atof(tokens[4].c_str());
+			int scene_id = atoi(tokens[5].c_str());
+			obj = new CPortal(x, y, r, b, scene_id);
+			objects.push_back(obj);
+		}
+		break;
 
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
@@ -179,10 +207,10 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 
 	// General object setup
-	obj->SetPosition(x, y);
+	//obj->SetPosition(x, y);
 
 
-	objects.push_back(obj);
+	//objects.push_back(obj);
 }
 
 void CPlayScene::LoadAssets(LPCWSTR assetFile)
@@ -259,13 +287,24 @@ void CPlayScene::Update(DWORD dt)
 {
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
+	//vector<LPGAMEOBJECT> coObjectsBgr;
+	
+
+	
 
 	vector<LPGAMEOBJECT> coObjects;
-	for (size_t i = 1; i < objects.size(); i++)
+	for (size_t i = 0; i < objectsBgr.size(); i++)
+	{
+		coObjects.push_back(objectsBgr[i]);
+	}
+	for (size_t i = 0; i < objects.size(); i++)
 	{
 		coObjects.push_back(objects[i]);
 	}
-
+	for (size_t i = 0; i < objectsBgr.size(); i++)
+	{
+		objectsBgr[i]->Update(dt, &coObjects);
+	}
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);
@@ -291,6 +330,8 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
+	for (int i = 0; i < objectsBgr.size(); i++)
+		objectsBgr[i]->Render();
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
 }
@@ -300,6 +341,13 @@ void CPlayScene::Render()
 */
 void CPlayScene::Clear()
 {
+	vector<LPGAMEOBJECT>::iterator itBgr;
+	for (itBgr = objectsBgr.begin(); itBgr != objectsBgr.end(); itBgr++)
+	{
+		delete (*itBgr);
+	}
+	objectsBgr.clear();
+
 	vector<LPGAMEOBJECT>::iterator it;
 	for (it = objects.begin(); it != objects.end(); it++)
 	{
@@ -316,6 +364,11 @@ void CPlayScene::Clear()
 */
 void CPlayScene::Unload()
 {
+	for (int i = 0; i < objectsBgr.size(); i++)
+		delete objectsBgr[i];
+
+	objectsBgr.clear();
+
 	for (int i = 0; i < objects.size(); i++)
 		delete objects[i];
 
@@ -329,6 +382,17 @@ bool CPlayScene::IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; 
 
 void CPlayScene::PurgeDeletedObjects()
 {
+	vector<LPGAMEOBJECT>::iterator itBgr;
+	for (itBgr = objectsBgr.begin(); itBgr != objectsBgr.end(); itBgr++)
+	{
+		LPGAMEOBJECT o = *itBgr;
+		if (o->IsDeleted())
+		{
+			delete o;
+			*itBgr = NULL;
+		}
+	}
+
 	vector<LPGAMEOBJECT>::iterator it;
 	for (it = objects.begin(); it != objects.end(); it++)
 	{
@@ -342,11 +406,15 @@ void CPlayScene::PurgeDeletedObjects()
 
 	// NOTE: remove_if will swap all deleted items to the end of the vector
 	// then simply trim the vector, this is much more efficient than deleting individual items
+	objectsBgr.erase(
+		std::remove_if(objectsBgr.begin(), objectsBgr.end(), CPlayScene::IsGameObjectDeleted),
+		objectsBgr.end());
 	objects.erase(
 		std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
 		objects.end());
+	
 }
 
 void CPlayScene::AddGameObject(LPGAMEOBJECT obj) {
-	objects.push_back(obj);
+	objects.insert(objects.begin(), obj);
 }
