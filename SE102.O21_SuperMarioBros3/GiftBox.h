@@ -24,7 +24,5 @@ public:
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void OpenGiftBox();
-	//void OnCollisionWithMario(LPCOLLISIONEVENT e);
-	//void OnCollisionWith(LPCOLLISIONEVENT e);
 	int IsCollidable() { return 1; }
 };

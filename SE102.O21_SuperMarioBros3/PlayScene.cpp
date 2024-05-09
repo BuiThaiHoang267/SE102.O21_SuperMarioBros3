@@ -346,3 +346,7 @@ void CPlayScene::PurgeDeletedObjects()
 		std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
 		objects.end());
 }
+
+void CPlayScene::AddGameObject(LPGAMEOBJECT obj) {
+	objects.push_back(obj);
+}

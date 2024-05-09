@@ -1,5 +1,7 @@
 #include "GiftBox.h"
 #include "Mario.h"
+#include "PlayScene.h"
+#include "Mushroom.h"
 
 void CGiftBox::Render() {
 	int aniId = ID_ANI_GIFTBOX_IDLE;
@@ -22,18 +24,13 @@ void CGiftBox::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void CGiftBox::OpenGiftBox() 
 {
+	if (state == GIFTBOX_STATE_OPENED)
+		return;
 	SetState(GIFTBOX_STATE_OPENED);
-	/*CMushroom* mushroom = new CMushroom(x, y);
-	objects.push_front(mushroom);*/
+	LPGAMEOBJECT mushroom = new CMushroom(x, y);
+	LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+	LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+	p->AddGameObject(mushroom);
 }
 
-//void CGiftBox::OnCollisionWith(LPCOLLISIONEVENT e)
-//{
-//	if (dynamic_cast<CMario*>(e->obj))
-//		OnCollisionWithMario(e);
-//}
-//
-//void CGiftBox::OnCollisionWithMario(LPCOLLISIONEVENT e) 
-//{
-//	SetState(GIFTBOX_STATE_OPENED);
-//}
+

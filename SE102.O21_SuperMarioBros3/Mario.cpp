@@ -56,8 +56,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
-	/*else if (dynamic_cast<CGiftBox*>(e->obj))
-		OnCollisionWithGiftBox(e);*/
+	else if (dynamic_cast<CGiftBox*>(e->obj))
+		OnCollisionWithGiftBox(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
