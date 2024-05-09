@@ -13,16 +13,25 @@
 
 #define GIFTBOX_STATE_IDLE 100
 #define GIFTBOX_STATE_OPENED 200
+#define GIFTBOX_STATE_BEFORE_OPENED 300
+
+#define GIFTBOX_GRAVITY 0.002f
 
 class CGiftBox : public CGameObject {
+protected:
+	float posX;
+	float posY;
 public:
 	CGiftBox(float x, float y) : CGameObject(x, y) 
 	{
 		SetState(GIFTBOX_STATE_IDLE);
+		posX = x;
+		posY = y;
 	}
 	void Render();
-	void Update(DWORD dt) {}
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void OpenGiftBox();
+	void CanOpen();
 	int IsCollidable() { return 1; }
 };

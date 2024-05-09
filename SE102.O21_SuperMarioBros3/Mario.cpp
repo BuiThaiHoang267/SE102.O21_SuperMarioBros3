@@ -58,6 +58,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<CGiftBox*>(e->obj))
 		OnCollisionWithGiftBox(e);
+	else if (dynamic_cast<CMushroom*>(e->obj))
+		OnCollisionWithMushroom(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -108,7 +110,14 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithGiftBox(LPCOLLISIONEVENT e) {
 	CGiftBox* m = (CGiftBox*)e->obj;
-	m->OpenGiftBox();
+	if (e->ny > 0) {
+		m->CanOpen();
+	}
+}
+
+void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e) {
+	e->obj->Delete();
+	SetLevel(MARIO_LEVEL_BIG);
 }
 
 //

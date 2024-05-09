@@ -24,13 +24,35 @@ void CGiftBox::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void CGiftBox::OpenGiftBox() 
 {
-	if (state == GIFTBOX_STATE_OPENED)
-		return;
-	SetState(GIFTBOX_STATE_OPENED);
 	LPGAMEOBJECT mushroom = new CMushroom(x, y);
 	LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 	LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
 	p->AddGameObject(mushroom);
 }
+
+void CGiftBox::CanOpen() {
+	if (state == GIFTBOX_STATE_OPENED || state == GIFTBOX_STATE_BEFORE_OPENED)
+		return;
+	SetState(GIFTBOX_STATE_BEFORE_OPENED);
+	vy = -0.2f;
+}
+
+void CGiftBox::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	if (state == GIFTBOX_STATE_BEFORE_OPENED)
+	{
+		vy += GIFTBOX_GRAVITY * dt;
+		y += vy * dt;
+	}
+	if (y > posY && state == GIFTBOX_STATE_BEFORE_OPENED) {
+		SetState(GIFTBOX_STATE_OPENED);
+		y = posY;
+		vy = 0;
+		OpenGiftBox();
+	}
+	CGameObject::Update(dt, coObjects);
+	//CCollision::GetInstance()->Process(this, dt, coObjects);
+}
+
 
 

@@ -65,7 +65,7 @@ void CMushroom::SetState(int state) {
 		ay = 0;
 		break;
 	case MUSHROOM_STATE_WALKING:
-		vx = +MUSHROOM_WALKING_SPEED;
+		vx = -MUSHROOM_WALKING_SPEED;
 		ay = MUSHROOM_GRAVITY;
 		break;
 	}
