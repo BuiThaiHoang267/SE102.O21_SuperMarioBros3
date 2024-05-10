@@ -24,10 +24,17 @@ void CGiftBox::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void CGiftBox::OpenGiftBox() 
 {
-	LPGAMEOBJECT mushroom = new CMushroom(x, y);
-	LPSCENE s = CGame::GetInstance()->GetCurrentScene();
-	LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
-	p->AddGameObject(mushroom);
+	if (typeGift == 1) 
+	{
+		LPGAMEOBJECT mushroom = new CMushroom(x, y);
+		LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+		p->AddGameObject(mushroom);
+	}
+	else
+	{
+		//gold
+	}
 }
 
 void CGiftBox::CanOpen() {

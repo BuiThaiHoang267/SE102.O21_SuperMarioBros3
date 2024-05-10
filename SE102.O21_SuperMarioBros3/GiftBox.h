@@ -21,12 +21,14 @@ class CGiftBox : public CGameObject {
 protected:
 	float posX;
 	float posY;
+	int typeGift;
 public:
-	CGiftBox(float x, float y) : CGameObject(x, y) 
+	CGiftBox(float x, float y, int type) : CGameObject(x, y) 
 	{
 		SetState(GIFTBOX_STATE_IDLE);
 		posX = x;
 		posY = y;
+		typeGift = type;
 	}
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

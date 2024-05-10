@@ -129,7 +129,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_GIFTBOX: 
 		{
-			obj = new CGiftBox(x, y);
+			int type = atoi(tokens[3].c_str());
+			obj = new CGiftBox(x, y, type);
 			objects.push_back(obj);
 		}
 		break;
