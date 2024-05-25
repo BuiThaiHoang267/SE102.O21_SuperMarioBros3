@@ -142,7 +142,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_COIN: 
 		{
-			obj = new CCoin(x, y);
+			int isAnim = atoi(tokens[3].c_str());
+			obj = new CCoin(x, y, isAnim);
 			objects.push_back(obj);
 		}
 		break;

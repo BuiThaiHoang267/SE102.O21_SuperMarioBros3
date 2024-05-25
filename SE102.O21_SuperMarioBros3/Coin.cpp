@@ -2,9 +2,16 @@
 
 void CCoin::Render()
 {
-	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(ID_ANI_COIN)->Render(x, y);
-
+	if (isAnimation == 1) 
+	{
+		CAnimations* animations = CAnimations::GetInstance();
+		animations->Get(ID_ANI_COIN)->Render(x, y);
+	}
+	else 
+	{
+		CSprites* spirtes = CSprites::GetInstance();
+		spirtes->Get(ID_ANI_COIN)->Draw(x, y);
+	}
 	//RenderBoundingBox();
 }
 
