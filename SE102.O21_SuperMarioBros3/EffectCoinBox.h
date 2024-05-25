@@ -9,13 +9,14 @@
 #define EF_COINBOX_WIDTH 8
 #define EF_COINBOX_HEIGHT 16
 
-#define COINBOX_VY_START -0.5f
-#define COINBOX_GRAVITY 0.002f
+#define COINBOX_VY_START -0.4f
+#define COINBOX_GRAVITY 0.0018f
 
 
 class CEffectCoinBox : public CEffect {
 private:
 	float posY;
+	bool calledEffectPoint = false;
 public:
 	CEffectCoinBox(float x, float y) : CEffect(x, y) {
 		this->posY = y;
@@ -24,4 +25,5 @@ public:
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
+	void EffectPoint();
 };

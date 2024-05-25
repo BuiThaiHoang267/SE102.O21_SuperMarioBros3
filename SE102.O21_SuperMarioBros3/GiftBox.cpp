@@ -2,6 +2,7 @@
 #include "Mario.h"
 #include "PlayScene.h"
 #include "Mushroom.h"
+#include "EffectCoinBox.h"
 
 void CGiftBox::Render() {
 	int aniId = ID_ANI_GIFTBOX_IDLE;
@@ -31,15 +32,25 @@ void CGiftBox::OpenGiftBox()
 		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
 		p->AddGameObject(mushroom);
 	}
+	else if(typeGift == 2)
+	{
+		// la cay
+	}
 	else
 	{
-		//gold
+		LPGAMEOBJECT effectCoinBox = new CEffectCoinBox(x, y - 16);
+		LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+		p->AddGameObject(effectCoinBox);
 	}
 }
 
 void CGiftBox::CanOpen() {
 	if (state == GIFTBOX_STATE_OPENED || state == GIFTBOX_STATE_BEFORE_OPENED)
 		return;
+	if (typeGift == 0) {
+		OpenGiftBox();
+	}
 	SetState(GIFTBOX_STATE_BEFORE_OPENED);
 	vy = -0.2f;
 }
@@ -55,7 +66,9 @@ void CGiftBox::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetState(GIFTBOX_STATE_OPENED);
 		y = posY;
 		vy = 0;
-		OpenGiftBox();
+		if (this->typeGift == 1) {
+			OpenGiftBox();
+		}
 	}
 	CGameObject::Update(dt, coObjects);
 	//CCollision::GetInstance()->Process(this, dt, coObjects);

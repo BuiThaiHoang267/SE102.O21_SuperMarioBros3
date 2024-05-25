@@ -1,4 +1,6 @@
 #include "EffectCoinBox.h"
+#include "PlayScene.h"
+#include "EffectPoint.h"
 
 void CEffectCoinBox::Render()
 {
@@ -21,7 +23,21 @@ void CEffectCoinBox::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += COINBOX_GRAVITY * dt;
 	y += vy * dt;
 	if (y > posY) {
-		this->Delete();
+		if (!calledEffectPoint) {
+			calledEffectPoint = true;
+			EffectPoint();
+		}
 	}
 	CGameObject::Update(dt, coObjects);
+}
+
+void CEffectCoinBox::EffectPoint() {
+	if (calledEffectPoint = true) {
+		LPGAMEOBJECT effectCoinBox = new CEffectPoint(x, y,100);
+		LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+		p->AddGameObject(effectCoinBox);
+
+		this->Delete();
+	}
 }
