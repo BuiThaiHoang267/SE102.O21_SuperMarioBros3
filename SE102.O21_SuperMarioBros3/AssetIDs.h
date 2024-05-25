@@ -20,6 +20,11 @@
 #define OBJECT_TYPE_GIFTBOX 8
 #define OBJECT_TYPE_MUSHROOM 9
 
+// Effect start
+#define OBJECT_TYPE_EFFECTCOINBOX 40
+#define OBJECT_TYPE_EFFECTPOINT 41
+// Effect end
+
 #define OBJECT_TYPE_PORTAL	50
 
 

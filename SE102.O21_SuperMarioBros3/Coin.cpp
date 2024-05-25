@@ -10,7 +10,7 @@ void CCoin::Render()
 	else 
 	{
 		CSprites* spirtes = CSprites::GetInstance();
-		spirtes->Get(ID_ANI_COIN)->Draw(x, y);
+		spirtes->Get(ID_NOTANI_COIN)->Draw(x, y);
 	}
 	//RenderBoundingBox();
 }

@@ -87,6 +87,12 @@
     <ClCompile Include="Mushroom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EffectCoinBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectPoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -170,6 +176,15 @@
     <ClInclude Include="Mushroom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectCoinBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="brick.txt" />
@@ -187,6 +202,7 @@
     <Text Include="background.txt" />
     <Text Include="giftbox.txt" />
     <Text Include="specials.txt" />
+    <Text Include="effect.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="mario.ico">

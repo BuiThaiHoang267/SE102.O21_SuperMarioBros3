@@ -7,6 +7,7 @@ boxcolor.txt
 background.txt
 giftbox.txt
 specials.txt
+effect.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -71,3 +72,6 @@ specials.txt
 # BoxCoin
 #type	x	y	isAnim
 4	60	112	1
+
+40	80	112
+41	100	112	100

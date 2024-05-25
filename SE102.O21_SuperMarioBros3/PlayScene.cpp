@@ -13,6 +13,9 @@
 #include "ObjectBackground.h"
 #include "GiftBox.h"
 #include "Mushroom.h"
+#include "Effect.h"
+#include "EffectCoinBox.h"
+#include "EffectPoint.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -144,6 +147,19 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		{
 			int isAnim = atoi(tokens[3].c_str());
 			obj = new CCoin(x, y, isAnim);
+			objects.push_back(obj);
+		}
+		break;
+	case OBJECT_TYPE_EFFECTCOINBOX:
+		{
+			obj = new CEffectCoinBox(x, y);
+			objects.push_back(obj);
+		}
+		break;
+	case OBJECT_TYPE_EFFECTPOINT:
+		{
+			int point = atoi(tokens[3].c_str());
+			obj = new CEffectPoint(x, y, point);
 			objects.push_back(obj);
 		}
 		break;
