@@ -8,6 +8,7 @@ background.txt
 giftbox.txt
 specials.txt
 effect.txt
+enemy.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -63,8 +64,12 @@ effect.txt
 8	231	48	0
 8	247	48	1
 8	663	128	1
-8	711	96	1
-8	423	64	1
+8	711	96	0
+8	423	64	0
+
+#Chimney
+#type	x	y	type(tall = 1 or short = 0)
+90	367	128	1
 
 # MARIO
 0	30	120
@@ -73,5 +78,7 @@ effect.txt
 #type	x	y	isAnim
 4	60	112	1
 
+#Effect test
 40	80	112
 41	100	112	100
+

@@ -25,6 +25,10 @@
 #define OBJECT_TYPE_EFFECTPOINT 41
 // Effect end
 
+// Enemy start
+#define OBJECT_TYPE_CHIMNEY 90
+// Enemy end
+
 #define OBJECT_TYPE_PORTAL	50
 
 

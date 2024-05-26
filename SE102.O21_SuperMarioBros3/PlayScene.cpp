@@ -16,6 +16,7 @@
 #include "Effect.h"
 #include "EffectCoinBox.h"
 #include "EffectPoint.h"
+#include "Chimney.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -134,6 +135,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		{
 			int type = atoi(tokens[3].c_str());
 			obj = new CGiftBox(x, y, type);
+			objects.push_back(obj);
+		}
+		break;
+	case OBJECT_TYPE_CHIMNEY:
+		{
+			int type = atoi(tokens[3].c_str());
+			obj = new CChimney(x, y, type);
 			objects.push_back(obj);
 		}
 		break;

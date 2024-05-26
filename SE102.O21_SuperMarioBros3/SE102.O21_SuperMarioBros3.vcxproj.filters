@@ -93,6 +93,9 @@
     <ClCompile Include="EffectPoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Chimney.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -185,6 +188,9 @@
     <ClInclude Include="EffectPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Chimney.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="brick.txt" />
@@ -203,6 +209,7 @@
     <Text Include="giftbox.txt" />
     <Text Include="specials.txt" />
     <Text Include="effect.txt" />
+    <Text Include="enemy.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="mario.ico">
