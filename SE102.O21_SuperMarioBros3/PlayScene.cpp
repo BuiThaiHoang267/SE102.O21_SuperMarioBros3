@@ -17,6 +17,7 @@
 #include "EffectCoinBox.h"
 #include "EffectPoint.h"
 #include "Chimney.h"
+#include "FlowerEnemy.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -177,7 +178,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			objects.push_back(obj);
 		}
 		break;
-
+	case OBJECT_TYPE_FLOWERENEMY:
+		{
+			obj = new CFlowerEnemy(x, y);
+			objects.push_back(obj);
+		}
+		break;
 	case OBJECT_TYPE_PLATFORM:
 		{
 			float cell_width = (float)atof(tokens[3].c_str());

@@ -67,6 +67,8 @@ enemy.txt
 8	711	96	0
 8	423	64	0
 
+#Flower
+91	367	120
 #Chimney
 #type	x	y	type(tall = 1 or short = 0)
 90	367	128	1
@@ -81,4 +83,6 @@ enemy.txt
 #Effect test
 40	80	112
 41	100	112	100
+
+
 
