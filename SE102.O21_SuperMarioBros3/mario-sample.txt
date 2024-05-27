@@ -22,3 +22,5 @@ height	240
 40	textures\sprite02.png
 50	textures\sprite03.png
 60	textures\sprite04.png
+70	textures\sprite05.png
+80	textures\sprite06.png
