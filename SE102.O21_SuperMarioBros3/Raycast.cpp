@@ -46,7 +46,7 @@ void CRaycast::OnTriggerEnter(LPCOLLISIONEVENT e)
 {
 	if (dynamic_cast<CMario*>(e->obj)) 
 	{
-		DebugOut(L"[INFO] enter trigger mario %d\n", 1);
+		//DebugOut(L"[INFO] enter trigger mario %d\n", 1);
 		isDetectedMario = true;
 	}
 }
@@ -54,7 +54,6 @@ void CRaycast::OnTriggerStay(LPCOLLISIONEVENT e)
 {
 	if (dynamic_cast<CMario*>(e->obj))
 	{
-		DebugOut(L"[INFO] stay trigger mario %d\n", 1);
 		isDetectedMario = true;
 		dynamic_cast<CMario*>(e->obj)->GetPosition(posXMario, posYMario);
 		//set isLeft
@@ -80,7 +79,7 @@ void CRaycast::OnTriggerExit(LPGAMEOBJECT e)
 {
 	if (dynamic_cast<CMario*>(e))
 	{
-		DebugOut(L"[INFO] exit trigger mario %d\n", 1);	
+		//DebugOut(L"[INFO] exit trigger mario %d\n", 1);	
 		isDetectedMario = false;
 	}
 }

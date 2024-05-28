@@ -26,8 +26,8 @@
 
 #define FLOWERENEMY_VY_UP -0.05f
 
-#define FLOWERENEMY_BBOX_WIDTH 16
-#define FLOWERENEMY_BBOX_HEIGHT 32
+#define FLOWERENEMY_BBOX_WIDTH 12
+#define FLOWERENEMY_BBOX_HEIGHT 28
 
 class CFlowerEnemy : public CGameObject {
 private:

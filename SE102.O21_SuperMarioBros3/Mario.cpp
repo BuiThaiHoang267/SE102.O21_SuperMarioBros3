@@ -10,6 +10,7 @@
 #include "Mushroom.h"
 #include "GiftBox.h"
 #include "Bullet.h"
+#include "FlowerEnemy.h"
 
 #include "Collision.h"
 
@@ -63,6 +64,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithMushroom(e);
 	else if (dynamic_cast<CBullet*>(e->obj))
 		OnCollisionWithBullet(e);
+	else if (dynamic_cast<CFlowerEnemy*>(e->obj))
+		OnCollisionWithFlowerEnemy(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -111,6 +114,23 @@ void CMario::OnCollisionWithBullet(LPCOLLISIONEVENT e)
 	{
 		DebugOut(L">>> Mario DIE >>> \n");
 		SetState(MARIO_STATE_DIE);
+	}
+}
+
+void CMario::OnCollisionWithFlowerEnemy(LPCOLLISIONEVENT e)
+{
+	if (untouchable == 0)
+	{
+		if (level > MARIO_LEVEL_SMALL)
+		{
+			level = MARIO_LEVEL_SMALL;
+			StartUntouchable();
+		}
+		else
+		{
+			DebugOut(L">>> Mario DIE >>> \n");
+			SetState(MARIO_STATE_DIE);
+		}
 	}
 }
 
