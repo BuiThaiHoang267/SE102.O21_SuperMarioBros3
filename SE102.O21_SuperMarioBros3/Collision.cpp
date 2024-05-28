@@ -389,12 +389,12 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 		currentCollidingObjects.insert(e->obj);
 	}
 
-	// Detect OnTriggerExit
-	for (auto it = objSrc->prevCollidingObjects.begin(); it != objSrc->prevCollidingObjects.end(); ++it) 
+	for (LPGAMEOBJECT previous: objSrc->prevCollidingObjects)
 	{
-		if (currentCollidingObjects.find(*it) == currentCollidingObjects.end()) 
+		if (previous->IsDeleted()) continue;
+		if (currentCollidingObjects.find(previous) == currentCollidingObjects.end())
 		{
-			objSrc->OnTriggerExit(*it);
+			objSrc->OnTriggerExit(previous);
 		}
 	}
 

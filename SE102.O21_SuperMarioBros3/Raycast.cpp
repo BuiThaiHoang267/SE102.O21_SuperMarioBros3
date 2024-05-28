@@ -28,28 +28,7 @@ void CRaycast::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void CRaycast::OnCollisionWithMario(LPCOLLISIONEVENT e)
 {
-	//DebugOut(L"[INFO] KeyDown: %d\n", "va cham mario");
-	CMario* mario = dynamic_cast<CMario*>(e->obj);
-	float xm, ym;
-	mario->GetPosition(xm, ym);
-	isDetectedMario = true;
-	//set isLeft
-	if (xm < this->x) {
-		isLeft = true;
-	}
-	else
-	{
-		isLeft = false;
-	}
-	//set isHigh
-	if (ym < this->y)
-	{
-		isHigh = true;
-	}
-	else
-	{
-		isHigh = false;
-	}
+	
 }
 
 void CRaycast::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -68,6 +47,7 @@ void CRaycast::OnTriggerEnter(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CMario*>(e->obj)) 
 	{
 		DebugOut(L"[INFO] enter trigger mario %d\n", 1);
+		isDetectedMario = true;
 	}
 }
 void CRaycast::OnTriggerStay(LPCOLLISIONEVENT e) 
@@ -75,6 +55,25 @@ void CRaycast::OnTriggerStay(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CMario*>(e->obj))
 	{
 		DebugOut(L"[INFO] stay trigger mario %d\n", 1);
+		isDetectedMario = true;
+		dynamic_cast<CMario*>(e->obj)->GetPosition(posXMario, posYMario);
+		//set isLeft
+		if (posXMario < this->x) {
+			isLeft = true;
+		}
+		else
+		{
+			isLeft = false;
+		}
+		//set isHigh
+		if (posYMario < this->y)
+		{
+			isHigh = true;
+		}
+		else
+		{
+			isHigh = false;
+		}
 	}
 }
 void CRaycast::OnTriggerExit(LPGAMEOBJECT e)
@@ -82,5 +81,6 @@ void CRaycast::OnTriggerExit(LPGAMEOBJECT e)
 	if (dynamic_cast<CMario*>(e))
 	{
 		DebugOut(L"[INFO] exit trigger mario %d\n", 1);	
+		isDetectedMario = false;
 	}
 }

@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "Animations.h"
+#include "Mario.h"
 
 class CRaycast : public CGameObject {
 protected:
@@ -11,6 +12,8 @@ protected:
 	bool isDetectedMario;
 	bool isLeft;
 	bool isHigh;
+	float posXMario;
+	float posYMario;
 public:
 	CRaycast(float x, float y, int widthh, int heightt) : CGameObject(x, y)
 	{
@@ -19,6 +22,8 @@ public:
 		this->isDetectedMario = false;
 		this->isLeft = true;
 		this->isHigh = true;
+		this->posXMario = 0;
+		this->posYMario = 0;
 	}
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

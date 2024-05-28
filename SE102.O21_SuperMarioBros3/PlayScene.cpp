@@ -330,9 +330,6 @@ void CPlayScene::Update(DWORD dt)
 	// TO-DO: This is a "dirty" way, need a more organized way 
 	//vector<LPGAMEOBJECT> coObjectsBgr;
 	
-
-	
-
 	vector<LPGAMEOBJECT> coObjects;
 	for (size_t i = 0; i < objectsBgr.size(); i++)
 	{

@@ -9,6 +9,7 @@ giftbox.txt
 specials.txt
 effect.txt
 enemy.txt
+bullet.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type

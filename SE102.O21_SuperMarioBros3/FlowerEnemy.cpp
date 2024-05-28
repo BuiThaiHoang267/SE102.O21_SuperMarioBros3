@@ -32,10 +32,10 @@ void CFlowerEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (state == FLOWERENEMY_STATE_DOWN && y > posY) {
 		SetState(FLOWERENEMY_STATE_IDLE);
 	}
-	if ((state == FLOWERENEMY_STATE_FIRE) && (GetTickCount64() - fire_start > 3000)) {
+	if ((state == FLOWERENEMY_STATE_FIRE) && (GetTickCount64() - fire_start > 2000)) {
 		SetState(FLOWERENEMY_STATE_DOWN);
 	}
-	if ((state == FLOWERENEMY_STATE_IDLE) && (GetTickCount64() - fire_start > 3000)) {
+	if ((state == FLOWERENEMY_STATE_IDLE) && (GetTickCount64() - fire_start > 2000)) {
 		SetState(FLOWERENEMY_STATE_UP);
 	}
 
@@ -79,22 +79,38 @@ int CFlowerEnemy::GetIdAni()
 
 	if (state == FLOWERENEMY_STATE_UP)
 	{
-		if (isLeft) {
+		if (isLeft && isHigh) {
 			return ID_ANI_FLOWERENEMY_UPDOWN_LEFT_HIGH;
 		}
-		else
+		else if(isLeft && !isHigh)
+		{
+			return ID_ANI_FLOWERENEMY_UPDOWN_LEFT_LOW;
+		}
+		else if (!isLeft && isHigh)
 		{
 			return ID_ANI_FLOWERENEMY_UPDOWN_RIGHT_HIGH;
+		}
+		else 
+		{
+			return ID_ANI_FLOWERENEMY_UPDOWN_RIGHT_LOW;
 		}
 	}
 	else if (state == FLOWERENEMY_STATE_DOWN)
 	{
-		if (isLeft) {
+		if (isLeft && isHigh) {
 			return ID_ANI_FLOWERENEMY_UPDOWN_LEFT_HIGH;
+		}
+		else if (isLeft && !isHigh)
+		{
+			return ID_ANI_FLOWERENEMY_UPDOWN_LEFT_LOW;
+		}
+		else if (!isLeft && isHigh)
+		{
+			return ID_ANI_FLOWERENEMY_UPDOWN_RIGHT_HIGH;
 		}
 		else
 		{
-			return ID_ANI_FLOWERENEMY_UPDOWN_RIGHT_HIGH;
+			return ID_ANI_FLOWERENEMY_UPDOWN_RIGHT_LOW;
 		}
 	}
 	else if (state == FLOWERENEMY_STATE_FIRE)
