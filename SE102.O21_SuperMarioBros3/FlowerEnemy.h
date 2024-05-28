@@ -35,6 +35,7 @@ private:
 	ULONGLONG fire_start;
 	bool isLeft;
 	bool isHigh;
+	bool isFired;
 	int aniId;
 	LPGAMEOBJECT shootRange;
 public:
@@ -46,6 +47,7 @@ public:
 		this->isLeft = true;
 		this->isHigh = true;
 		this->aniId = ID_NOTANI_FLOWERENEMY_LEFT_LOW;
+		this->isFired = false;
 
 		shootRange = new CRaycast(x, y, 256, 256);
 		LPSCENE s = CGame::GetInstance()->GetCurrentScene();

@@ -19,6 +19,7 @@
 #include "Chimney.h"
 #include "FlowerEnemy.h"
 #include "Raycast.h"
+#include "Bullet.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -130,6 +131,14 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_GOOMBA:
 		{
 			obj = new CGoomba(x, y);
+			objects.push_back(obj);
+		}
+		break;
+	case OBJECT_TYPE_BULLET:
+		{
+			float posX = (float)atof(tokens[3].c_str());
+			float posY = (float)atof(tokens[4].c_str());
+			obj = new CBullet(x, y, posX, posY);
 			objects.push_back(obj);
 		}
 		break;

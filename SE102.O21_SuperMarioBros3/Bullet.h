@@ -12,11 +12,14 @@
 class CBullet : public CGameObject {
 
 public:
-	CBullet(float x, float y, int isAnim) : CGameObject(x, y) {}
+	CBullet(float x, float y, float posX, float posY) : CGameObject(x, y) 
+	{
+		SetUpAngle(posX, posY);
+	}
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	int IsBlocking() { return 0; }
 	int IsCollidable() { return 1; };
-	void SetUpAngle();
+	void SetUpAngle(float posX,float posY);
 };

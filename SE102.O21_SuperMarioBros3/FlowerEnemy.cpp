@@ -1,4 +1,6 @@
 #include "FlowerEnemy.h"
+#include "PlayScene.h"
+#include "Bullet.h"
 
 void CFlowerEnemy::Render()
 {
@@ -38,6 +40,18 @@ void CFlowerEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if ((state == FLOWERENEMY_STATE_IDLE) && (GetTickCount64() - fire_start > 2000)) {
 		SetState(FLOWERENEMY_STATE_UP);
 	}
+	if ((state == FLOWERENEMY_STATE_FIRE) && isFired == false && (GetTickCount64() - fire_start > 1000))
+	{
+		isFired = true;
+		CRaycast* range = dynamic_cast<CRaycast*>(shootRange);
+		if (range->GetIsDetectedMario()) 
+		{
+			LPGAMEOBJECT bullet = new CBullet(x, y - 8, range->GetPosXMario(),range->GetPosYMario());
+			LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+			LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+			p->AddGameObject(bullet);
+		}
+	}
 
 	shootRange->SetPosition(this->x, this->y);
 
@@ -50,6 +64,7 @@ void CFlowerEnemy::SetState(int state)
 	this->state = state;
 	if (state == FLOWERENEMY_STATE_IDLE) 
 	{
+		isFired = false;
 		fire_start = GetTickCount64();
 		vy = 0;
 		y = posY;// cap nhat lai vi tri ban dau

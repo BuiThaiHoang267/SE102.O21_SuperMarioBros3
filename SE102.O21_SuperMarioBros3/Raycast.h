@@ -39,4 +39,6 @@ public:
 	void OnTriggerEnter(LPCOLLISIONEVENT e);
 	void OnTriggerStay(LPCOLLISIONEVENT e);
 	void OnTriggerExit(LPGAMEOBJECT e);
+	float GetPosXMario() { return this->posXMario; };
+	float GetPosYMario() { return this->posYMario; };
 };
