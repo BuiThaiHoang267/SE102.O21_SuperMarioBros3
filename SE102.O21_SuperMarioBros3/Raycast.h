@@ -31,4 +31,7 @@ public:
 	bool GetIsLeft() { return this->isLeft; }
 	bool GetIsHigh() { return this->isHigh; }
 	bool GetIsDetectedMario() { return this->isDetectedMario; }
+	void OnTriggerEnter(LPCOLLISIONEVENT e);
+	void OnTriggerStay(LPCOLLISIONEVENT e);
+	void OnTriggerExit(LPGAMEOBJECT e);
 };

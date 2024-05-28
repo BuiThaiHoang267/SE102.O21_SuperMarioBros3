@@ -62,3 +62,25 @@ void CRaycast::OnNoCollision(DWORD dt)
 {
 	
 }
+
+void CRaycast::OnTriggerEnter(LPCOLLISIONEVENT e)
+{
+	if (dynamic_cast<CMario*>(e->obj)) 
+	{
+		DebugOut(L"[INFO] enter trigger mario %d\n", 1);
+	}
+}
+void CRaycast::OnTriggerStay(LPCOLLISIONEVENT e) 
+{
+	if (dynamic_cast<CMario*>(e->obj))
+	{
+		DebugOut(L"[INFO] stay trigger mario %d\n", 1);
+	}
+}
+void CRaycast::OnTriggerExit(LPGAMEOBJECT e)
+{
+	if (dynamic_cast<CMario*>(e))
+	{
+		DebugOut(L"[INFO] exit trigger mario %d\n", 1);	
+	}
+}

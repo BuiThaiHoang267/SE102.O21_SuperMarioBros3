@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <d3dx10.h>
 #include <vector>
+#include <unordered_set>
 
 #include "Animation.h"
 #include "Animations.h"
@@ -31,6 +32,7 @@ protected:
 	bool isDeleted; 
 
 public: 
+	std::unordered_set<LPGAMEOBJECT> prevCollidingObjects;
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
@@ -63,8 +65,9 @@ public:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {};
 	
 	//Trigger update
-	virtual void OnEnterTrigger(LPCOLLISIONEVENT e) {};
-	virtual void OnExitTrigger(LPCOLLISIONEVENT e) {};
+	virtual void OnTriggerEnter(LPCOLLISIONEVENT e) {};
+	virtual void OnTriggerStay(LPCOLLISIONEVENT e) {};
+	virtual void OnTriggerExit(LPGAMEOBJECT e) {};
 
 	// Is this object blocking other object? If YES, collision framework will automatically push the other object
 	virtual int IsBlocking() { return 1; }
