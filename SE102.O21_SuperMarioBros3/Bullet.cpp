@@ -20,9 +20,12 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	x += vx * dt;
 	y += vy * dt;
+	if (GetTickCount64() - fire_start > BULLET_TIMEOUT) {
+		this->Delete();
+	}
 
 	CGameObject::Update(dt, coObjects);
-	CCollision::GetInstance()->Process(this, dt, coObjects);
+	//CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
 void CBullet::SetUpAngle(float posX, float posY)
@@ -32,39 +35,39 @@ void CBullet::SetUpAngle(float posX, float posY)
 	float angle = atan2(deltaY, deltaX) * 180.0f / M_PI;
 	float angleFire;
 
-	if (angle >= -90 && angle <= -45) // 1
+	if (angle >= -90 && angle <= -10) // 1
 	{
 		angleFire = -45;
 	}
-	else if (angle > -45 && angle <= 0) // 2
+	else if (angle > -10 && angle <= 0) // 2
 	{
-		angleFire = -15;
+		angleFire = -20;
 	}
-	else if (angle > 0 && angle <= 45) //3
+	else if (angle > 0 && angle <= 30) //3
 	{
-		angleFire = 15;
+		angleFire = 20;
 	}
-	else if (angle > 45 && angle <= 90) //4
+	else if (angle > 30 && angle <= 90) //4
 	{
 		angleFire = 45;
 	}
-	else if (angle > 90 && angle <= 135) //5
+	else if (angle > 90 && angle <= 160) //5
 	{
 		angleFire = 135;
 	}
-	else if (angle > 135 && angle <= 180) //6
+	else if (angle > 160 && angle <= 180) //6
 	{
-		angleFire = 165;
+		angleFire = 160;
 	}
-	else if (angle > -180 && angle <= -135) //7
+	else if (angle > -180 && angle <= -145) //7
 	{
-		angleFire = -165;
+		angleFire = -160;
 	}
 	else // 8
 	{
 		angleFire = -135;
 	}
 
-	vx = 0.3 * cos(angleFire * M_PI / 180.0f);
-	vy = -0.3 * sin(angleFire * M_PI / 180.0f);
+	vx = BULLET_V * cos(angleFire * M_PI / 180.0f);
+	vy = -BULLET_V * sin(angleFire * M_PI / 180.0f);
 }

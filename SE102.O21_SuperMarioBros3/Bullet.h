@@ -9,12 +9,17 @@
 #define BULLET_BBOX_WIDTH 6
 #define BULLET_BBOX_HEIGHT 6
 
-class CBullet : public CGameObject {
+#define BULLET_TIMEOUT 10000
+#define BULLET_V 0.06f
 
+class CBullet : public CGameObject {
+private: 
+	ULONGLONG fire_start;
 public:
 	CBullet(float x, float y, float posX, float posY) : CGameObject(x, y) 
 	{
 		SetUpAngle(posX, posY);
+		fire_start = GetTickCount64();
 	}
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

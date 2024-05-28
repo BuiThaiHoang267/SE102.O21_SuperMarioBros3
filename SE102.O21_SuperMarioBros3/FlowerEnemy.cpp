@@ -49,7 +49,7 @@ void CFlowerEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			LPGAMEOBJECT bullet = new CBullet(x, y - 8, range->GetPosXMario(),range->GetPosYMario());
 			LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 			LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
-			p->AddGameObject(bullet);
+			p->AddGameObjectPushBack(bullet);
 		}
 	}
 

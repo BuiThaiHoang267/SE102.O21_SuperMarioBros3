@@ -465,3 +465,7 @@ void CPlayScene::PurgeDeletedObjects()
 void CPlayScene::AddGameObject(LPGAMEOBJECT obj) {
 	objects.insert(objects.begin(), obj);
 }
+
+void CPlayScene::AddGameObjectPushBack(LPGAMEOBJECT obj) {
+	objects.push_back(obj);
+}

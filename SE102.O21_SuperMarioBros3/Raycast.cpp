@@ -4,7 +4,7 @@
 
 void CRaycast::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CRaycast::GetBoundingBox(float& l, float& t, float& r, float& b)
