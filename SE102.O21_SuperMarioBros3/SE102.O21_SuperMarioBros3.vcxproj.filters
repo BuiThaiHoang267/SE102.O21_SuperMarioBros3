@@ -108,6 +108,9 @@
     <ClCompile Include="CheckActivity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Turtle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -215,6 +218,9 @@
     <ClInclude Include="CheckActivity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Turtle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="brick.txt" />
@@ -235,6 +241,7 @@
     <Text Include="effect.txt" />
     <Text Include="enemy.txt" />
     <Text Include="bullet.txt" />
+    <Text Include="Turtle.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="mario.ico">

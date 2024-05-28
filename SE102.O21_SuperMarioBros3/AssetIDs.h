@@ -29,6 +29,7 @@
 #define OBJECT_TYPE_CHIMNEY 90
 #define OBJECT_TYPE_FLOWERENEMY 91
 #define OBJECT_TYPE_BULLET 92
+#define OBJECT_TYPE_TURTLE 93
 // Enemy end
 
 //Raycast
