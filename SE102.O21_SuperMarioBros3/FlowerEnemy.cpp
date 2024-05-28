@@ -2,37 +2,17 @@
 
 void CFlowerEnemy::Render()
 {
-	switch (this->state)
+	CAnimations* animations = CAnimations::GetInstance();
+	CSprites* s = CSprites::GetInstance();
+	aniId = this->GetIdAni();
+	if (state == FLOWERENEMY_STATE_IDLE || state == FLOWERENEMY_STATE_FIRE)
 	{
-	case FLOWERENEMY_STATE_IDLE:
-		{
-			CSprites* spirtes = CSprites::GetInstance();
-			spirtes->Get(ID_NOTANI_FLOWERENEMY_LEFT_LOW)->Draw(x, y);
-		}
-		break;
-	case FLOWERENEMY_STATE_UP:
-		{
-			CAnimations* animations = CAnimations::GetInstance();
-			animations->Get(ID_ANI_FLOWERENEMY_UPDOWN_LEFT_HIGH)->Render(x, y);
-		}
-		break;
-	case FLOWERENEMY_STATE_FIRE:
-		{
-			CSprites* spirtes = CSprites::GetInstance();
-			spirtes->Get(ID_NOTANI_FLOWERENEMY_LEFT_HIGH)->Draw(x, y);
-		}
-		break;
-	case FLOWERENEMY_STATE_DOWN:
-		{
-			CAnimations* animations = CAnimations::GetInstance();
-			animations->Get(ID_ANI_FLOWERENEMY_UPDOWN_LEFT_HIGH)->Render(x, y);
-		}
-		break;
-	default:
-		CSprites* spirtes = CSprites::GetInstance();
-		spirtes->Get(ID_NOTANI_FLOWERENEMY_LEFT_LOW)->Draw(x, y);
-		break;
+		s->Get(aniId)->Draw(x, y);
 	}
+	else {
+		animations->Get(aniId)->Render(x, y);
+	}
+
 }
 
 void CFlowerEnemy::GetBoundingBox(float& l, float& t, float& r, float& b)
@@ -58,6 +38,9 @@ void CFlowerEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if ((state == FLOWERENEMY_STATE_IDLE) && (GetTickCount64() - fire_start > 3000)) {
 		SetState(FLOWERENEMY_STATE_UP);
 	}
+
+	shootRange->SetPosition(this->x, this->y);
+
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -86,6 +69,14 @@ void CFlowerEnemy::SetState(int state)
 
 int CFlowerEnemy::GetIdAni() 
 {
+	CRaycast* range = dynamic_cast<CRaycast*>(shootRange);
+	if (range->GetIsDetectedMario())
+	{
+		this->isLeft = range->GetIsLeft();
+		this->isHigh = range->GetIsHigh();
+	}
+	
+
 	if (state == FLOWERENEMY_STATE_UP)
 	{
 		if (isLeft) {
@@ -125,6 +116,6 @@ int CFlowerEnemy::GetIdAni()
 		}
 	}
 	else {
-		aniId = ID_NOTANI_FLOWERENEMY_LEFT_HIGH;
+		return ID_NOTANI_FLOWERENEMY_LEFT_HIGH;
 	}
 }

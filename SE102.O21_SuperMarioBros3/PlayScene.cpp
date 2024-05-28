@@ -18,6 +18,7 @@
 #include "EffectPoint.h"
 #include "Chimney.h"
 #include "FlowerEnemy.h"
+#include "Raycast.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -156,6 +157,14 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		{
 			int isAnim = atoi(tokens[3].c_str());
 			obj = new CCoin(x, y, isAnim);
+			objects.push_back(obj);
+		}
+		break;
+	case OBJECT_TYPE_RAYCAST:
+		{
+			int width = atoi(tokens[3].c_str());
+			int height = atoi(tokens[4].c_str());
+			obj = new CRaycast(x, y, width, height);
 			objects.push_back(obj);
 		}
 		break;

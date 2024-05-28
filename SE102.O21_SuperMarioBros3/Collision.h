@@ -70,7 +70,9 @@ public:
 		LPGAMEOBJECT objSrc, 
 		DWORD dt, 
 		vector<LPGAMEOBJECT>* objDests, 
-		vector<LPCOLLISIONEVENT>& coEvents);
+		vector<LPCOLLISIONEVENT>& coEvents,
+		vector<LPCOLLISIONEVENT>& coEventTrigger
+	);
 
 	void Filter(
 		LPGAMEOBJECT objSrc,

@@ -164,16 +164,34 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT objSrc, DWORD dt, LPGAMEOBJE
 	coObjects: the list of colliable objects
 	coEvents: list of potential collisions
 */
-void CCollision::Scan(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* objDests, vector<LPCOLLISIONEVENT>& coEvents)
+void CCollision::Scan(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* objDests, vector<LPCOLLISIONEVENT>& coEvents, vector<LPCOLLISIONEVENT>& coEventTrigger)
 {
 	for (UINT i = 0; i < objDests->size(); i++)
 	{
+		LPGAMEOBJECT objDest = objDests->at(i);
 		LPCOLLISIONEVENT e = SweptAABB(objSrc, dt, objDests->at(i));
 
 		if (e->WasCollided()==1)
 			coEvents.push_back(e);
 		else
-			delete e;
+		{
+			// Ki?m tra xem ð?i tý?ng có n?m trong vùng không (Ontrigger)
+			// get bbox obj source
+			float ml, mt, mr, mb;
+			// get bbox obj dest
+			float yl, yt, yr, yb;
+
+			objSrc->GetBoundingBox(ml, mt, mr, mb);
+			objDest->GetBoundingBox(yl, yt, yr, yb);
+
+			if (ml < yr && mr > yl && mt < yb && mb > yt)
+			{
+				coEventTrigger.push_back(e);
+			}
+			else {
+				delete e;
+			}
+		}
 	}
 
 	//std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
@@ -226,14 +244,16 @@ void CCollision::Filter( LPGAMEOBJECT objSrc,
 void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventTrigger;
 	LPCOLLISIONEVENT colX = NULL; 
 	LPCOLLISIONEVENT colY = NULL;
 
 	coEvents.clear();
+	coEventTrigger.clear();
 
 	if (objSrc->IsCollidable())
 	{
-		Scan(objSrc, dt, coObjects, coEvents);
+		Scan(objSrc, dt, coObjects, coEvents, coEventTrigger);
 	}
 
 	// No collision detected
@@ -355,6 +375,15 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 		objSrc->OnCollisionWith(e);			
 	}
 
+	for (UINT i = 0; i < coEventTrigger.size(); i++) 
+	{
+		LPCOLLISIONEVENT e = coEventTrigger[i];
+		if (e->isDeleted) continue;
+
+		objSrc->OnCollisionWith(e);
+	}
+
 
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	for (UINT i = 0; i < coEventTrigger.size(); i++) delete coEventTrigger[i];
 }

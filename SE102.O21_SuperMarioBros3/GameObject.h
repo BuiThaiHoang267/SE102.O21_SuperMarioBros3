@@ -62,6 +62,10 @@ public:
 	// When collision with an object has been detected (triggered by CCollision::Process)
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {};
 	
+	//Trigger update
+	virtual void OnEnterTrigger(LPCOLLISIONEVENT e) {};
+	virtual void OnExitTrigger(LPCOLLISIONEVENT e) {};
+
 	// Is this object blocking other object? If YES, collision framework will automatically push the other object
 	virtual int IsBlocking() { return 1; }
 

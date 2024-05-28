@@ -30,6 +30,10 @@
 #define OBJECT_TYPE_FLOWERENEMY 91
 // Enemy end
 
+//Raycast
+#define OBJECT_TYPE_RAYCAST 100
+
+
 #define OBJECT_TYPE_PORTAL	50
 
 

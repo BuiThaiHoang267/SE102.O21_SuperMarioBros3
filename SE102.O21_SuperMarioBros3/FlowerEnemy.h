@@ -3,6 +3,9 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "Animations.h"
+#include "Raycast.h"
+#include "PlayScene.h"
+
 
 #define FLOWERENEMY_STATE_IDLE 1
 #define FLOWERENEMY_STATE_UP 2
@@ -33,6 +36,7 @@ private:
 	bool isLeft;
 	bool isHigh;
 	int aniId;
+	LPGAMEOBJECT shootRange;
 public:
 	CFlowerEnemy(float x, float y) : CGameObject(x, y) {
 		this->state = FLOWERENEMY_STATE_UP;
@@ -42,6 +46,11 @@ public:
 		this->isLeft = true;
 		this->isHigh = true;
 		this->aniId = ID_NOTANI_FLOWERENEMY_LEFT_LOW;
+
+		shootRange = new CRaycast(x, y, 256, 256);
+		LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+		p->AddGameObject(shootRange);
 	}
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
