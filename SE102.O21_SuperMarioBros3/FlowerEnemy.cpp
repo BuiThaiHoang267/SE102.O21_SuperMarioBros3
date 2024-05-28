@@ -27,6 +27,17 @@ void CFlowerEnemy::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void CFlowerEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) 
 {
+	shootRange->SetPosition(this->x, this->y);
+	checkActivity->SetPosition(this->x, this->y + 8);
+	if (state == FLOWERENEMY_STATE_IDLE)
+	{
+		CCheckActivity* check = dynamic_cast<CCheckActivity*>(checkActivity);
+		if (check->GetIsDetectedMario())
+		{
+			fire_start = GetTickCount64();
+			return;
+		}
+	}
 	y += vy * dt;
 	if (state == FLOWERENEMY_STATE_UP && y < posY - distanceY) {
 		SetState(FLOWERENEMY_STATE_FIRE);
@@ -53,7 +64,7 @@ void CFlowerEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-	shootRange->SetPosition(this->x, this->y);
+	
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);

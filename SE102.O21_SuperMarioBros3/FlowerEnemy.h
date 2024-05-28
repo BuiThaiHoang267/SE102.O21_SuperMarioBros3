@@ -5,6 +5,7 @@
 #include "Animations.h"
 #include "Raycast.h"
 #include "PlayScene.h"
+#include "CheckActivity.h"
 
 
 #define FLOWERENEMY_STATE_IDLE 1
@@ -38,6 +39,7 @@ private:
 	bool isFired;
 	int aniId;
 	LPGAMEOBJECT shootRange;
+	LPGAMEOBJECT checkActivity;
 public:
 	CFlowerEnemy(float x, float y) : CGameObject(x, y) {
 		this->state = FLOWERENEMY_STATE_UP;
@@ -53,6 +55,9 @@ public:
 		LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
 		p->AddGameObject(shootRange);
+
+		checkActivity = new CCheckActivity(x, y + 8, 40, 54);
+		p->AddGameObject(checkActivity);
 	}
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
