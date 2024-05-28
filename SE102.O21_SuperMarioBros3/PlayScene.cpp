@@ -20,7 +20,7 @@
 #include "FlowerEnemy.h"
 #include "Raycast.h"
 #include "Bullet.h"
-
+#include "Turtle.h"
 #include "SampleKeyEventHandler.h"
 
 using namespace std;
@@ -180,6 +180,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_EFFECTCOINBOX:
 		{
 			obj = new CEffectCoinBox(x, y);
+			objects.push_back(obj);
+		}
+		break;
+	case OBJECT_TYPE_TURTLE:
+		{
+			obj = new CTurtle(x, y);
 			objects.push_back(obj);
 		}
 		break;

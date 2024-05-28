@@ -3,7 +3,7 @@
 void CTurtle::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(ID_ANI_TURTLE_IDLE);
+	animations->Get(400000)->Render(x,y);
 }
 
 void CTurtle::GetBoundingBox(float& l, float& t, float& r, float& b)

@@ -10,6 +10,7 @@ specials.txt
 effect.txt
 enemy.txt
 bullet.txt
+turtle.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -85,6 +86,5 @@ bullet.txt
 40	80	112
 41	100	112	100
 
-
-
-
+#turtle
+93	120	120

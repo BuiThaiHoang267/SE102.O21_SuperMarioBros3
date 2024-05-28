@@ -218,7 +218,7 @@
     <Text Include="scene01.txt" />
     <Text Include="scene02.txt" />
     <Text Include="specials.txt" />
-    <Text Include="Turtle.txt" />
+    <Text Include="turtle.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="mario.ico" />
