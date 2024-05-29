@@ -11,6 +11,7 @@
 #include "GiftBox.h"
 #include "Bullet.h"
 #include "FlowerEnemy.h"
+#include "Turtle.h"
 
 #include "Collision.h"
 
@@ -66,6 +67,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithBullet(e);
 	else if (dynamic_cast<CFlowerEnemy*>(e->obj))
 		OnCollisionWithFlowerEnemy(e);
+	else if (dynamic_cast<CTurtle*>(e->obj))
+		OnCollisionWithTurtle(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -132,6 +135,53 @@ void CMario::OnCollisionWithFlowerEnemy(LPCOLLISIONEVENT e)
 			SetState(MARIO_STATE_DIE);
 		}
 	}
+}
+
+void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
+{
+	CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
+
+	if (turtle->GetState() == TURTLE_STATE_WALK || turtle->GetState() == TURTLE_STATE_RUN)
+	{
+		if (e->ny < 0)
+		{
+			if (turtle->GetState() != TURTLE_STATE_TORTOISESHELL)
+			{
+				turtle->SetState(TURTLE_STATE_TORTOISESHELL);
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
+			}
+		}
+		else 
+		{
+			if (untouchable == 0)
+			{
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(MARIO_STATE_DIE);
+				}
+			}
+		}
+	}
+	else if (turtle->GetState() == TURTLE_STATE_TORTOISESHELL || turtle->GetState() == TURTLE_STATE_WAKEUP)
+	{
+		if (turtle->GetState() != TURTLE_STATE_RUN)
+		{
+			turtle->SetState(TURTLE_STATE_RUN);
+			float tx, ty;
+			turtle->GetPosition(tx, ty);
+			if (tx < x)
+				turtle->SetDirectionRun(-1);
+			else
+				turtle->SetDirectionRun(+1);
+		}
+	}
+	
 }
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)

@@ -23,13 +23,17 @@
 #define TURTLE_STATE_RUN 3
 #define TURTLE_STATE_WAKEUP 4
 
-#define TURTLE_VX_STATE_WALK 0.01f
-#define TURTLE_VX_STATE_RUN 0.15f
+#define TURTLE_VX_STATE_WALK 0.03f
+#define TURTLE_VX_STATE_RUN 0.2f
 
-#define TURTLE_GRAVITY 0.02f
+#define TURTLE_GRAVITY 0.002f
 
 #define TURTLE_RETURN_TIMEOUT 5000
 #define TURTLE_WAKEUP_TIMEOUT 2500
+
+#define OFFSET_CHECKMOVE_X 8
+#define OFFSET_CHECKMOVE_Y 10
+
 
 
 class CTurtle : public CGameObject {
@@ -48,10 +52,10 @@ public:
 		this->aniId = ID_ANI_TURTLE_WALK_LEFT;
 		this->offsetYBBox = 0;
 		this->wakeup_start = 0;
-		this->checkmove = new CCheckMove(x - 15, y + 10,  4,  4);
-		SetState(TURTLE_STATE_WALK);
+		this->checkmove = new CCheckMove(x - OFFSET_CHECKMOVE_X, y + OFFSET_CHECKMOVE_Y,  4,  4);
+		//SetState(TURTLE_STATE_WALK);
 		//SetState(TURTLE_STATE_RUN);
-		//SetState(TURTLE_STATE_TORTOISESHELL);
+		SetState(TURTLE_STATE_TORTOISESHELL);
 		//SetState(TURTLE_STATE_RUN);
 	}
 	void Render();
@@ -64,4 +68,5 @@ public:
 	void SetState(int state);
 	int GetAniId();
 	void UpdatePosCheckMove();
+	void SetDirectionRun(int direction);
 };

@@ -3,7 +3,7 @@
 
 void CCheckMove::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 void CCheckMove::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {

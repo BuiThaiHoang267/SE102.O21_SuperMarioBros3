@@ -11,7 +11,7 @@ void CBoxColor::Render()
 void CBoxColor::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x - this->width / 2 + 1;
-	t = y - this->height / 2;
+	t = y - this->height / 2 + 1;
 	r = l + this->width - this->paddingRight - 1;
 	b = t + this->height;
 }

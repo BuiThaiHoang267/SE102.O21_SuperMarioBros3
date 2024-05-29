@@ -6,7 +6,6 @@ void CTurtle::Render()
 	aniId = GetAniId();
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(aniId)->Render(x,y);
-	RenderBoundingBox();
 	this->checkmove->Render();
 }
 
@@ -25,6 +24,7 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//update pos checkmove
 	UpdatePosCheckMove();
 	checkmove->Update(dt,coObjects);
+	//
 
 	if (state == TURTLE_STATE_WALK && checkmove->isOnPlatform == false)
 	{
@@ -49,11 +49,11 @@ void CTurtle::UpdatePosCheckMove()
 {
 	if (vx > 0)
 	{
-		checkmove->SetPosition(x + 15, y + 10);
+		checkmove->SetPosition(x + OFFSET_CHECKMOVE_X, y + OFFSET_CHECKMOVE_Y);
 	}
 	else
 	{
-		checkmove->SetPosition(x - 15, y + 10);
+		checkmove->SetPosition(x - OFFSET_CHECKMOVE_X, y + OFFSET_CHECKMOVE_Y);
 	}
 }
 
@@ -120,7 +120,6 @@ void CTurtle::SetState(int state)
 	}
 	else if (state == TURTLE_STATE_TORTOISESHELL)
 	{
-		y += 4;
 		tortoiseshell_start = GetTickCount64();
 		offsetYBBox = 0;
 		vx = 0;
@@ -128,7 +127,6 @@ void CTurtle::SetState(int state)
 	else if (state == TURTLE_STATE_RUN)
 	{
 		offsetYBBox = 0;
-		vx = TURTLE_VX_STATE_RUN;
 	}
 	else if (state == TURTLE_STATE_WAKEUP)
 	{
@@ -137,5 +135,19 @@ void CTurtle::SetState(int state)
 		vx = 0;
 		vy = 0;
 		ay = 0;
+	}
+}
+
+void CTurtle::SetDirectionRun(int direction)
+{
+	if (direction == 1)
+	{
+		vx = TURTLE_VX_STATE_RUN;
+		ay = TURTLE_GRAVITY;
+	}
+	else
+	{
+		vx = -TURTLE_VX_STATE_RUN;
+		ay = TURTLE_GRAVITY;
 	}
 }
