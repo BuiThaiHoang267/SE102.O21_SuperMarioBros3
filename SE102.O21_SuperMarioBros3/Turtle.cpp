@@ -1,6 +1,7 @@
 #include "Turtle.h"
 #include "GiftBox.h"
 #include "debug.h"
+#include "Goomba.h"
 
 void CTurtle::Render()
 {
@@ -99,6 +100,8 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CTurtle*>(e->obj)) return;
+	if (dynamic_cast<CGoomba*>(e->obj)) return;
+
 
 	if (e->ny != 0)
 	{

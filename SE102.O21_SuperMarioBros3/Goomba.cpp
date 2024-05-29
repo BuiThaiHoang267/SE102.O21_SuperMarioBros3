@@ -1,4 +1,5 @@
 #include "Goomba.h"
+#include "Turtle.h"
 
 CGoomba::CGoomba(float x, float y):CGameObject(x, y)
 {
@@ -36,6 +37,8 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return; 
 	if (dynamic_cast<CGoomba*>(e->obj)) return; 
+	if (dynamic_cast<CTurtle*>(e->obj)) return;
+
 
 	if (e->ny != 0 )
 	{
@@ -72,7 +75,7 @@ void CGoomba::Render()
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x,y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CGoomba::SetState(int state)

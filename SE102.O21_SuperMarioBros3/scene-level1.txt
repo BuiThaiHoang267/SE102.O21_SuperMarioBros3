@@ -5,6 +5,7 @@ brick.txt
 land.txt
 boxcolor.txt
 background.txt
+goomba.txt
 giftbox.txt
 specials.txt
 effect.txt
@@ -75,16 +76,12 @@ turtle.txt
 #type	x	y	type(tall = 1 or short = 0)
 90	367	128	1
 
-# MARIO
-0	30	120
-
-# BoxCoin
-#type	x	y	isAnim
-4	60	112	1
-
-#Effect test
-40	80	112
-41	100	112	100
-
 #turtle
 93	560	100
+
+#Goomba
+2	234	144
+2	460	144
+
+# MARIO
+0	30	120
