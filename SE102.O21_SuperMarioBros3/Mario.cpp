@@ -20,6 +20,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
+	if (vx > 0)
+	{
+		flexDirection = 1;
+	}
+	else if (vx < 0) {
+		flexDirection = -1;
+	}
+
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	// reset untouchable timer if untouchable time has passed
@@ -27,6 +35,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	{
 		untouchable_start = 0;
 		untouchable = 0;
+	}
+	if (GetTickCount64() - untouchableTurtle_start > 500)
+	{
+		untouchableTurtle_start = 0;
+		untouchableTurtle = 0;
 	}
 
 	//isOnPlatform = false;
@@ -68,7 +81,13 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CFlowerEnemy*>(e->obj))
 		OnCollisionWithFlowerEnemy(e);
 	else if (dynamic_cast<CTurtle*>(e->obj))
-		OnCollisionWithTurtle(e);
+	{
+		if (untouchableTurtle == 0)
+		{
+			OnCollisionWithTurtle(e);
+			StartUntouchableTurtle();
+		}
+	}
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -168,17 +187,15 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 			}
 		}
 	}
-	else if (turtle->GetState() == TURTLE_STATE_TORTOISESHELL || turtle->GetState() == TURTLE_STATE_WAKEUP)
+	else if ((turtle->GetState() == TURTLE_STATE_TORTOISESHELL || turtle->GetState() == TURTLE_STATE_WAKEUP) && !isPressA)
 	{
+
 		if (turtle->GetState() != TURTLE_STATE_RUN)
 		{
 			turtle->SetState(TURTLE_STATE_RUN);
 			float tx, ty;
 			turtle->GetPosition(tx, ty);
-			if (tx < x)
-				turtle->SetDirectionRun(-1);
-			else
-				turtle->SetDirectionRun(+1);
+			turtle->SetDirectionRun(flexDirection);
 		}
 	}
 	
@@ -467,5 +484,60 @@ void CMario::SetLevel(int l)
 		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
 	}
 	level = l;
+}
+
+void CMario::OnTriggerEnter(LPCOLLISIONEVENT e)
+{
+	if (dynamic_cast<CTurtle*>(e->obj)) 
+	{
+
+		DebugOut(L"[INFO] enter trigger turtle %d\n", 1);
+		CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
+		if (turtle->GetState() == TURTLE_STATE_TORTOISESHELL || turtle->GetState() == TURTLE_STATE_WAKEUP)
+		{
+			if (isPressA) {
+				DebugOut(L"[INFO] be turtle %d\n", 1);
+
+				if (flexDirection == 1)
+					turtle->SetPosition(x + 8 , y - 2);
+				else if(flexDirection == -1)
+					turtle->SetPosition(x - 8 , y - 2);
+			}
+		}
+		
+	}
+}
+void CMario::OnTriggerStay(LPCOLLISIONEVENT e)
+{
+	if (dynamic_cast<CTurtle*>(e->obj))
+	{
+		CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
+		if (turtle->GetState() == TURTLE_STATE_TORTOISESHELL || turtle->GetState() == TURTLE_STATE_WAKEUP)
+		{
+			if (isPressA) {
+				if (flexDirection == 1)
+					turtle->SetPosition(x + 8 , y - 2);
+				else if (flexDirection == -1)
+					turtle->SetPosition(x - 8 , y - 2);
+			}
+			else
+			{
+				if (untouchableTurtle == 0)
+				{
+					if (turtle->GetState() != TURTLE_STATE_RUN)
+					{
+						turtle->SetState(TURTLE_STATE_RUN);
+						turtle->SetDirectionRun(flexDirection);
+
+						StartUntouchableTurtle();
+					}
+				}
+			}
+		}
+	}
+}
+void CMario::OnTriggerExit(LPGAMEOBJECT e)
+{
+
 }
 

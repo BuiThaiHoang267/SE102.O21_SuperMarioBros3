@@ -44,6 +44,7 @@ private:
 	ULONGLONG tortoiseshell_start;
 	ULONGLONG wakeup_start;
 	CCheckMove* checkmove;
+	bool isStatic;
 public:
 	CTurtle(float x, float y) : CGameObject(x, y) 
 	{
@@ -53,9 +54,10 @@ public:
 		this->offsetYBBox = 0;
 		this->wakeup_start = 0;
 		this->checkmove = new CCheckMove(x - OFFSET_CHECKMOVE_X, y + OFFSET_CHECKMOVE_Y,  4,  4);
-		//SetState(TURTLE_STATE_WALK);
+		this->isStatic = false;
+		SetState(TURTLE_STATE_WALK);
 		//SetState(TURTLE_STATE_RUN);
-		SetState(TURTLE_STATE_TORTOISESHELL);
+		//SetState(TURTLE_STATE_TORTOISESHELL);
 		//SetState(TURTLE_STATE_RUN);
 	}
 	void Render();
@@ -69,4 +71,5 @@ public:
 	int GetAniId();
 	void UpdatePosCheckMove();
 	void SetDirectionRun(int direction);
+	int IsStatic();
 };

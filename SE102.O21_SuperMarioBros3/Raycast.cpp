@@ -17,11 +17,9 @@ void CRaycast::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void CRaycast::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	DebugOut(L"[INFO] Khong va cham voi mario %d\n", 1);
 
 	if (dynamic_cast<CMario*>(e->obj))
 	{
-		DebugOut(L"[INFO] va cham voi mario %d\n", 1);
 		OnCollisionWithMario(e);
 	}
 }

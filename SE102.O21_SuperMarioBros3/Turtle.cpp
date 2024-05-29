@@ -1,4 +1,5 @@
 #include "Turtle.h"
+#include "GiftBox.h"
 #include "debug.h"
 
 void CTurtle::Render()
@@ -7,6 +8,11 @@ void CTurtle::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(aniId)->Render(x,y);
 	this->checkmove->Render();
+}
+
+int CTurtle::IsStatic()
+{
+	return isStatic;
 }
 
 void CTurtle::GetBoundingBox(float& l, float& t, float& r, float& b)
@@ -41,7 +47,10 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		SetState(TURTLE_STATE_WALK);
 	}
-	CGameObject::Update(dt, coObjects);
+	if (state == TURTLE_STATE_TORTOISESHELL || state == TURTLE_STATE_WAKEUP)
+	{
+		return;
+	}
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
@@ -99,7 +108,6 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
-	//if(dynamic_cast<>(e->obj))
 }
 
 void CTurtle::OnNoCollision(DWORD dt)
@@ -110,9 +118,11 @@ void CTurtle::OnNoCollision(DWORD dt)
 
 void CTurtle::SetState(int state)
 {
+	int statePre = this->state;
 	this->state = state;
 	if (state == TURTLE_STATE_WALK)
 	{
+		isStatic = false;
 		offsetYBBox = 4;
 		y -= 4;
 		vx = -TURTLE_VX_STATE_WALK;
@@ -120,16 +130,26 @@ void CTurtle::SetState(int state)
 	}
 	else if (state == TURTLE_STATE_TORTOISESHELL)
 	{
+		if (statePre == TURTLE_STATE_WALK)
+		{
+			y += 4;
+		}
+		isStatic = true;
 		tortoiseshell_start = GetTickCount64();
 		offsetYBBox = 0;
 		vx = 0;
+		vy = 0;
+		ay = 0;
 	}
 	else if (state == TURTLE_STATE_RUN)
 	{
+		isStatic = false;
 		offsetYBBox = 0;
+		vy = 0;
 	}
 	else if (state == TURTLE_STATE_WAKEUP)
 	{
+		isStatic = true;
 		wakeup_start = GetTickCount64();
 		offsetYBBox = 0;
 		vx = 0;

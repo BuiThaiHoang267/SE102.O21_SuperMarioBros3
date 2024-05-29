@@ -111,9 +111,12 @@ class CMario : public CGameObject
 	int level; 
 	int untouchable; 
 	ULONGLONG untouchable_start;
+	int untouchableTurtle;
+	ULONGLONG untouchableTurtle_start;
 	BOOLEAN isOnPlatform;
 	int coin; 
 	bool isPressA;
+	int flexDirection;
 
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -139,9 +142,12 @@ public:
 		level = MARIO_LEVEL_SMALL;
 		untouchable = 0;
 		untouchable_start = -1;
+		untouchableTurtle = 0;
+		untouchableTurtle_start = -1;
 		isOnPlatform = false;
 		coin = 0;
 		isPressA = false;
+		flexDirection = 1;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -159,6 +165,11 @@ public:
 
 	void SetLevel(int l);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
+	void StartUntouchableTurtle() { untouchableTurtle = 1; untouchableTurtle_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	void SetIsPressA(bool press) { this->isPressA = press; }
+	void OnTriggerEnter(LPCOLLISIONEVENT e);
+	void OnTriggerStay(LPCOLLISIONEVENT e);
+	void OnTriggerExit(LPGAMEOBJECT e);
 };
