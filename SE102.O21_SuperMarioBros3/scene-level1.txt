@@ -76,12 +76,15 @@ turtle.txt
 #type	x	y	type(tall = 1 or short = 0)
 90	367	128	1
 
-#turtle
-93	560	100
-
 #Goomba
 2	234	144
 2	460	144
 
 # MARIO
 0	30	120
+
+#turtle
+93	560	100
+
+#Enemy manager
+99	0	0

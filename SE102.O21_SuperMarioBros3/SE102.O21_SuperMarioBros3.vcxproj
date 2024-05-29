@@ -141,6 +141,7 @@
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="EffectCoinBox.cpp" />
     <ClCompile Include="EffectPoint.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="FlowerEnemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="ObjectBackground.cpp" />
+    <ClCompile Include="OnTriggerSpawnEnemy.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Portal.cpp" />
@@ -179,6 +181,7 @@
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectCoinBox.h" />
     <ClInclude Include="EffectPoint.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="FlowerEnemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
@@ -188,6 +191,7 @@
     <ClInclude Include="Mario.h" />
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="ObjectBackground.h" />
+    <ClInclude Include="OnTriggerSpawnEnemy.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Portal.h" />

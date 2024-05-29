@@ -21,6 +21,8 @@
 #include "Raycast.h"
 #include "Bullet.h"
 #include "Turtle.h"
+#include "EnemyManager.h"
+
 #include "SampleKeyEventHandler.h"
 
 using namespace std;
@@ -186,6 +188,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_TURTLE:
 		{
 			obj = new CTurtle(x, y);
+			objects.push_back(obj);
+		}
+		break;
+	case OBJECT_TYPE_ENEMYMANAGER:
+		{
+			obj = new CEnemyManager(x, y);
 			objects.push_back(obj);
 		}
 		break;
