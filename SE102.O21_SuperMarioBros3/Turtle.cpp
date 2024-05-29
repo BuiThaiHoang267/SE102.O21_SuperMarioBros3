@@ -108,6 +108,14 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
+
+	if (dynamic_cast<CGiftBox*>(e->obj))
+	{
+		CGiftBox* m = (CGiftBox*)e->obj;
+		if (e->nx != 0) {
+			m->CanOpen();
+		}
+	}
 }
 
 void CTurtle::OnNoCollision(DWORD dt)
