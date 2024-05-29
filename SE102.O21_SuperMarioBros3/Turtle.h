@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "Animations.h"
+#include "CheckMove.h"
 
 #define ID_ANI_TURTLE_TORTOISESHELL 430000
 
@@ -22,7 +23,7 @@
 #define TURTLE_STATE_RUN 3
 #define TURTLE_STATE_WAKEUP 4
 
-#define TURTLE_VX_STATE_WALK 0.05f
+#define TURTLE_VX_STATE_WALK 0.01f
 #define TURTLE_VX_STATE_RUN 0.15f
 
 #define TURTLE_GRAVITY 0.02f
@@ -38,6 +39,7 @@ private:
 	int offsetYBBox;
 	ULONGLONG tortoiseshell_start;
 	ULONGLONG wakeup_start;
+	CCheckMove* checkmove;
 public:
 	CTurtle(float x, float y) : CGameObject(x, y) 
 	{
@@ -46,9 +48,10 @@ public:
 		this->aniId = ID_ANI_TURTLE_WALK_LEFT;
 		this->offsetYBBox = 0;
 		this->wakeup_start = 0;
-		//SetState(TURTLE_STATE_WALK);
+		this->checkmove = new CCheckMove(x - 15, y + 10,  4,  4);
+		SetState(TURTLE_STATE_WALK);
 		//SetState(TURTLE_STATE_RUN);
-		SetState(TURTLE_STATE_TORTOISESHELL);
+		//SetState(TURTLE_STATE_TORTOISESHELL);
 		//SetState(TURTLE_STATE_RUN);
 	}
 	void Render();
@@ -60,4 +63,5 @@ public:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void SetState(int state);
 	int GetAniId();
+	void UpdatePosCheckMove();
 };

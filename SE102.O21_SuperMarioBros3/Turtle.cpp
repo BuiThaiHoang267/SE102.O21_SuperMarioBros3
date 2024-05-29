@@ -1,11 +1,13 @@
 #include "Turtle.h"
+#include "debug.h"
 
 void CTurtle::Render()
 {
 	aniId = GetAniId();
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(aniId)->Render(x,y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
+	this->checkmove->Render();
 }
 
 void CTurtle::GetBoundingBox(float& l, float& t, float& r, float& b)
@@ -19,6 +21,17 @@ void CTurtle::GetBoundingBox(float& l, float& t, float& r, float& b)
 void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
+
+	//update pos checkmove
+	UpdatePosCheckMove();
+	checkmove->Update(dt,coObjects);
+
+	if (state == TURTLE_STATE_WALK && checkmove->isOnPlatform == false)
+	{
+		vx = -vx;
+		checkmove->isOnPlatform = true;
+	}
+
 	if (state == TURTLE_STATE_TORTOISESHELL && GetTickCount64() - tortoiseshell_start > TURTLE_RETURN_TIMEOUT)
 	{
 		SetState(TURTLE_STATE_WAKEUP);
@@ -30,6 +43,18 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
+}
+
+void CTurtle::UpdatePosCheckMove()
+{
+	if (vx > 0)
+	{
+		checkmove->SetPosition(x + 15, y + 10);
+	}
+	else
+	{
+		checkmove->SetPosition(x - 15, y + 10);
+	}
 }
 
 int CTurtle::GetAniId()
@@ -74,6 +99,7 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
+	//if(dynamic_cast<>(e->obj))
 }
 
 void CTurtle::OnNoCollision(DWORD dt)
@@ -89,7 +115,7 @@ void CTurtle::SetState(int state)
 	{
 		offsetYBBox = 4;
 		y -= 4;
-		vx = TURTLE_VX_STATE_WALK;
+		vx = -TURTLE_VX_STATE_WALK;
 		ay = TURTLE_GRAVITY;
 	}
 	else if (state == TURTLE_STATE_TORTOISESHELL)
