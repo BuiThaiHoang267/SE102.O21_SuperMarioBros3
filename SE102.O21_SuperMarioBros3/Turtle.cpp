@@ -135,7 +135,7 @@ void CTurtle::SetState(int state)
 	{
 		isStatic = false;
 		offsetYBBox = 4;
-		y -= 4;
+		y -= 5;
 		vx = -TURTLE_VX_STATE_WALK;
 		ay = TURTLE_GRAVITY;
 	}
@@ -143,7 +143,7 @@ void CTurtle::SetState(int state)
 	{
 		if (statePre == TURTLE_STATE_WALK)
 		{
-			y += 4;
+			y += 3;
 		}
 		isStatic = true;
 		tortoiseshell_start = GetTickCount64();
