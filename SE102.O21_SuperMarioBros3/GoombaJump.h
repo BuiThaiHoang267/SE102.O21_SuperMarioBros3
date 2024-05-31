@@ -1,8 +1,10 @@
 #pragma once
 #include "GameObject.h"
 
-#define GOOMBAJUMP_GRAVITY 0.002f
-#define GOOMBAJUMP_WALKING_SPEED 0.05f
+#define GOOMBAJUMP_GRAVITY 0.001f
+#define GOOMBAJUMP_WALKING_SPEED 0.04f
+#define GOOMBAJUMP_VY_JUMP 0.08f
+#define GOOMBAJUMP_VY_JUMP_MAX 0.30f
 
 
 #define GOOMBAJUMP_BBOX_WIDTH 16
@@ -15,34 +17,51 @@
 #define GOOMBAJUMP_STATE_WALKING 200
 #define GOOMBAJUMP_STATE_DIE 300
 
-#define ID_ANI_GOOMBAJUMP_JUMP 
-#define ID_ANI_GOOMBAJUMP_WALKING 5000
-#define ID_ANI_GOOMBAJUMP_DIE 5001
+#define GOOMBAJUMP_LEVEL_WING 2
+#define GOOMBAJUMP_LEVEL_NORMAL 1
+
+#define ID_ANI_GOOMBAJUMP_JUMPING 35001
+#define ID_ANI_GOOMBAJUMP_WALKING_WING 35000
+#define ID_ANI_GOOMBAJUMP_WALKING 33000
+#define ID_ANI_GOOMBAJUMP_DIE 34000
 
 class CGoombaJump : public CGameObject
 {
 protected:
 	float ax;
 	float ay;
+	bool isOnPlatform;
+	int aniId;
+	int level;
+	int countJump;
 
 	ULONGLONG die_start;
+	ULONGLONG walk_start;
 
-	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-	virtual void Render();
+	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void Render();
 
-	virtual int IsCollidable() { return 1; };
-	virtual int IsBlocking() { return 0; }
-	virtual void OnNoCollision(DWORD dt);
+	int IsCollidable() { return 1; };
+	int IsBlocking() { return 1; }
+	void OnNoCollision(DWORD dt);
 
-	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
-
+	void OnCollisionWith(LPCOLLISIONEVENT e);
+	int GetAniId();
 public:
 	CGoombaJump(float x, float y) : CGameObject(x, y) 
 	{
 		this->ax = 0;
 		this->ay = GOOMBAJUMP_GRAVITY;
 		this->die_start = -1;
+		this->aniId = ID_ANI_GOOMBAJUMP_WALKING_WING;
+		this->isOnPlatform = true;
+		this->level = GOOMBAJUMP_LEVEL_WING;
+		this->countJump = 0;
+		this->vx = GOOMBAJUMP_WALKING_SPEED;
+		SetState(GOOMBAJUMP_STATE_WALKING);
 	};
 	void SetState(int state);
+	void SetLevel(int level);
+	int GetLevel();
 };

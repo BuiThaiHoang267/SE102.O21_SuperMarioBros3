@@ -1,6 +1,7 @@
 #include "GoombaJump.h"
 #include "Turtle.h"
-
+#include "Platform.h"
+#include "debug.h"
 
 void CGoombaJump::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -24,6 +25,7 @@ void CGoombaJump::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
+	isOnPlatform = false;
 };
 
 void CGoombaJump::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -36,6 +38,11 @@ void CGoombaJump::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (e->ny != 0)
 	{
 		vy = 0;
+		if (e->ny == -1 && level == GOOMBAJUMP_LEVEL_WING && state == GOOMBAJUMP_STATE_JUMP)
+		{
+			DebugOut(L"Cham dat %d\n", countJump);
+			isOnPlatform = true;
+		}
 	}
 	else if (e->nx != 0)
 	{
@@ -53,6 +60,22 @@ void CGoombaJump::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		isDeleted = true;
 		return;
 	}
+	if (state == GOOMBAJUMP_STATE_JUMP && isOnPlatform == true)
+	{
+		if (countJump == 4)
+		{
+			SetState(GOOMBAJUMP_STATE_WALKING);
+			countJump = 0;
+		}
+		else
+		{
+			SetState(GOOMBAJUMP_STATE_JUMP);	
+		}
+	}
+	if ((state == GOOMBAJUMP_STATE_WALKING) && (GetTickCount64() - walk_start > 1000) && level == GOOMBAJUMP_LEVEL_WING)
+	{
+		SetState(GOOMBAJUMP_STATE_JUMP);
+	}
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -61,10 +84,79 @@ void CGoombaJump::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CGoombaJump::Render()
 {
-	
+	aniId = GetAniId();
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(aniId)->Render(x, y);
 }
 
 void CGoombaJump::SetState(int state)
 {
-	
+	this->state = state;
+	if (state == GOOMBAJUMP_STATE_JUMP)
+	{
+		countJump++;
+		if (countJump == 4)
+		{
+			DebugOut(L"jump max %d\n", countJump);
+			vy = -GOOMBAJUMP_VY_JUMP_MAX;
+		}
+		else
+		{
+			DebugOut(L"jump %d\n", countJump);
+			vy = -GOOMBAJUMP_VY_JUMP;
+		}
+	}
+	else if (state == GOOMBAJUMP_STATE_DIE)
+	{
+		die_start = GetTickCount64();
+		y += (GOOMBAJUMP_BBOX_HEIGHT - GOOMBAJUMP_BBOX_HEIGHT_DIE) / 2;
+		vy = 0;
+		vx = 0;
+		ax = 0;
+		ay = 0;
+	}
+	else if (state == GOOMBAJUMP_STATE_WALKING)
+	{
+		if (level == GOOMBAJUMP_LEVEL_WING)
+		{
+			walk_start = GetTickCount64();
+		}
+	}
+}
+
+int CGoombaJump::GetAniId()
+{
+	if (state == GOOMBAJUMP_STATE_WALKING)
+	{
+		if (level == GOOMBAJUMP_LEVEL_NORMAL)
+		{
+			return ID_ANI_GOOMBAJUMP_WALKING;
+		}
+		else
+		{
+			return ID_ANI_GOOMBAJUMP_WALKING_WING;
+		}
+	}
+	else if (state == GOOMBAJUMP_STATE_DIE)
+	{
+		return ID_ANI_GOOMBAJUMP_DIE;
+	}
+	else if (state == GOOMBAJUMP_STATE_JUMP)
+	{
+		return ID_ANI_GOOMBAJUMP_JUMPING;
+	}
+	else 
+	{
+		return ID_ANI_GOOMBAJUMP_WALKING;
+	}
+}
+
+void CGoombaJump::SetLevel(int level)
+{
+	this->level = level;
+}
+
+int CGoombaJump::GetLevel()
+{
+	return this->level;
 }
