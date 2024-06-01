@@ -12,6 +12,7 @@
 #include "Bullet.h"
 #include "FlowerEnemy.h"
 #include "Turtle.h"
+#include "GoombaJump.h"
 
 #include "Collision.h"
 
@@ -88,6 +89,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			StartUntouchableTurtle();
 		}
 	}
+	else if (dynamic_cast<CGoombaJump*>(e->obj))
+	{
+		OnCollisionWithGoombaJump(e);
+	}
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -152,6 +157,50 @@ void CMario::OnCollisionWithFlowerEnemy(LPCOLLISIONEVENT e)
 		{
 			DebugOut(L">>> Mario DIE >>> \n");
 			SetState(MARIO_STATE_DIE);
+		}
+	}
+}
+
+void CMario::OnCollisionWithGoombaJump(LPCOLLISIONEVENT e)
+{
+	CGoombaJump* gbJump = dynamic_cast<CGoombaJump*>(e->obj);
+
+	if (e->ny < 0)
+	{
+		int gbjLevel = gbJump->GetLevel();
+		if (gbjLevel == GOOMBAJUMP_LEVEL_WING)
+		{
+			gbJump->SetLevel(GOOMBAJUMP_LEVEL_NORMAL);
+			gbJump->SetState(GOOMBAJUMP_STATE_WALKING);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else
+		{
+			if (gbJump->GetState() != GOOMBAJUMP_STATE_DIE)
+			{
+				gbJump->SetState(GOOMBAJUMP_STATE_DIE);
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
+			}
+		}
+		
+	}
+	else 
+	{
+		if (untouchable == 0)
+		{
+			if (gbJump->GetState() != GOOMBAJUMP_STATE_DIE)
+			{
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(MARIO_STATE_DIE);
+				}
+			}
 		}
 	}
 }
