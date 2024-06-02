@@ -48,6 +48,7 @@ private:
 public:
 	CTurtle(float x, float y) : CGameObject(x, y) 
 	{
+		this->tag = TAG_ENEMY;
 		this->tortoiseshell_start = -1;
 		this->ay = TURTLE_GRAVITY;
 		this->aniId = ID_ANI_TURTLE_WALK_LEFT;

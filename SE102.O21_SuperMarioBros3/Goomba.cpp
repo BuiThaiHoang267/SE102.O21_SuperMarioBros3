@@ -3,6 +3,7 @@
 
 CGoomba::CGoomba(float x, float y):CGameObject(x, y)
 {
+	this->tag = TAG_ENEMY;
 	this->ax = 0;
 	this->ay = GOOMBA_GRAVITY;
 	die_start = -1;

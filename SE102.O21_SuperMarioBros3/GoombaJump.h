@@ -51,6 +51,7 @@ protected:
 public:
 	CGoombaJump(float x, float y) : CGameObject(x, y) 
 	{
+		this->tag = TAG_ENEMY;
 		this->ax = 0;
 		this->ay = GOOMBAJUMP_GRAVITY;
 		this->die_start = -1;

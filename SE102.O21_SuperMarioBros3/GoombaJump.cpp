@@ -121,6 +121,10 @@ void CGoombaJump::SetState(int state)
 		{
 			walk_start = GetTickCount64();
 		}
+		else
+		{
+			y -= 1;
+		}
 	}
 }
 

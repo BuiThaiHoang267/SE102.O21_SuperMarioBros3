@@ -48,10 +48,10 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		SetState(TURTLE_STATE_WALK);
 	}
-	if (state == TURTLE_STATE_TORTOISESHELL || state == TURTLE_STATE_WAKEUP)
+	/*if (state == TURTLE_STATE_TORTOISESHELL || state == TURTLE_STATE_WAKEUP)
 	{
 		return;
-	}
+	}*/
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
@@ -150,10 +150,11 @@ void CTurtle::SetState(int state)
 		offsetYBBox = 0;
 		vx = 0;
 		vy = 0;
-		ay = 0;
+		//ay = 0;
 	}
 	else if (state == TURTLE_STATE_RUN)
 	{
+		y -= 1;
 		isStatic = false;
 		offsetYBBox = 0;
 		vy = 0;
