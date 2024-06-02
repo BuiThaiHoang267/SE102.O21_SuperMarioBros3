@@ -2,6 +2,7 @@
 #include "Mario.h"
 #include "PlayScene.h"
 #include "Mushroom.h"
+#include "Leaf.h"
 #include "EffectCoinBox.h"
 
 void CGiftBox::Render() {
@@ -27,14 +28,20 @@ void CGiftBox::OpenGiftBox()
 {
 	if (typeGift == 1) 
 	{
-		LPGAMEOBJECT mushroom = new CMushroom(x, y);
 		LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
-		p->AddGameObject(mushroom);
-	}
-	else if(typeGift == 2)
-	{
-		// la cay
+		CMario* mario = dynamic_cast<CMario*>(p->GetPlayer());
+		int levelMario = mario->GetLevel();
+		if (levelMario == MARIO_LEVEL_SMALL)
+		{
+			LPGAMEOBJECT mushroom = new CMushroom(x, y);
+			p->AddGameObject(mushroom);
+		}
+		else
+		{
+			LPGAMEOBJECT leaf = new CLeaf(x, y - 64);
+			p->AddGameObjectPushBack(leaf);
+		}
 	}
 	else
 	{

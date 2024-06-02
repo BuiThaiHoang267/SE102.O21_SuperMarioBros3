@@ -25,7 +25,7 @@ void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	x += vx * dt;
 	y += vy * dt;
-	if (vy < 0)
+	if (vy < -0.02)
 	{
 		flexDirection = -flexDirection;
 		vx = -vx;

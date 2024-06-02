@@ -165,6 +165,7 @@ public:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	void SetLevel(int l);
+	int GetLevel() { return this->level; };
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 	void StartUntouchableTurtle() { untouchableTurtle = 1; untouchableTurtle_start = GetTickCount64(); }
 
