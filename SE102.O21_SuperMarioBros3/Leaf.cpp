@@ -25,10 +25,28 @@ void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	x += vx * dt;
 	y += vy * dt;
-	if (vy < -0.02)
+	if (state == LEAF_STATE_UP && vy > 0)
+	{
+		SetState(LEAF_STATE_DOWN);
+	}
+
+	if (vy < -0.02  && state == LEAF_STATE_DOWN)
 	{
 		flexDirection = -flexDirection;
 		vx = -vx;
 		vy = LEAF_VY;
+	}
+}
+
+void CLeaf::SetState(int state)
+{
+	this->state = state;
+	if (state == LEAF_STATE_DOWN)
+	{
+		this->ax = 0;
+		this->ay = LEAF_GRAVITY;
+		this->flexDirection = 1;
+		this->vx = LEAF_VX;
+		this->vy = LEAF_VY;
 	}
 }

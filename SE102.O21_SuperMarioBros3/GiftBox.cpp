@@ -39,7 +39,7 @@ void CGiftBox::OpenGiftBox()
 		}
 		else
 		{
-			LPGAMEOBJECT leaf = new CLeaf(x, y - 64);
+			LPGAMEOBJECT leaf = new CLeaf(x, y - 8);
 			p->AddGameObjectPushBack(leaf);
 		}
 	}
