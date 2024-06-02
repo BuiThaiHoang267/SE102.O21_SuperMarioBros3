@@ -25,4 +25,5 @@ height	240
 70	textures\sprite05.png
 80	textures\sprite06.png
 90	textures\sprite07.png
-100	textures\mariobros3.png
+100	textures\sprite08.png
+110	textures\mariobros3.png

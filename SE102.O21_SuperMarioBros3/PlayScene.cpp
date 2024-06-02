@@ -23,6 +23,7 @@
 #include "Turtle.h"
 #include "EnemyManager.h"
 #include "GoombaJump.h"
+#include "Leaf.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -220,6 +221,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_FLOWERENEMY:
 		{
 			obj = new CFlowerEnemy(x, y);
+			objects.push_back(obj);
+		}
+		break;
+	case OBJECT_TYPE_LEAF:
+		{
+			obj = new CLeaf(x, y);
 			objects.push_back(obj);
 		}
 		break;

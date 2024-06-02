@@ -88,3 +88,6 @@ turtle.txt
 
 #Enemy manager
 99	0	0
+
+#Leaf
+10	120	120
