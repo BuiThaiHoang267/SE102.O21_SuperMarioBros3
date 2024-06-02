@@ -40,7 +40,7 @@ void CGoombaJump::OnCollisionWith(LPCOLLISIONEVENT e)
 		vy = 0;
 		if (e->ny == -1 && level == GOOMBAJUMP_LEVEL_WING && state == GOOMBAJUMP_STATE_JUMP)
 		{
-			DebugOut(L"Cham dat %d\n", countJump);
+			//DebugOut(L"Cham dat %d\n", countJump);
 			isOnPlatform = true;
 		}
 	}
@@ -54,6 +54,17 @@ void CGoombaJump::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
+
+	if (state == GOOMBAJUMP_STATE_DIE_TORTOISESHELL)
+	{
+		y += vy * dt;
+		x += vx * dt;
+		if (GetTickCount64() - die_start > GOOMBAJUMP_DIE_TORTOISESHELL_TIMEOUT)
+		{
+			isDeleted = true;
+		}
+		return;
+	}
 
 	if ((state == GOOMBAJUMP_STATE_DIE) && (GetTickCount64() - die_start > GOOMBAJUMP_DIE_TIMEOUT))
 	{
@@ -97,19 +108,19 @@ void CGoombaJump::SetState(int state)
 		countJump++;
 		if (countJump == 4)
 		{
-			DebugOut(L"jump max %d\n", countJump);
+			//DebugOut(L"jump max %d\n", countJump);
 			vy = -GOOMBAJUMP_VY_JUMP_MAX;
 		}
 		else
 		{
-			DebugOut(L"jump %d\n", countJump);
+			//DebugOut(L"jump %d\n", countJump);
 			vy = -GOOMBAJUMP_VY_JUMP;
 		}
 	}
 	else if (state == GOOMBAJUMP_STATE_DIE)
 	{
 		die_start = GetTickCount64();
-		y += (GOOMBAJUMP_BBOX_HEIGHT - GOOMBAJUMP_BBOX_HEIGHT_DIE) / 2;
+		y += (GOOMBAJUMP_BBOX_HEIGHT - GOOMBAJUMP_BBOX_HEIGHT_DIE) / 2 ;
 		vy = 0;
 		vx = 0;
 		ax = 0;
@@ -125,6 +136,10 @@ void CGoombaJump::SetState(int state)
 		{
 			y -= 1;
 		}
+	}
+	else if (state == GOOMBAJUMP_STATE_DIE_TORTOISESHELL)
+	{
+		die_start = GetTickCount64();
 	}
 }
 
@@ -149,9 +164,9 @@ int CGoombaJump::GetAniId()
 	{
 		return ID_ANI_GOOMBAJUMP_JUMPING;
 	}
-	else 
+	else if(GOOMBAJUMP_STATE_DIE_TORTOISESHELL)
 	{
-		return ID_ANI_GOOMBAJUMP_WALKING;
+		return ID_ANI_GOOMBAJUMP_DIE_TORTOISESHELL;
 	}
 }
 
@@ -163,4 +178,13 @@ void CGoombaJump::SetLevel(int level)
 int CGoombaJump::GetLevel()
 {
 	return this->level;
+}
+
+void CGoombaJump::DieFromTortoiseshell(int flexDirection)
+{
+	ax = 0;
+	ay = GRAVITY_COLLIDER_TORTOISESHELL;
+	vx = VX_COLLIDER_TORTOISESHELL * flexDirection;
+	vy = -VY_COLLIDER_TORTOISESHELL;
+	SetState(GOOMBAJUMP_STATE_DIE_TORTOISESHELL);
 }

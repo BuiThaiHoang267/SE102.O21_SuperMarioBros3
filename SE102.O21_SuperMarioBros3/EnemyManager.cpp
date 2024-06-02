@@ -1,6 +1,7 @@
 #include "EnemyManager.h"
 #include "PlayScene.h"
 #include "Goomba.h"
+#include "GoombaJump.h"
 
 void CEnemyManager::Render()
 {
@@ -28,7 +29,7 @@ void CEnemyManager::SpawnEnemy()
 		p->AddGameObject(goomba1);
 		LPGAMEOBJECT goomba2 = new CGoomba(950, 128);
 		p->AddGameObject(goomba2);
-		LPGAMEOBJECT goomba3 = new CGoomba(1050, 128);
+		LPGAMEOBJECT goomba3 = new CGoombaJump(1050, 128);
 		p->AddGameObject(goomba3);
 	}
 }

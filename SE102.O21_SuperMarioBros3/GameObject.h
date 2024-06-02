@@ -4,7 +4,6 @@
 #include <d3dx10.h>
 #include <vector>
 #include <unordered_set>
-#include <string>
 
 #include "Animation.h"
 #include "Animations.h"
@@ -15,7 +14,11 @@ using namespace std;
 
 #define ID_TEX_BBOX -100		// special texture to draw object bounding box
 #define BBOX_ALPHA 0.25f		// Bounding box transparency
-#define TAG_ENEMY "Enemy";
+#define TAG_ENEMY 1
+#define VX_COLLIDER_TORTOISESHELL 0.05f
+#define VY_COLLIDER_TORTOISESHELL 0.2f
+#define GRAVITY_COLLIDER_TORTOISESHELL 0.001f
+
 
 class CGameObject
 {
@@ -33,7 +36,7 @@ protected:
 
 	bool isDeleted;
 
-	string tag = "";
+	int tag;
 
 public: 
 	std::unordered_set<LPGAMEOBJECT> prevCollidingObjects;
@@ -41,8 +44,7 @@ public:
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
-
-	string GetTag() { return this->tag; }
+	int GetTag() { return this->tag; }
 	int GetState() { return this->state; }
 	virtual void Delete() { isDeleted = true;  }
 	bool IsDeleted() { return isDeleted; }

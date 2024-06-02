@@ -2,6 +2,7 @@
 #include "GiftBox.h"
 #include "debug.h"
 #include "Goomba.h"
+#include "GoombaJump.h"
 
 void CTurtle::Render()
 {
@@ -98,9 +99,9 @@ int CTurtle::GetAniId()
 
 void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	OnCollisionWhenStateRun(e);
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CTurtle*>(e->obj)) return;
-	if (dynamic_cast<CGoomba*>(e->obj)) return;
 
 
 	if (e->ny != 0)
@@ -145,12 +146,15 @@ void CTurtle::SetState(int state)
 		{
 			y += 3;
 		}
+		else {
+			y -= 1;
+		}
 		isStatic = true;
 		tortoiseshell_start = GetTickCount64();
 		offsetYBBox = 0;
 		vx = 0;
 		vy = 0;
-		//ay = 0;
+		ay = 0;
 	}
 	else if (state == TURTLE_STATE_RUN)
 	{
@@ -158,6 +162,7 @@ void CTurtle::SetState(int state)
 		isStatic = false;
 		offsetYBBox = 0;
 		vy = 0;
+		ay = 0;
 	}
 	else if (state == TURTLE_STATE_WAKEUP)
 	{
@@ -181,5 +186,24 @@ void CTurtle::SetDirectionRun(int direction)
 	{
 		vx = -TURTLE_VX_STATE_RUN;
 		ay = TURTLE_GRAVITY;
+	}
+}
+
+void CTurtle::OnCollisionWhenStateRun(LPCOLLISIONEVENT e)
+{
+	if (!e->obj->IsCollidable())
+		return;
+
+	if (state == TURTLE_STATE_RUN && e->obj->GetTag() == TAG_ENEMY)
+	{
+		int flexDirection = vx > 0? 1 :-1;
+		if (dynamic_cast<CGoomba*>(e->obj))
+		{
+			dynamic_cast<CGoomba*>(e->obj)->DieFromTortoiseshell(flexDirection);
+		}
+		else if (dynamic_cast<CGoombaJump*>(e->obj))
+		{
+			dynamic_cast<CGoombaJump*>(e->obj)->DieFromTortoiseshell(flexDirection);
+		}
 	}
 }

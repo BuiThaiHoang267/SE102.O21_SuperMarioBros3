@@ -55,6 +55,16 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
+	if (state == GOOMBA_STATE_DIE_TORTOISESHELL)
+	{
+		y += vy * dt;
+		x += vx * dt;
+		if (GetTickCount64() - die_start > GOOMBA_DIE_TORTOISESHELL_TIMEOUT)
+		{
+			isDeleted = true;
+		}
+		return;
+	}
 
 	if ( (state==GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT) )
 	{
@@ -73,6 +83,10 @@ void CGoomba::Render()
 	if (state == GOOMBA_STATE_DIE) 
 	{
 		aniId = ID_ANI_GOOMBA_DIE;
+	}
+	else if (state == GOOMBA_STATE_DIE_TORTOISESHELL)
+	{
+		aniId = ID_ANI_GOOMBA_DIE_TORTOISESHELL;
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x,y);
@@ -94,5 +108,16 @@ void CGoomba::SetState(int state)
 		case GOOMBA_STATE_WALKING: 
 			vx = -GOOMBA_WALKING_SPEED;
 			break;
+		case GOOMBA_STATE_DIE_TORTOISESHELL:
+			die_start = GetTickCount64();
 	}
+}
+
+void CGoomba::DieFromTortoiseshell(int flexDirection)
+{
+	ax = 0;
+	ay = GRAVITY_COLLIDER_TORTOISESHELL;
+	vx = VX_COLLIDER_TORTOISESHELL * flexDirection;
+	vy = -VY_COLLIDER_TORTOISESHELL;
+	SetState(GOOMBA_STATE_DIE_TORTOISESHELL);
 }
