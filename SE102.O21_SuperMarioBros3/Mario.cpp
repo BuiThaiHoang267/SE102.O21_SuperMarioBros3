@@ -23,11 +23,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if (vx > 0)
+	if (ax > 0)
 	{
 		flexDirection = 1;
 	}
-	else if (vx < 0) {
+	else if (ax < 0) {
 		flexDirection = -1;
 	}
 
@@ -44,6 +44,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchableTurtle_start = 0;
 		untouchableTurtle = 0;
 	}
+	
 
 	//isOnPlatform = false;
 
@@ -290,6 +291,7 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 			float tx, ty;
 			turtle->GetPosition(tx, ty);
 			turtle->SetDirectionRun(flexDirection);
+			SetState(MARIO_STATE_SHOOT_TORTOISESHELL);
 		}
 	}
 	
@@ -324,9 +326,24 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e) {
 //
 int CMario::GetAniIdSmall()
 {
+	if (GetTickCount64() - timer_shoot <= 150)
+	{
+		if (flexDirection == 1)
+			return ID_ANI_MARIO_SMALL_SHOOT_TORTOISESHELL_RIGHT;
+		else
+			return ID_ANI_MARIO_SMALL_SHOOT_TORTOISESHELL_LEFT;
+	}
 	int aniId = -1;
 	if (!isOnPlatform)
 	{
+		if (isHoldTortoiseshell)
+		{
+			if (nx >= 0)
+				return ID_ANI_MARIO_SMALL_JUMP_TORTOISESHELL_RIGHT;
+			else
+				return ID_ANI_MARIO_SMALL_JUMP_TORTOISESHELL_LEFT;
+		}
+		// Not hold tortoiseshell
 		if (abs(ax) == MARIO_ACCEL_RUN_X)
 		{
 			if (nx >= 0)
@@ -342,38 +359,64 @@ int CMario::GetAniIdSmall()
 				aniId = ID_ANI_MARIO_SMALL_JUMP_WALK_LEFT;
 		}
 	}
-	else
-		if (isSitting)
+	else if (isSitting)
+	{
+		if (nx > 0)
+			aniId = ID_ANI_MARIO_SIT_RIGHT;
+		else
+			aniId = ID_ANI_MARIO_SIT_LEFT;
+	}
+	else if (vx == 0)
+	{
+		if (isHoldTortoiseshell)
 		{
 			if (nx > 0)
-				aniId = ID_ANI_MARIO_SIT_RIGHT;
+				return ID_ANI_MARIO_SMALL_IDLE_TORTOISESHELL_RIGHT;
 			else
-				aniId = ID_ANI_MARIO_SIT_LEFT;
+				return ID_ANI_MARIO_SMALL_IDLE_TORTOISESHELL_LEFT;
 		}
-		else
-			if (vx == 0)
-			{
-				if (nx > 0) aniId = ID_ANI_MARIO_SMALL_IDLE_RIGHT;
-				else aniId = ID_ANI_MARIO_SMALL_IDLE_LEFT;
-			}
-			else if (vx > 0)
-			{
-				if (ax < 0)
-					aniId = ID_ANI_MARIO_SMALL_BRACE_RIGHT;
-				else if (ax == MARIO_ACCEL_RUN_X)
-					aniId = ID_ANI_MARIO_SMALL_RUNNING_RIGHT;
-				else if (ax == MARIO_ACCEL_WALK_X)
-					aniId = ID_ANI_MARIO_SMALL_WALKING_RIGHT;
-			}
-			else // vx < 0
-			{
-				if (ax > 0)
-					aniId = ID_ANI_MARIO_SMALL_BRACE_LEFT;
-				else if (ax == -MARIO_ACCEL_RUN_X)
-					aniId = ID_ANI_MARIO_SMALL_RUNNING_LEFT;
-				else if (ax == -MARIO_ACCEL_WALK_X)
-					aniId = ID_ANI_MARIO_SMALL_WALKING_LEFT;
-			}
+		//not hold tortoiseshell
+		if (nx > 0) aniId = ID_ANI_MARIO_SMALL_IDLE_RIGHT;
+		else aniId = ID_ANI_MARIO_SMALL_IDLE_LEFT;
+	}
+	else if (vx > 0)
+	{
+		if (isHoldTortoiseshell)
+		{
+			if (ax == MARIO_ACCEL_RUN_X)
+				return ID_ANI_MARIO_SMALL_RUN_TORTOISESHELL_RIGHT;
+			else if (ax == MARIO_ACCEL_WALK_X)
+				return ID_ANI_MARIO_SMALL_WALK_TORTOISESHELL_RIGHT;
+			else
+				return	ID_ANI_MARIO_SMALL_WALK_TORTOISESHELL_LEFT;
+		}
+		//not hold tortoiseshell
+		if (ax < 0)
+			aniId = ID_ANI_MARIO_SMALL_BRACE_RIGHT;
+		else if (ax == MARIO_ACCEL_RUN_X)
+			aniId = ID_ANI_MARIO_SMALL_RUNNING_RIGHT;
+		else if (ax == MARIO_ACCEL_WALK_X)
+			aniId = ID_ANI_MARIO_SMALL_WALKING_RIGHT;
+	}
+	else // vx < 0
+	{
+		if (isHoldTortoiseshell)
+		{
+			if (ax == -MARIO_ACCEL_RUN_X)
+				return ID_ANI_MARIO_SMALL_RUN_TORTOISESHELL_LEFT;
+			else if (ax == -MARIO_ACCEL_WALK_X)
+				return ID_ANI_MARIO_SMALL_WALK_TORTOISESHELL_LEFT;
+			else
+				return	ID_ANI_MARIO_SMALL_WALK_TORTOISESHELL_RIGHT;
+		}
+		//not hold tortoiseshell
+		if (ax > 0)
+			aniId = ID_ANI_MARIO_SMALL_BRACE_LEFT;
+		else if (ax == -MARIO_ACCEL_RUN_X)
+			aniId = ID_ANI_MARIO_SMALL_RUNNING_LEFT;
+		else if (ax == -MARIO_ACCEL_WALK_X)
+			aniId = ID_ANI_MARIO_SMALL_WALKING_LEFT;
+	}
 
 	if (aniId == -1) aniId = ID_ANI_MARIO_SMALL_IDLE_RIGHT;
 
@@ -386,11 +429,26 @@ int CMario::GetAniIdSmall()
 //
 int CMario::GetAniIdBig()
 {
+	if (GetTickCount64() - timer_shoot <= 150)
+	{
+		if (flexDirection == 1)
+			return ID_ANI_MARIO_BIG_SHOOT_TORTOISESHELL_RIGHT;
+		else
+			return ID_ANI_MARIO_BIG_SHOOT_TORTOISESHELL_LEFT;
+	}
+
 	int aniId = -1;
 	if (!isOnPlatform)
 	{
 		if (abs(ax) == MARIO_ACCEL_RUN_X)
 		{
+			if (isHoldTortoiseshell)
+			{
+				if (nx >= 0)
+					return ID_ANI_MARIO_BIG_JUMP_TORTOISESHELL_RIGHT;
+				else
+					return ID_ANI_MARIO_BIG_JUMP_TORTOISESHELL_LEFT;
+			}
 			// Not hold tortoiseshell
 			if (nx >= 0)
 				aniId = ID_ANI_MARIO_JUMP_RUN_RIGHT;
@@ -427,6 +485,16 @@ int CMario::GetAniIdBig()
 	}
 	else if (vx > 0)
 	{
+		if (isHoldTortoiseshell)
+		{
+			if (ax == MARIO_ACCEL_RUN_X)
+				return ID_ANI_MARIO_BIG_RUN_TORTOISESHELL_RIGHT;
+			else if (ax == MARIO_ACCEL_WALK_X)
+				return ID_ANI_MARIO_BIG_WALK_TORTOISESHELL_RIGHT;
+			else
+				return	ID_ANI_MARIO_BIG_WALK_TORTOISESHELL_LEFT;
+		}
+		//not hold tortoiseshell
 		if (ax < 0)
 			aniId = ID_ANI_MARIO_BRACE_RIGHT;
 		else if (ax == MARIO_ACCEL_RUN_X)
@@ -436,6 +504,16 @@ int CMario::GetAniIdBig()
 	}
 	else // vx < 0
 	{
+		if (isHoldTortoiseshell)
+		{
+			if (ax == -MARIO_ACCEL_RUN_X)
+				return ID_ANI_MARIO_BIG_RUN_TORTOISESHELL_LEFT;
+			else if (ax == -MARIO_ACCEL_WALK_X)
+				return ID_ANI_MARIO_BIG_WALK_TORTOISESHELL_LEFT;
+			else
+				return	ID_ANI_MARIO_BIG_WALK_TORTOISESHELL_RIGHT;
+		}
+		//not hold tortoiseshell
 		if (ax > 0)
 			aniId = ID_ANI_MARIO_BRACE_LEFT;
 		else if (ax == -MARIO_ACCEL_RUN_X)
@@ -544,6 +622,10 @@ void CMario::SetState(int state)
 		vx = 0;
 		ax = 0;
 		break;
+
+	case MARIO_STATE_SHOOT_TORTOISESHELL:
+		timer_shoot = GetTickCount64();
+		break;
 	}
 
 	CGameObject::SetState(state);
@@ -599,10 +681,10 @@ void CMario::OnTriggerEnter(LPCOLLISIONEVENT e)
 			if (isPressA) {
 				DebugOut(L"[INFO] be turtle %d\n", 1);
 				this->isHoldTortoiseshell = true;
-				if (flexDirection == 1)
+				/*if (flexDirection == 1)
 					turtle->SetPosition(x + 10 , y + 2);
 				else if(flexDirection == -1)
-					turtle->SetPosition(x - 10 , y + 2);
+					turtle->SetPosition(x - 10 , y + 2);*/
 			}
 		}
 		
@@ -615,15 +697,23 @@ void CMario::OnTriggerStay(LPCOLLISIONEVENT e)
 		CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
 		if (turtle->GetState() == TURTLE_STATE_TORTOISESHELL || turtle->GetState() == TURTLE_STATE_WAKEUP)
 		{
+			this->isHoldTortoiseshell = true;
 			if (isPressA) {
+				float posY;
+				if (level == MARIO_LEVEL_SMALL)
+					posY = y - 2;
+				else
+					posY = y + 2;
+
 				if (flexDirection == 1)
-					turtle->SetPosition(x + 10 , y + 2);
+					turtle->SetPosition(x + 10 , posY);
 				else if (flexDirection == -1)
-					turtle->SetPosition(x - 10 , y + 2);
+					turtle->SetPosition(x - 10 , posY);
 			}
 			else
 			{
 				this->isHoldTortoiseshell = false;
+				SetState(MARIO_STATE_SHOOT_TORTOISESHELL);
 				if (untouchableTurtle == 0)
 				{
 					if (turtle->GetState() != TURTLE_STATE_RUN)
@@ -640,6 +730,9 @@ void CMario::OnTriggerStay(LPCOLLISIONEVENT e)
 }
 void CMario::OnTriggerExit(LPGAMEOBJECT e)
 {
-
+	if (dynamic_cast<CTurtle*>(e))
+	{
+		isHoldTortoiseshell = false;
+	}
 }
 

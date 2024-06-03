@@ -58,7 +58,7 @@ void CLeaf::OnCollisionWithMario()
 	if (state != LEAF_STATE_DIE)
 	{
 		SetState(LEAF_STATE_DIE);
-		LPGAMEOBJECT effectCoinBox = new CEffectPoint(x, y - 16, 100);
+		LPGAMEOBJECT effectCoinBox = new CEffectPoint(x, y - 16, 1000);
 		LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
 		p->AddGameObject(effectCoinBox);
