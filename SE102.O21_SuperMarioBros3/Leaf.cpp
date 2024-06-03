@@ -1,4 +1,6 @@
 #include "Leaf.h"
+#include "PlayScene.h"
+#include "EffectPoint.h"
 
 void CLeaf::Render()
 {
@@ -48,5 +50,18 @@ void CLeaf::SetState(int state)
 		this->flexDirection = 1;
 		this->vx = LEAF_VX;
 		this->vy = LEAF_VY;
+	}
+}
+
+void CLeaf::OnCollisionWithMario()
+{
+	if (state != LEAF_STATE_DIE)
+	{
+		SetState(LEAF_STATE_DIE);
+		LPGAMEOBJECT effectCoinBox = new CEffectPoint(x, y - 16, 100);
+		LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+		p->AddGameObject(effectCoinBox);
+		this->Delete();
 	}
 }

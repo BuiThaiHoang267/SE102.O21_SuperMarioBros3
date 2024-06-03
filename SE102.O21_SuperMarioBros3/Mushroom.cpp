@@ -1,6 +1,8 @@
 #include "Mushroom.h"
 #include "Goomba.h"
 #include "Mario.h"
+#include "PlayScene.h"
+#include "EffectPoint.h"
 
 CMushroom::CMushroom(float x, float y) : CGameObject(x, y) {
 	this->ax = 0;
@@ -68,5 +70,18 @@ void CMushroom::SetState(int state) {
 		vx = -MUSHROOM_WALKING_SPEED;
 		ay = MUSHROOM_GRAVITY;
 		break;
+	}
+}
+
+void CMushroom::OnCollisionWithMario(float mx, float my)
+{
+	if (state != MUSHROOM_STATE_DIE)
+	{
+		state = MUSHROOM_STATE_DIE;
+		LPGAMEOBJECT effectCoinBox = new CEffectPoint(mx, my, 1000);
+		LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+		p->AddGameObject(effectCoinBox);
+		this->Delete();
 	}
 }

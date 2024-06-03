@@ -1,5 +1,7 @@
 #include "Goomba.h"
 #include "Turtle.h"
+#include "EffectPoint.h"
+#include "PlayScene.h"
 
 CGoomba::CGoomba(float x, float y):CGameObject(x, y)
 {
@@ -115,9 +117,16 @@ void CGoomba::SetState(int state)
 
 void CGoomba::DieFromTortoiseshell(int flexDirection)
 {
-	ax = 0;
-	ay = GRAVITY_COLLIDER_TORTOISESHELL;
-	vx = VX_COLLIDER_TORTOISESHELL * flexDirection;
-	vy = -VY_COLLIDER_TORTOISESHELL;
-	SetState(GOOMBA_STATE_DIE_TORTOISESHELL);
+	if (state != GOOMBA_STATE_DIE_TORTOISESHELL)
+	{
+		ax = 0;
+		ay = GRAVITY_COLLIDER_TORTOISESHELL;
+		vx = VX_COLLIDER_TORTOISESHELL * flexDirection;
+		vy = -VY_COLLIDER_TORTOISESHELL;
+		LPGAMEOBJECT effectCoinBox = new CEffectPoint(x, y - 16, 100);
+		LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+		p->AddGameObject(effectCoinBox);
+		SetState(GOOMBA_STATE_DIE_TORTOISESHELL);
+	}
 }

@@ -13,6 +13,8 @@
 #include "FlowerEnemy.h"
 #include "Turtle.h"
 #include "GoombaJump.h"
+#include "Leaf.h"
+#include "EffectPoint.h"
 
 #include "Collision.h"
 
@@ -95,6 +97,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		OnCollisionWithGoombaJump(e);
 	}
+	else if (dynamic_cast<CLeaf*>(e->obj))
+	{
+		OnCollisionWithLeaf(e);
+	}
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -106,6 +112,12 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	{
 		if (goomba->GetState() != GOOMBA_STATE_DIE)
 		{
+			float mx, my;
+			goomba->GetPosition(mx, my);
+			LPGAMEOBJECT effectCoinBox = new CEffectPoint(mx, my - 16, 100);
+			LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+			LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+			p->AddGameObject(effectCoinBox);
 			goomba->SetState(GOOMBA_STATE_DIE);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
@@ -129,6 +141,10 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 			}
 		}
 	}
+}
+void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
+{
+	dynamic_cast<CLeaf*>(e->obj)->OnCollisionWithMario();
 }
 
 void CMario::OnCollisionWithBullet(LPCOLLISIONEVENT e)
@@ -172,6 +188,12 @@ void CMario::OnCollisionWithGoombaJump(LPCOLLISIONEVENT e)
 		int gbjLevel = gbJump->GetLevel();
 		if (gbjLevel == GOOMBAJUMP_LEVEL_WING)
 		{
+			float mx, my;
+			gbJump->GetPosition(mx, my);
+			LPGAMEOBJECT effectCoinBox = new CEffectPoint(mx, my - 16, 100);
+			LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+			LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+			p->AddGameObject(effectCoinBox);
 			gbJump->SetLevel(GOOMBAJUMP_LEVEL_NORMAL);
 			gbJump->SetState(GOOMBAJUMP_STATE_WALKING);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
@@ -180,6 +202,12 @@ void CMario::OnCollisionWithGoombaJump(LPCOLLISIONEVENT e)
 		{
 			if (gbJump->GetState() != GOOMBAJUMP_STATE_DIE)
 			{
+				float mx, my;
+				gbJump->GetPosition(mx, my);
+				LPGAMEOBJECT effectCoinBox = new CEffectPoint(mx, my - 16, 100);
+				LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+				LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+				p->AddGameObject(effectCoinBox);
 				gbJump->SetState(GOOMBAJUMP_STATE_DIE);
 				vy = -MARIO_JUMP_DEFLECT_SPEED;
 			}
@@ -217,6 +245,12 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 		{
 			if (turtle->GetState() != TURTLE_STATE_TORTOISESHELL)
 			{
+				float mx, my;
+				turtle->GetPosition(mx, my);
+				LPGAMEOBJECT effectCoinBox = new CEffectPoint(mx, my - 16, 100);
+				LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+				LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+				p->AddGameObject(effectCoinBox);
 				turtle->SetState(TURTLE_STATE_TORTOISESHELL);
 				vy = -MARIO_JUMP_DEFLECT_SPEED;
 			}
@@ -240,9 +274,18 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 	}
 	else if ((turtle->GetState() == TURTLE_STATE_TORTOISESHELL || turtle->GetState() == TURTLE_STATE_WAKEUP) && !isPressA)
 	{
-
+		
 		if (turtle->GetState() != TURTLE_STATE_RUN)
 		{
+			if (e->ny < 0)
+			{
+				float mx, my;
+				turtle->GetPosition(mx, my);
+				LPGAMEOBJECT effectCoinBox = new CEffectPoint(mx, my - 16, 100);
+				LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+				LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+				p->AddGameObject(effectCoinBox);
+			}
 			turtle->SetState(TURTLE_STATE_RUN);
 			float tx, ty;
 			turtle->GetPosition(tx, ty);
@@ -272,7 +315,7 @@ void CMario::OnCollisionWithGiftBox(LPCOLLISIONEVENT e) {
 }
 
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e) {
-	e->obj->Delete();
+	dynamic_cast<CMushroom*>(e->obj)->OnCollisionWithMario(x,y - 16);
 	SetLevel(MARIO_LEVEL_BIG);
 }
 

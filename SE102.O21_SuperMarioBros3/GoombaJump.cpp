@@ -2,6 +2,8 @@
 #include "Turtle.h"
 #include "Platform.h"
 #include "debug.h"
+#include "PlayScene.h"
+#include "EffectPoint.h"
 
 void CGoombaJump::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -182,9 +184,16 @@ int CGoombaJump::GetLevel()
 
 void CGoombaJump::DieFromTortoiseshell(int flexDirection)
 {
-	ax = 0;
-	ay = GRAVITY_COLLIDER_TORTOISESHELL;
-	vx = VX_COLLIDER_TORTOISESHELL * flexDirection;
-	vy = -VY_COLLIDER_TORTOISESHELL;
-	SetState(GOOMBAJUMP_STATE_DIE_TORTOISESHELL);
+	if (state != GOOMBAJUMP_STATE_DIE_TORTOISESHELL)
+	{
+		ax = 0;
+		ay = GRAVITY_COLLIDER_TORTOISESHELL;
+		vx = VX_COLLIDER_TORTOISESHELL * flexDirection;
+		vy = -VY_COLLIDER_TORTOISESHELL;
+		LPGAMEOBJECT effectCoinBox = new CEffectPoint(x, y - 16, 100);
+		LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+		p->AddGameObject(effectCoinBox);
+		SetState(GOOMBAJUMP_STATE_DIE_TORTOISESHELL);
+	}
 }

@@ -20,6 +20,8 @@
 
 #define LEAF_STATE_UP 100
 #define LEAF_STATE_DOWN 200
+#define LEAF_STATE_DIE 300
+
 
 class CLeaf : public CGameObject {
 protected:
@@ -39,5 +41,7 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	int IsBlocking() { return 0; }
+	int IsCollidable() { return 1; }
 	void SetState(int state);
+	void OnCollisionWithMario();
 };
