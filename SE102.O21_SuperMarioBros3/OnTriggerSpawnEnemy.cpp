@@ -24,7 +24,10 @@ void COnTriggerSpawnEnemy::OnTriggerEnter(LPCOLLISIONEVENT e)
 }
 void COnTriggerSpawnEnemy::OnTriggerStay(LPCOLLISIONEVENT e)
 {
-
+	if (dynamic_cast<CMario*>(e->obj))
+	{
+		isDetectedMario = true;
+	}
 }
 void COnTriggerSpawnEnemy::OnTriggerExit(LPGAMEOBJECT e)
 {
