@@ -391,6 +391,7 @@ int CMario::GetAniIdBig()
 	{
 		if (abs(ax) == MARIO_ACCEL_RUN_X)
 		{
+			// Not hold tortoiseshell
 			if (nx >= 0)
 				aniId = ID_ANI_MARIO_JUMP_RUN_RIGHT;
 			else
@@ -404,38 +405,44 @@ int CMario::GetAniIdBig()
 				aniId = ID_ANI_MARIO_JUMP_WALK_LEFT;
 		}
 	}
-	else
-		if (isSitting)
+	else if (isSitting)
+	{
+		if (nx > 0)
+			aniId = ID_ANI_MARIO_SIT_RIGHT;
+		else
+			aniId = ID_ANI_MARIO_SIT_LEFT;
+	}
+	else if (vx == 0)
+	{
+		if (isHoldTortoiseshell)
 		{
 			if (nx > 0)
-				aniId = ID_ANI_MARIO_SIT_RIGHT;
+				return ID_ANI_MARIO_BIG_IDLE_TORTOISESHELL_RIGHT;
 			else
-				aniId = ID_ANI_MARIO_SIT_LEFT;
+				return ID_ANI_MARIO_BIG_IDLE_TORTOISESHELL_LEFT;
 		}
-		else
-			if (vx == 0)
-			{
-				if (nx > 0) aniId = ID_ANI_MARIO_IDLE_RIGHT;
-				else aniId = ID_ANI_MARIO_IDLE_LEFT;
-			}
-			else if (vx > 0)
-			{
-				if (ax < 0)
-					aniId = ID_ANI_MARIO_BRACE_RIGHT;
-				else if (ax == MARIO_ACCEL_RUN_X)
-					aniId = ID_ANI_MARIO_RUNNING_RIGHT;
-				else if (ax == MARIO_ACCEL_WALK_X)
-					aniId = ID_ANI_MARIO_WALKING_RIGHT;
-			}
-			else // vx < 0
-			{
-				if (ax > 0)
-					aniId = ID_ANI_MARIO_BRACE_LEFT;
-				else if (ax == -MARIO_ACCEL_RUN_X)
-					aniId = ID_ANI_MARIO_RUNNING_LEFT;
-				else if (ax == -MARIO_ACCEL_WALK_X)
-					aniId = ID_ANI_MARIO_WALKING_LEFT;
-			}
+		//not hold tortoiseshell
+		if (nx > 0) aniId = ID_ANI_MARIO_IDLE_RIGHT;
+		else aniId = ID_ANI_MARIO_IDLE_LEFT;
+	}
+	else if (vx > 0)
+	{
+		if (ax < 0)
+			aniId = ID_ANI_MARIO_BRACE_RIGHT;
+		else if (ax == MARIO_ACCEL_RUN_X)
+			aniId = ID_ANI_MARIO_RUNNING_RIGHT;
+		else if (ax == MARIO_ACCEL_WALK_X)
+			aniId = ID_ANI_MARIO_WALKING_RIGHT;
+	}
+	else // vx < 0
+	{
+		if (ax > 0)
+			aniId = ID_ANI_MARIO_BRACE_LEFT;
+		else if (ax == -MARIO_ACCEL_RUN_X)
+			aniId = ID_ANI_MARIO_RUNNING_LEFT;
+		else if (ax == -MARIO_ACCEL_WALK_X)
+			aniId = ID_ANI_MARIO_WALKING_LEFT;
+	}
 
 	if (aniId == -1) aniId = ID_ANI_MARIO_IDLE_RIGHT;
 
@@ -591,11 +598,11 @@ void CMario::OnTriggerEnter(LPCOLLISIONEVENT e)
 		{
 			if (isPressA) {
 				DebugOut(L"[INFO] be turtle %d\n", 1);
-
+				this->isHoldTortoiseshell = true;
 				if (flexDirection == 1)
-					turtle->SetPosition(x + 8 , y - 2);
+					turtle->SetPosition(x + 10 , y + 2);
 				else if(flexDirection == -1)
-					turtle->SetPosition(x - 8 , y - 2);
+					turtle->SetPosition(x - 10 , y + 2);
 			}
 		}
 		
@@ -610,12 +617,13 @@ void CMario::OnTriggerStay(LPCOLLISIONEVENT e)
 		{
 			if (isPressA) {
 				if (flexDirection == 1)
-					turtle->SetPosition(x + 8 , y - 2);
+					turtle->SetPosition(x + 10 , y + 2);
 				else if (flexDirection == -1)
-					turtle->SetPosition(x - 8 , y - 2);
+					turtle->SetPosition(x - 10 , y + 2);
 			}
 			else
 			{
+				this->isHoldTortoiseshell = false;
 				if (untouchableTurtle == 0)
 				{
 					if (turtle->GetState() != TURTLE_STATE_RUN)
