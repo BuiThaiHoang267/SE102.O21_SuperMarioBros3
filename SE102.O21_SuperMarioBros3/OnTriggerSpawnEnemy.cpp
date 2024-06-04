@@ -31,6 +31,8 @@ void COnTriggerSpawnEnemy::OnTriggerStay(LPCOLLISIONEVENT e)
 }
 void COnTriggerSpawnEnemy::OnTriggerExit(LPGAMEOBJECT e)
 {
+	if (e->IsDeleted())
+		return;
 	if (dynamic_cast<CMario*>(e))
 	{
 		isDetectedMario = false;
