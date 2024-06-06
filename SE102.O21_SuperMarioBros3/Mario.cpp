@@ -27,12 +27,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	if (state == MARIO_STATE_IDLE) 
 	{
-		if (flexDirection == 1 && vx <= 0)
+		if (flexDirection == 1 && vx <= 0 && ax == -MARIO_ACCEL_FRICTION_FORCE)
 		{
 			vx = 0.0f;
 			ax = 0.0f;
 		}
-		else if (flexDirection == -1 && vx >= 0)
+		else if (flexDirection == -1 && vx >= 0 && ax == MARIO_ACCEL_FRICTION_FORCE)
 		{
 			vx = 0.0f;
 			ax = 0.0f;
@@ -709,14 +709,14 @@ void CMario::SetState(int state)
 	switch (state)
 	{
 	case MARIO_STATE_RUNNING_RIGHT:
-		if (isSitting || !isOnPlatform) break;
+		if (isSitting) break;
 		maxVx = MARIO_RUNNING_SPEED;
 		ax = MARIO_ACCEL_RUN_X;
 		nx = 1;
 		flexDirection = 1;
 		break;
 	case MARIO_STATE_RUNNING_LEFT:
-		if (isSitting || !isOnPlatform) break;
+		if (isSitting) break;
 		maxVx = -MARIO_RUNNING_SPEED;
 		ax = -MARIO_ACCEL_RUN_X;
 		nx = -1;
@@ -741,6 +741,7 @@ void CMario::SetState(int state)
 		if (isOnPlatform)
 		{
 			isOnPlatform = false;
+			ax = 0.0f;
 			if (abs(this->vx) == MARIO_RUNNING_SPEED)
 				vy = -MARIO_JUMP_RUN_SPEED_Y;
 			else
@@ -749,7 +750,7 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_RELEASE_JUMP:
-		if (vy < 0) vy += MARIO_JUMP_SPEED_Y / 2;
+		if (vy < 0) vy += abs(vy)*0.5f;
 		break;
 
 	case MARIO_STATE_SIT:
@@ -772,10 +773,8 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_IDLE:
-		{
-			if(isOnPlatform == true)
-				ax = 0.0004f*(-flexDirection);
-		}
+		if (isOnPlatform == true && vx != 0) ax = MARIO_ACCEL_FRICTION_FORCE * (-flexDirection);
+		else ax = 0.0f;
 		break;
 
 	case MARIO_STATE_DIE:
