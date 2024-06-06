@@ -23,7 +23,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if (abs(vx) > abs(maxVx)) vx = maxVx;
+	if ( abs(vx) > abs(maxVx) && ( (flexDirection>0 && vx > 0) || (flexDirection < 0 && vx < 0) ) ) vx = maxVx;
 
 	if (state == MARIO_STATE_IDLE) 
 	{
@@ -134,7 +134,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
-					level = MARIO_LEVEL_SMALL;
+					level--;
 					StartUntouchable();
 				}
 				else
@@ -391,8 +391,10 @@ int CMario::GetAniIdSmall()
 				return ID_ANI_MARIO_SMALL_RUN_TORTOISESHELL_RIGHT;
 			else if (ax == MARIO_ACCEL_WALK_X)
 				return ID_ANI_MARIO_SMALL_WALK_TORTOISESHELL_RIGHT;
+			else if (ax < 0 && flexDirection == -1)
+				return ID_ANI_MARIO_SMALL_WALK_TORTOISESHELL_LEFT;
 			else
-				return	ID_ANI_MARIO_SMALL_WALK_TORTOISESHELL_LEFT;
+				return	ID_ANI_MARIO_SMALL_WALK_TORTOISESHELL_RIGHT;
 		}
 		//not hold tortoiseshell
 		if (ax < 0 && flexDirection == -1)
@@ -412,8 +414,10 @@ int CMario::GetAniIdSmall()
 				return ID_ANI_MARIO_SMALL_RUN_TORTOISESHELL_LEFT;
 			else if (ax == -MARIO_ACCEL_WALK_X)
 				return ID_ANI_MARIO_SMALL_WALK_TORTOISESHELL_LEFT;
+			else if (ax > 0 && flexDirection == 1)
+				return ID_ANI_MARIO_SMALL_WALK_TORTOISESHELL_RIGHT;
 			else
-				return	ID_ANI_MARIO_SMALL_WALK_TORTOISESHELL_RIGHT;
+				return	ID_ANI_MARIO_SMALL_WALK_TORTOISESHELL_LEFT;
 		}
 		//not hold tortoiseshell
 		if (ax > 0 && flexDirection == 1)
@@ -509,8 +513,10 @@ int CMario::GetAniIdBig()
 				return ID_ANI_MARIO_BIG_RUN_TORTOISESHELL_RIGHT;
 			else if (ax == MARIO_ACCEL_WALK_X)
 				return ID_ANI_MARIO_BIG_WALK_TORTOISESHELL_RIGHT;
+			else if (ax < 0 && flexDirection == -1)
+				return ID_ANI_MARIO_BIG_WALK_TORTOISESHELL_LEFT;
 			else
-				return	ID_ANI_MARIO_BIG_WALK_TORTOISESHELL_LEFT;
+				return	ID_ANI_MARIO_BIG_WALK_TORTOISESHELL_RIGHT;
 		}
 		//not hold tortoiseshell
 		if (ax < 0 && flexDirection == -1)
@@ -530,8 +536,10 @@ int CMario::GetAniIdBig()
 				return ID_ANI_MARIO_BIG_RUN_TORTOISESHELL_LEFT;
 			else if (ax == -MARIO_ACCEL_WALK_X)
 				return ID_ANI_MARIO_BIG_WALK_TORTOISESHELL_LEFT;
-			else
+			else if (ax > 0 && flexDirection == 1)
 				return ID_ANI_MARIO_BIG_WALK_TORTOISESHELL_RIGHT;
+			else
+				return ID_ANI_MARIO_BIG_WALK_TORTOISESHELL_LEFT;
 		}
 		//not hold tortoiseshell
 		if (ax > 0 && flexDirection == 1)
@@ -634,8 +642,10 @@ int CMario::GetAniIdMax()
 				return ID_ANI_MARIO_MAX_RUN_TORTOISESHELL_RIGHT;
 			else if (ax == MARIO_ACCEL_WALK_X)
 				return ID_ANI_MARIO_MAX_WALK_TORTOISESHELL_RIGHT;
+			else if (ax < 0 && flexDirection == -1)
+				return ID_ANI_MARIO_MAX_WALK_TORTOISESHELL_LEFT;
 			else
-				return	ID_ANI_MARIO_MAX_WALK_TORTOISESHELL_LEFT;
+				return	ID_ANI_MARIO_MAX_WALK_TORTOISESHELL_RIGHT;
 		}
 		//not hold tortoiseshell
 		if (ax < 0 && flexDirection == -1)
@@ -655,8 +665,10 @@ int CMario::GetAniIdMax()
 				return ID_ANI_MARIO_MAX_RUN_TORTOISESHELL_LEFT;
 			else if (ax == -MARIO_ACCEL_WALK_X)
 				return ID_ANI_MARIO_MAX_WALK_TORTOISESHELL_LEFT;
+			else if (ax > 0 && flexDirection == 1)
+				return ID_ANI_MARIO_MAX_WALK_TORTOISESHELL_RIGHT;
 			else
-				return	ID_ANI_MARIO_MAX_WALK_TORTOISESHELL_RIGHT;
+				return ID_ANI_MARIO_MAX_WALK_TORTOISESHELL_LEFT;
 		}
 		//not hold tortoiseshell
 		if (ax > 0 && flexDirection == 1)
