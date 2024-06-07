@@ -25,6 +25,7 @@
 #include "GoombaJump.h"
 #include "Leaf.h"
 #include "TitleMap.h"
+#include "TitleMapCloud.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -250,22 +251,40 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 
 	case OBJECT_TYPE_TITLEMAP:
-	{
-		float cell_width = (float)atof(tokens[3].c_str());
-		float cell_height = (float)atof(tokens[4].c_str());
-		int length = atoi(tokens[5].c_str());
-		int sprite_begin = atoi(tokens[6].c_str());
-		int sprite_middle = atoi(tokens[7].c_str());
-		int sprite_end = atoi(tokens[8].c_str());
+		{
+			float cell_width = (float)atof(tokens[3].c_str());
+			float cell_height = (float)atof(tokens[4].c_str());
+			int length = atoi(tokens[5].c_str());
+			int sprite_begin = atoi(tokens[6].c_str());
+			int sprite_middle = atoi(tokens[7].c_str());
+			int sprite_end = atoi(tokens[8].c_str());
 
-		obj = new CTitleMap(
-			x, y,
-			cell_width, cell_height, length,
-			sprite_begin, sprite_middle, sprite_end
-		);
-		objectsBgr.push_back(obj);
-	}
-	break;
+			obj = new CTitleMap(
+				x, y,
+				cell_width, cell_height, length,
+				sprite_begin, sprite_middle, sprite_end
+			);
+			objectsBgr.push_back(obj);
+		}
+		break;
+
+	case OBJECT_TYPE_TITLEMAP_CLOUD:
+		{
+			float cell_width = (float)atof(tokens[3].c_str());
+			float cell_height = (float)atof(tokens[4].c_str());
+			int length = atoi(tokens[5].c_str());
+			int sprite_begin = atoi(tokens[6].c_str());
+			int sprite_middle = atoi(tokens[7].c_str());
+			int sprite_end = atoi(tokens[8].c_str());
+
+			obj = new CTitleMapCloud(
+				x, y,
+				cell_width, cell_height, length,
+				sprite_begin, sprite_middle, sprite_end
+			);
+			objectsBgr.push_back(obj);
+		}
+		break;
 
 	case OBJECT_TYPE_BOXCOLOR:
 		{

@@ -11,7 +11,6 @@ protected:
 	float cellWidth;
 	float cellHeight;
 	int spriteIdBegin, spriteIdMiddle, spriteIdEnd;
-
 public:
 	CTitleMap(float x, float y,
 		float cell_width, float cell_height, int length,
@@ -29,5 +28,6 @@ public:
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void RenderBoundingBox();
-	int IsBlocking() { return 0; }
+	virtual int IsBlocking() { return 0; }
+	virtual int IsDirectionColliable(float nx, float ny) { return 1; }
 };
