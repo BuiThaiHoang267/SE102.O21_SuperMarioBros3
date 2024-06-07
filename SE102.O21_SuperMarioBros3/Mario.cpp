@@ -227,7 +227,7 @@ void CMario::OnCollisionWithGoombaJump(LPCOLLISIONEVENT e)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
-					level = MARIO_LEVEL_SMALL;
+					level--;
 					StartUntouchable();
 				}
 				else
@@ -266,7 +266,7 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
-					level = MARIO_LEVEL_SMALL;
+					level--;
 					StartUntouchable();
 				}
 				else
@@ -853,6 +853,7 @@ void CMario::OnTriggerEnter(LPCOLLISIONEVENT e)
 			if (isPressA) {
 				DebugOut(L"[INFO] be turtle %d\n", 1);
 				this->isHoldTortoiseshell = true;
+				turtle->SetState(TURTLE_STATE_MARIO_HOLD);
 			}
 		}
 		
@@ -863,7 +864,7 @@ void CMario::OnTriggerStay(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CTurtle*>(e->obj))
 	{
 		CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
-		if (turtle->GetState() == TURTLE_STATE_TORTOISESHELL || turtle->GetState() == TURTLE_STATE_WAKEUP)
+		if (turtle->GetState() == TURTLE_STATE_TORTOISESHELL || turtle->GetState() == TURTLE_STATE_WAKEUP || turtle->GetState() == TURTLE_STATE_MARIO_HOLD)
 		{
 			this->isHoldTortoiseshell = true;
 			if (isPressA) {

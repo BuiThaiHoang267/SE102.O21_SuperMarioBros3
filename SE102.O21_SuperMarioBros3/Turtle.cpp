@@ -12,11 +12,6 @@ void CTurtle::Render()
 	this->checkmove->Render();
 }
 
-int CTurtle::IsStatic()
-{
-	return isStatic;
-}
-
 void CTurtle::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x - TURTLE_BBOX_WIDTH / 2 + 1;
@@ -39,20 +34,22 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vx = -vx;
 		checkmove->isOnPlatform = true;
 	}
-
 	if (state == TURTLE_STATE_TORTOISESHELL && GetTickCount64() - tortoiseshell_start > TURTLE_RETURN_TIMEOUT)
 	{
 		SetState(TURTLE_STATE_WAKEUP);
 	}
-
+	if (state == TURTLE_STATE_MARIO_HOLD && GetTickCount64() - tortoiseshell_start > TURTLE_RETURN_TIMEOUT)
+	{
+		SetState(TURTLE_STATE_WAKEUP);
+	}
 	if (state == TURTLE_STATE_WAKEUP && GetTickCount64() - wakeup_start > TURTLE_WAKEUP_TIMEOUT)
 	{
 		SetState(TURTLE_STATE_WALK);
 	}
-	if (state == TURTLE_STATE_TORTOISESHELL || state == TURTLE_STATE_WAKEUP)
-	{
-		return;
-	}
+	//if (state == TURTLE_STATE_TORTOISESHELL || state == TURTLE_STATE_WAKEUP)
+	//{
+	//	return;
+	//}
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
@@ -147,22 +144,20 @@ void CTurtle::SetState(int state)
 			y += 3;
 		}
 		else {
-			y -= 1;
+			y -= 3;
 		}
 		isStatic = true;
 		tortoiseshell_start = GetTickCount64();
 		offsetYBBox = 0;
 		vx = 0;
 		vy = 0;
-		ay = 0;
 	}
 	else if (state == TURTLE_STATE_RUN)
 	{
-		y -= 1;
+		y -= 2;
 		isStatic = false;
 		offsetYBBox = 0;
 		vy = 0;
-		ay = 0;
 	}
 	else if (state == TURTLE_STATE_WAKEUP)
 	{
@@ -171,7 +166,14 @@ void CTurtle::SetState(int state)
 		offsetYBBox = 0;
 		vx = 0;
 		vy = 0;
-		ay = 0;
+		//ay = 0;
+	}
+	else if (state == TURTLE_STATE_MARIO_HOLD)
+	{
+		vx = 0.0f;
+		vy = 0.0f;
+		ay = 0.0f;
+		tortoiseshell_start = GetTickCount64();
 	}
 }
 

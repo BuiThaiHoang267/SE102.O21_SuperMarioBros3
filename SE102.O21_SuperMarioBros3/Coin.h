@@ -22,4 +22,5 @@ public:
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	int IsBlocking() { return 0; }
+	int IsCollidable() { return 1; }
 };

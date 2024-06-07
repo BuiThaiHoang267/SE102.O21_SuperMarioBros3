@@ -22,6 +22,7 @@
 #define TURTLE_STATE_TORTOISESHELL 2
 #define TURTLE_STATE_RUN 3
 #define TURTLE_STATE_WAKEUP 4
+#define TURTLE_STATE_MARIO_HOLD 5
 
 #define TURTLE_VX_STATE_WALK 0.03f
 #define TURTLE_VX_STATE_RUN 0.25f
@@ -72,6 +73,5 @@ public:
 	int GetAniId();
 	void UpdatePosCheckMove();
 	void SetDirectionRun(int direction);
-	int IsStatic();
 	void OnCollisionWhenStateRun(LPCOLLISIONEVENT e);
 };

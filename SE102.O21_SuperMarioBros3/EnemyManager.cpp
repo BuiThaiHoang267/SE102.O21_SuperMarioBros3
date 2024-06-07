@@ -27,9 +27,9 @@ void CEnemyManager::SpawnEnemy()
 		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
 		LPGAMEOBJECT goomba1 = new CGoomba(850, 128);
 		p->AddGameObject(goomba1);
-		LPGAMEOBJECT goomba2 = new CGoomba(950, 128);
+		LPGAMEOBJECT goomba2 = new CGoomba(914, 128);
 		p->AddGameObject(goomba2);
-		LPGAMEOBJECT goomba3 = new CGoombaJump(1050, 128);
+		LPGAMEOBJECT goomba3 = new CGoombaJump(978, 128);
 		p->AddGameObject(goomba3);
 	}
 }
