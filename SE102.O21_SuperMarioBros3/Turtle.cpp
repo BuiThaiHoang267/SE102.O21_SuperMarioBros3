@@ -49,10 +49,10 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		SetState(TURTLE_STATE_WALK);
 	}
-	/*if (state == TURTLE_STATE_TORTOISESHELL || state == TURTLE_STATE_WAKEUP)
+	if (state == TURTLE_STATE_TORTOISESHELL || state == TURTLE_STATE_WAKEUP)
 	{
 		return;
-	}*/
+	}
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
