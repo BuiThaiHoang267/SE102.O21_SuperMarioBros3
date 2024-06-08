@@ -141,16 +141,13 @@ void CTurtle::SetState(int state)
 	{
 		if (statePre == TURTLE_STATE_WALK)
 		{
-			y += 3;
-		}
-		else {
-			y -= 3;
+			y += 4;
 		}
 		isStatic = true;
 		tortoiseshell_start = GetTickCount64();
 		offsetYBBox = 0;
 		vx = 0;
-		vy = 0;
+		vy = -0.1;
 	}
 	else if (state == TURTLE_STATE_RUN)
 	{

@@ -45,7 +45,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
-	if (GetTickCount64() - untouchableTurtle_start > 500)
+	if (GetTickCount64() - untouchableTurtle_start > 300)
 	{
 		untouchableTurtle_start = 0;
 		untouchableTurtle = 0;
@@ -250,13 +250,13 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 		{
 			if (turtle->GetState() != TURTLE_STATE_TORTOISESHELL)
 			{
+				turtle->SetState(TURTLE_STATE_TORTOISESHELL);
 				float mx, my;
 				turtle->GetPosition(mx, my);
 				LPGAMEOBJECT effectCoinBox = new CEffectPoint(mx, my - 16, 100);
 				LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 				LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
 				p->AddGameObject(effectCoinBox);
-				turtle->SetState(TURTLE_STATE_TORTOISESHELL);
 				vy = -MARIO_JUMP_DEFLECT_SPEED;
 			}
 		}
@@ -298,7 +298,6 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 			SetState(MARIO_STATE_SHOOT_TORTOISESHELL);
 		}
 	}
-	
 }
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)

@@ -282,7 +282,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 				cell_width, cell_height, length,
 				sprite_begin, sprite_middle, sprite_end
 			);
-			objectsBgr.push_back(obj);
+			objects.push_back(obj);
 		}
 		break;
 
@@ -436,17 +436,36 @@ void CPlayScene::Update(DWORD dt)
 
 	if (cx < 0) cx = 0;
 
-	CGame::GetInstance()->SetCamPos(cx, -360.0f /*cy*/);
+	CGame::GetInstance()->SetCamPos(cx, -36.0f /*cy*/);
 
 	PurgeDeletedObjects();
 }
 
 void CPlayScene::Render()
 {
+	float x, y;
+	float mx, my;
+	player->GetPosition(x, y);
+
 	for (int i = 0; i < objectsBgr.size(); i++)
+	{
+		objectsBgr[i]->GetPosition(mx, my);
+		if (mx <= x - 260.0f || mx >= x + 260.0f)
+		{
+			continue;
+		}
 		objectsBgr[i]->Render();
+	}
 	for (int i = 0; i < objects.size(); i++)
+	{
+		objects[i]->GetPosition(mx, my);
+		if (mx <= x - 260.0f || mx >= x + 260.0f)
+		{
+			if(!dynamic_cast<CPlatform*>(objects[i]) && !dynamic_cast<CTitleMapCloud*>(objects[i]))
+				continue;
+		}
 		objects[i]->Render();
+	}
 }
 
 /*

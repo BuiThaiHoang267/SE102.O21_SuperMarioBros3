@@ -7,6 +7,11 @@ void CChimney::Render()
 		CSprites* spirtes = CSprites::GetInstance();
 		spirtes->Get(ID_SPRITE_CHIMNEY_TALL)->Draw(x, y);
 	}
+	else if(typeChimney == 2)
+	{
+		CSprites* spirtes = CSprites::GetInstance();
+		spirtes->Get(ID_SPRITE_CHIMNEY_MID)->Draw(x, y);
+	}
 	else
 	{
 		CSprites* spirtes = CSprites::GetInstance();
