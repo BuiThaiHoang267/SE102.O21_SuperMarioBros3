@@ -25,20 +25,23 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	if ( abs(vx) > abs(maxVx) && ( (flexDirection>0 && vx > 0) || (flexDirection < 0 && vx < 0) ) ) vx = maxVx;
 
+	if (vy > 0.3f) vy = 0.3f;
+
 	if (state == MARIO_STATE_IDLE) 
 	{
-		if (flexDirection == 1 && vx <= 0 && ax == -MARIO_ACCEL_FRICTION_FORCE)
+		if (vx <= 0 && ax == -MARIO_ACCEL_FRICTION_FORCE)
 		{
 			vx = 0.0f;
 			ax = 0.0f;
 		}
-		else if (flexDirection == -1 && vx >= 0 && ax == MARIO_ACCEL_FRICTION_FORCE)
+		else if (vx >= 0 && ax == MARIO_ACCEL_FRICTION_FORCE)
 		{
 			vx = 0.0f;
 			ax = 0.0f;
 		}
 	}
 
+	CheckFly();
 	// reset untouchable timer if untouchable time has passed
 	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
 	{
@@ -508,7 +511,7 @@ int CMario::GetAniIdBig()
 	{
 		if (isHoldTortoiseshell)
 		{
-			if (ax == MARIO_ACCEL_RUN_X)
+			if (vx >= MARIO_RUNNING_SPEED)
 				return ID_ANI_MARIO_BIG_RUN_TORTOISESHELL_RIGHT;
 			else if (ax == MARIO_ACCEL_WALK_X)
 				return ID_ANI_MARIO_BIG_WALK_TORTOISESHELL_RIGHT;
@@ -520,7 +523,7 @@ int CMario::GetAniIdBig()
 		//not hold tortoiseshell
 		if (ax < 0 && flexDirection == -1)
 			aniId = ID_ANI_MARIO_BIG_BRACE_RIGHT;
-		else if (ax == MARIO_ACCEL_RUN_X)
+		else if (vx >= MARIO_RUNNING_SPEED)
 			aniId = ID_ANI_MARIO_BIG_RUNNING_RIGHT;
 		else if (ax == MARIO_ACCEL_WALK_X)
 			aniId = ID_ANI_MARIO_BIG_WALKING_RIGHT;
@@ -637,7 +640,7 @@ int CMario::GetAniIdMax()
 	{
 		if (isHoldTortoiseshell)
 		{
-			if (ax == MARIO_ACCEL_RUN_X)
+			if (vx >= MARIO_RUNNING_SPEED)
 				return ID_ANI_MARIO_MAX_RUN_TORTOISESHELL_RIGHT;
 			else if (ax == MARIO_ACCEL_WALK_X)
 				return ID_ANI_MARIO_MAX_WALK_TORTOISESHELL_RIGHT;
@@ -649,7 +652,9 @@ int CMario::GetAniIdMax()
 		//not hold tortoiseshell
 		if (ax < 0 && flexDirection == -1)
 			aniId = ID_ANI_MARIO_MAX_BRACE_RIGHT;
-		else if (ax == MARIO_ACCEL_RUN_X)
+		else if (vx >= MARIO_RUNNING_SPEED && canFly == false)
+			aniId = ID_ANI_MARIO_MAX_PRERUN_RIGHT;
+		else if (vx >= MARIO_RUNNING_SPEED && canFly == true)
 			aniId = ID_ANI_MARIO_MAX_RUNNING_RIGHT;
 		else if (ax == MARIO_ACCEL_WALK_X)
 			aniId = ID_ANI_MARIO_MAX_WALKING_RIGHT;
@@ -660,7 +665,7 @@ int CMario::GetAniIdMax()
 	{
 		if (isHoldTortoiseshell)
 		{
-			if (ax == -MARIO_ACCEL_RUN_X)
+			if (vx <= -MARIO_RUNNING_SPEED)
 				return ID_ANI_MARIO_MAX_RUN_TORTOISESHELL_LEFT;
 			else if (ax == -MARIO_ACCEL_WALK_X)
 				return ID_ANI_MARIO_MAX_WALK_TORTOISESHELL_LEFT;
@@ -672,7 +677,9 @@ int CMario::GetAniIdMax()
 		//not hold tortoiseshell
 		if (ax > 0 && flexDirection == 1)
 			aniId = ID_ANI_MARIO_MAX_BRACE_LEFT;
-		else if (ax == -MARIO_ACCEL_RUN_X)
+		else if (vx <= -MARIO_RUNNING_SPEED && canFly == false)
+			aniId = ID_ANI_MARIO_MAX_PRERUN_LEFT;
+		else if (vx <= -MARIO_RUNNING_SPEED && canFly == true)
 			aniId = ID_ANI_MARIO_MAX_RUNNING_LEFT;
 		else if (ax == -MARIO_ACCEL_WALK_X)
 			aniId = ID_ANI_MARIO_MAX_WALKING_LEFT;
@@ -749,7 +756,16 @@ void CMario::SetState(int state)
 		break;
 	case MARIO_STATE_JUMP:
 		if (isSitting) break;
-		if (isOnPlatform)
+		if (isFlying == true)
+		{
+			isOnPlatform = false;
+			vy = -0.28f;
+		}
+		if (isFlying == false && level == MARIO_LEVEL_MAX && !isOnPlatform)
+		{
+			vy = -0.0f;
+		}
+		if (isOnPlatform && !isFlying)
 		{
 			isOnPlatform = false;
 			ax = 0.0f;
@@ -757,6 +773,11 @@ void CMario::SetState(int state)
 				vy = -MARIO_JUMP_RUN_SPEED_Y;
 			else
 				vy = -MARIO_JUMP_SPEED_Y;
+
+			if (canFly == true && level == MARIO_LEVEL_MAX) {
+				isFlying = true;
+				timer_fly = GetTickCount64();
+			}
 		}
 		break;
 
@@ -904,3 +925,41 @@ void CMario::OnTriggerExit(LPGAMEOBJECT e)
 	}
 }
 
+void CMario::CheckFly()
+{
+	if (abs(vx) >= MARIO_RUNNING_SPEED && isRunning == false)
+	{
+		isRunning = true;
+		DebugOut(L"Pre run start\n");
+		timer_pre_canFly = GetTickCount64();
+	}
+	if (abs(vx) < MARIO_RUNNING_SPEED && isRunning == true)
+	{
+		isRunning = false;
+		canFly =false;
+	}
+
+	if (GetTickCount64() - timer_pre_canFly > 500 && isRunning == true && canFly == false)
+	{
+		DebugOut(L"Can fly start\n");
+		canFly = true;
+	}
+
+	if (GetTickCount64() - timer_fly > 5000 && isFlying == true)
+	{
+		isFlying = false;
+	}
+}
+
+void CMario::SetIsPressA(bool press)
+{
+	this->isPressA = press;
+	if (press == true)
+	{
+		DebugOut(L"Key Down A\n");
+	}
+	else
+	{
+		DebugOut(L"Key Up A\n");
+	}
+}

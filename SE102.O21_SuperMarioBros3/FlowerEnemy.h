@@ -51,7 +51,7 @@ public:
 		this->aniId = ID_NOTANI_FLOWERENEMY_LEFT_LOW;
 		this->isFired = false;
 
-		shootRange = new CRaycast(x, y, 256, 256);
+		shootRange = new CRaycast(x, y, 232, 300);
 		LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
 		p->AddGameObject(shootRange);
