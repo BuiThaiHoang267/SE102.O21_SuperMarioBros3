@@ -25,7 +25,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	if ( abs(vx) > abs(maxVx) && ( (flexDirection>0 && vx > 0) || (flexDirection < 0 && vx < 0) ) ) vx = maxVx;
 
-	if (vy > 0.3f) vy = 0.3f;
+	if (vy > 0.3f) vy = 0.24f;
 
 	if (state == MARIO_STATE_IDLE) 
 	{
@@ -570,10 +570,32 @@ int CMario::GetAniIdMax()
 			return ID_ANI_MARIO_MAX_SHOOT_TORTOISESHELL_LEFT;
 	}
 
+	if (GetTickCount64() - timer_animation_fly <= 150)
+	{
+		if (flexDirection == 1 && vy <= 0)
+			return ID_ANI_MARIO_MAX_FLY_RIGHT;
+		else if (flexDirection == -1 && vy <= 0)
+			return ID_ANI_MARIO_MAX_FLY_LEFT;
+		else if (flexDirection == 1 && vy > 0)
+			return ID_ANI_MARIO_MAX_FLY_FALL_RIGHT;
+		else
+			return ID_ANI_MARIO_MAX_FLY_FALL_LEFT;
+	}
+	if (isFlying && !isOnPlatform) {
+		if (flexDirection == 1 && vy <= 0)
+			return ID_ANI_MARIO_MAX_JUMP_RUN_RIGHT;
+		else if (flexDirection == -1 && vy <= 0)
+			return ID_ANI_MARIO_MAX_JUMP_RUN_LEFT;
+		else if (flexDirection == 1 && vy > 0)
+			return ID_ANI_MARIO_MAX_FALL_RUN_RIGHT;
+		else
+			return ID_ANI_MARIO_MAX_FALL_RUN_LEFT;
+	}
+
 	int aniId = -1;
 	if (!isOnPlatform)
 	{
-		if (abs(ax) == MARIO_ACCEL_RUN_X)
+		if (abs(vx) >= MARIO_RUNNING_SPEED)
 		{
 			if (isHoldTortoiseshell)
 			{
@@ -760,15 +782,21 @@ void CMario::SetState(int state)
 		{
 			isOnPlatform = false;
 			vy = -0.28f;
+			timer_animation_fly = GetTickCount64();
 		}
 		if (isFlying == false && level == MARIO_LEVEL_MAX && !isOnPlatform)
 		{
+			timer_animation_fly = GetTickCount64();
 			vy = -0.0f;
+			if (abs(vx) > MARIO_WALKING_SPEED && vx * ax >= 0)
+			{
+				vx = flexDirection * MARIO_WALKING_SPEED;
+			}
 		}
 		if (isOnPlatform && !isFlying)
 		{
 			isOnPlatform = false;
-			ax = 0.0f;
+			//ax = 0.0f;
 			if (abs(this->vx) == MARIO_RUNNING_SPEED)
 				vy = -MARIO_JUMP_RUN_SPEED_Y;
 			else

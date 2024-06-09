@@ -126,6 +126,11 @@
 #define ID_ANI_MARIO_MAX_JUMP_TORTOISESHELL_LEFT	1728
 #define ID_ANI_MARIO_MAX_JUMP_TORTOISESHELL_RIGHT	1729
 
+#define ID_ANI_MARIO_MAX_FLY_LEFT					1820
+#define ID_ANI_MARIO_MAX_FLY_RIGHT					1821
+
+#define ID_ANI_MARIO_MAX_FLY_FALL_LEFT				1822
+#define ID_ANI_MARIO_MAX_FLY_FALL_RIGHT				1823
 
 // SMALL MARIO
 #define ID_ANI_MARIO_SMALL_IDLE_RIGHT 1100
@@ -208,6 +213,7 @@ class CMario : public CGameObject
 	ULONGLONG timer_shoot;
 	ULONGLONG timer_pre_canFly;
 	ULONGLONG timer_fly;
+	ULONGLONG timer_animation_fly;
 
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -240,6 +246,7 @@ public:
 		timer_shoot = -1;
 		timer_pre_canFly = -1;
 		timer_fly = -1;
+		timer_animation_fly = -1;
 		untouchableTurtle = 0;
 		coin = 0;
 		isOnPlatform = false;
