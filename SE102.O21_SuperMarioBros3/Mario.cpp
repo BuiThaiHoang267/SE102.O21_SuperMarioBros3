@@ -160,7 +160,7 @@ void CMario::OnCollisionWithBullet(LPCOLLISIONEVENT e)
 	e->obj->Delete();
 	if (level > MARIO_LEVEL_SMALL)
 	{
-		level = MARIO_LEVEL_SMALL;
+		level--;
 		StartUntouchable();
 	}
 	else
@@ -176,7 +176,7 @@ void CMario::OnCollisionWithFlowerEnemy(LPCOLLISIONEVENT e)
 	{
 		if (level > MARIO_LEVEL_SMALL)
 		{
-			level = MARIO_LEVEL_SMALL;
+			level--;
 			StartUntouchable();
 		}
 		else

@@ -239,7 +239,7 @@ public:
 		ay = MARIO_GRAVITY; 
 
 		//level = MARIO_LEVEL_SMALL;
-		level = 3;
+		level = 1;
 		untouchable = 0;
 		untouchableTurtle_start = -1;
 		untouchable_start = -1;
