@@ -209,12 +209,14 @@ class CMario : public CGameObject
 	bool isRunning;
 	bool isFlying;
 	bool isCamFollowMario;
+	bool isGravity;
 	ULONGLONG untouchable_start;
 	ULONGLONG untouchableTurtle_start;
 	ULONGLONG timer_shoot;
 	ULONGLONG timer_pre_canFly;
 	ULONGLONG timer_fly;
 	ULONGLONG timer_animation_fly;
+	ULONGLONG timer_not_gravity;
 
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -257,6 +259,7 @@ public:
 		isRunning = false;
 		isFlying = false;
 		isCamFollowMario = false;
+		isGravity = true;
 		flexDirection = 1;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

@@ -20,8 +20,15 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
-	vy += ay * dt;
 	vx += ax * dt;
+	if (isGravity)
+	{
+		vy += ay * dt;
+	}
+	if (isGravity == false && GetTickCount64() - timer_not_gravity > 200)
+	{
+		isGravity = true;
+	}
 
 	if ( abs(vx) > abs(maxVx) && ( (flexDirection>0 && vx > 0) || (flexDirection < 0 && vx < 0) ) ) vx = maxVx;
 
@@ -781,17 +788,21 @@ void CMario::SetState(int state)
 		if (isFlying == true)
 		{
 			isOnPlatform = false;
-			vy = -0.28f;
+			vy = -0.2f;
 			timer_animation_fly = GetTickCount64();
+			timer_not_gravity = GetTickCount64();
+			isGravity = false;
 		}
 		if (isFlying == false && level == MARIO_LEVEL_MAX && !isOnPlatform)
 		{
 			timer_animation_fly = GetTickCount64();
-			vy = -0.0f;
+			vy = 0.05f;
 			if (abs(vx) > MARIO_WALKING_SPEED && vx * ax >= 0)
 			{
 				vx = flexDirection * MARIO_WALKING_SPEED;
 			}
+			timer_not_gravity = GetTickCount64();
+			isGravity = false;
 		}
 		if (isOnPlatform && !isFlying)
 		{
