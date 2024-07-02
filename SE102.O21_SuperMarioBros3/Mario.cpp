@@ -805,6 +805,7 @@ void CMario::SetState(int state)
 			if (canFly == true && level == MARIO_LEVEL_MAX) {
 				isFlying = true;
 				timer_fly = GetTickCount64();
+				isCamFollowMario = true;
 			}
 		}
 		break;

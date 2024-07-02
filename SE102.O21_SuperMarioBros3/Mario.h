@@ -208,6 +208,7 @@ class CMario : public CGameObject
 	bool canFly;
 	bool isRunning;
 	bool isFlying;
+	bool isCamFollowMario;
 	ULONGLONG untouchable_start;
 	ULONGLONG untouchableTurtle_start;
 	ULONGLONG timer_shoot;
@@ -255,6 +256,7 @@ public:
 		canFly = false;
 		isRunning = false;
 		isFlying = false;
+		isCamFollowMario = false;
 		flexDirection = 1;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -280,4 +282,7 @@ public:
 	void OnTriggerStay(LPCOLLISIONEVENT e);
 	void OnTriggerExit(LPGAMEOBJECT e);
 	void CheckFly();
+	bool GetIsFlying() { return this->isFlying; }
+	bool GetIsCamFollowMario() { return this->isCamFollowMario; }
+	void SetIsCamFollowMario(bool isFollow) { this->isCamFollowMario = isFollow; }
 };

@@ -429,14 +429,33 @@ void CPlayScene::Update(DWORD dt)
 	// Update camera to follow mario
 	float cx, cy;
 	player->GetPosition(cx, cy);
+	CMario* mario = dynamic_cast<CMario*>(player);
 
 	CGame *game = CGame::GetInstance();
 	cx -= game->GetBackBufferWidth() / 2;
 	cy -= game->GetBackBufferHeight() / 2;
 
-	if (cx < 0) cx = 0;
+	if (mario->GetIsCamFollowMario())
+	{
+		if (cy > -36 && !mario->GetIsFlying())
+			mario->SetIsCamFollowMario(false);
+	}
+	else
+	{
+		cy = -36.0f;
+	}
 
-	CGame::GetInstance()->SetCamPos(cx, -36.0f);
+	if (cx < 0)
+		cx = 0;
+	else if (cx > 2550.0f)
+		cx = 2550.0f;
+
+	if (cy > -36)
+		cy = -36;
+	else if (cy < -256)
+		cy = -256;
+
+	CGame::GetInstance()->SetCamPos(cx,cy);
 
 	PurgeDeletedObjects();
 }
