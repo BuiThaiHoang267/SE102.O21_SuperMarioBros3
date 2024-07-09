@@ -1,5 +1,6 @@
 #include "Brick.h"
 #include "Coin.h"
+#include "PlayScene.h"
 
 void CBrick::Render()
 {
@@ -18,12 +19,16 @@ void CBrick::GetBoundingBox(float &l, float &t, float &r, float &b)
 
 void CBrick::Break()
 {
-
+	
 }
 
 void CBrick::OpenCoin()
 {
-
+	LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+	LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+	LPGAMEOBJECT coin = new CCoin(x, y, 0);
+	p->AddGameObject(coin);
+	this->Delete();
 }
 
 void CBrick::OpenMushroom()
