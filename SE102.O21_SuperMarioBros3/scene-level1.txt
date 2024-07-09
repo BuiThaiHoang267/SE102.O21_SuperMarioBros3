@@ -155,3 +155,5 @@ turtle.txt
 #Enemy manager
 99	0	0
 
+#Brick
+1	120	120

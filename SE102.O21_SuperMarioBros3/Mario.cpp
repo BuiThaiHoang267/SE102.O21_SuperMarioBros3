@@ -15,6 +15,7 @@
 #include "GoombaJump.h"
 #include "Leaf.h"
 #include "EffectPoint.h"
+#include "Brick.h"
 
 #include "Collision.h"
 
@@ -99,6 +100,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithBullet(e);
 	else if (dynamic_cast<CFlowerEnemy*>(e->obj))
 		OnCollisionWithFlowerEnemy(e);
+	else if (dynamic_cast<CBrick*>(e->obj))
+		OnCollisionWithBrick(e);
 	else if (dynamic_cast<CTurtle*>(e->obj))
 	{
 		if (untouchableTurtle == 0)
@@ -326,6 +329,15 @@ void CMario::OnCollisionWithGiftBox(LPCOLLISIONEVENT e) {
 	CGiftBox* m = (CGiftBox*)e->obj;
 	if (e->ny > 0) {
 		m->CanOpen();
+	}
+}
+
+
+void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
+{
+	CBrick* b = dynamic_cast<CBrick*>(e->obj);
+	if (e->ny > 0) {
+		b->CanOpen(level);
 	}
 }
 
