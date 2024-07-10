@@ -345,8 +345,12 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 }
 
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e) {
-	dynamic_cast<CMushroom*>(e->obj)->OnCollisionWithMario(x,y - 16);
-	SetLevel(MARIO_LEVEL_BIG);
+	CMushroom* m = dynamic_cast<CMushroom*>(e->obj);
+	m->OnCollisionWithMario(x,y - 16);
+	if (m->GetTypeMushroom() == 0)
+	{
+		SetLevel(MARIO_LEVEL_BIG);
+	}
 }
 
 void CMario::OnCollisionWithButtonP(LPCOLLISIONEVENT e)

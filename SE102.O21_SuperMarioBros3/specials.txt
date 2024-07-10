@@ -1,7 +1,9 @@
 # id	left	top	right	bottom	texture_id
 [SPRITES]
-#Mushroom
+#Mushroom red
 90000	131	157	146	172	40
+#Mushroom green
+90001	19	24	34	39	100
 #LEAF LEFT
 91001	55	24	70	37	100
 #LEAF RIGHT

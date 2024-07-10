@@ -24,11 +24,12 @@ class CMushroom : public CGameObject {
 protected:
 	float ax;
 	float ay;
+	int typeMushroom;
 
 	ULONGLONG walk_start;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 public:
-	CMushroom(float x, float y);
+	CMushroom(float x, float y, int type);
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	int IsCollidable() { return 1; };
@@ -37,4 +38,5 @@ public:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void SetState(int state);
 	void OnCollisionWithMario(float mx, float my);
+	int GetTypeMushroom() { return typeMushroom; }
 };

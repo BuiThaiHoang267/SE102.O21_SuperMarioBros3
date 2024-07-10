@@ -2,6 +2,7 @@
 #include "Coin.h"
 #include "PlayScene.h"
 #include "ButtonP.h"
+#include "Mushroom.h"
 
 void CBrick::Render()
 {
@@ -43,7 +44,10 @@ void CBrick::OpenCoin()
 
 void CBrick::OpenMushroom()
 {
-
+	LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+	LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+	LPGAMEOBJECT mushroom = new CMushroom(x, y, 1);
+	p->AddGameObject(mushroom);
 }
 
 void CBrick::CanOpen(int levelMario) {
@@ -51,7 +55,7 @@ void CBrick::CanOpen(int levelMario) {
 		return;
 
 	// type special
-	if (typeBrick == 1 && levelMario > 1) 
+	if (typeBrick == BRICK_TYPE_SPECIAL && levelMario > 1) 
 	{
 		LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
@@ -77,6 +81,10 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (y > posY && state == BRICK_STATE_BEFORE_OPENED) {
 		if (canOpen) {
 			SetState(BRICK_STATE_OPENED);
+			if (typeBrick == BRICK_TYPE_NORMAL)
+			{
+				OpenMushroom();
+			}
 		}
 		else {
 			SetState(BRICK_STATE_IDLE);

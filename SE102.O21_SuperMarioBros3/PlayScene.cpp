@@ -217,7 +217,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_MUSHROOM: 
 		{
-			obj = new CMushroom(x, y);
+			int type = atoi(tokens[3].c_str());
+			obj = new CMushroom(x, y, type);
 			objects.push_back(obj);
 		}
 		break;

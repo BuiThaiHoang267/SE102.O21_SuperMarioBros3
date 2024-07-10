@@ -34,7 +34,7 @@ void CGiftBox::OpenGiftBox()
 		int levelMario = mario->GetLevel();
 		if (levelMario == MARIO_LEVEL_SMALL)
 		{
-			LPGAMEOBJECT mushroom = new CMushroom(x, y);
+			LPGAMEOBJECT mushroom = new CMushroom(x, y, 0);
 			p->AddGameObject(mushroom);
 		}
 		else

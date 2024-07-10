@@ -4,9 +4,10 @@
 #include "PlayScene.h"
 #include "EffectPoint.h"
 
-CMushroom::CMushroom(float x, float y) : CGameObject(x, y) {
+CMushroom::CMushroom(float x, float y, int type) : CGameObject(x, y) {
 	this->ax = 0;
 	this->ay = MUSHROOM_GRAVITY;
+	this->typeMushroom = type;
 	walk_start = -1;
 	SetState(MUSHROOM_STATE_VISIBILITY);
 }
@@ -25,7 +26,7 @@ void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 
 void CMushroom::Render() {
 	CSprites* s = CSprites::GetInstance();
-	s->Get(ID_ANI_MUSHROOM)->Draw(x, y);
+	s->Get(ID_ANI_MUSHROOM+typeMushroom)->Draw(x, y);
 
 	//RenderBoundingBox();
 }
