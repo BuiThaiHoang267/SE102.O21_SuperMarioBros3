@@ -26,6 +26,7 @@
 #include "Leaf.h"
 #include "TitleMap.h"
 #include "TitleMapCloud.h"
+#include "BrickManager.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -193,6 +194,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_TURTLE:
 		{
 			obj = new CTurtle(x, y);
+			objects.push_back(obj);
+		}
+		break;
+	case OBJECT_TYPE_BRICK_MANAGER:
+		{
+			obj = new CBrickManager(x, y);
 			objects.push_back(obj);
 		}
 		break;

@@ -1,4 +1,5 @@
 #include "ButtonP.h"
+#include "BrickManager.h"
 
 void CButtonP::Render()
 {
@@ -27,4 +28,5 @@ void CButtonP::HandleClick()
 {
 	SetState(BUTTONP_STATE_CLICKED);
 	canClick = false;
+	CBrickManager::GetInstance()->HandleClickedButtonP();
 }
