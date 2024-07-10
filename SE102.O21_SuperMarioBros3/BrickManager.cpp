@@ -7,6 +7,10 @@ void CBrickManager::HandleClickedButtonP()
 {
 	for (int i = 0; i < this->objects.size(); i++)
 	{
+		if (objects[i]->IsDeleted())
+		{
+			continue;
+		}
 		CBrick* br = dynamic_cast<CBrick*>(objects[i]);
 		br->OpenCoin();
 	}
@@ -24,7 +28,7 @@ void CBrickManager::Init()
 	LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 	LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
 
-	LPGAMEOBJECT br = new CBrick(2038, 80, 1);
+	LPGAMEOBJECT br = new CBrick(2038, 112, 1);
 	p->AddGameObject(br);
 
 	br = new CBrick(1958, 144, 0);

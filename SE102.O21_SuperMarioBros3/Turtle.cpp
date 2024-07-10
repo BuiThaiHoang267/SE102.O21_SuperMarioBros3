@@ -3,6 +3,7 @@
 #include "debug.h"
 #include "Goomba.h"
 #include "GoombaJump.h"
+#include "Brick.h"
 
 void CTurtle::Render()
 {
@@ -203,6 +204,14 @@ void CTurtle::OnCollisionWhenStateRun(LPCOLLISIONEVENT e)
 		else if (dynamic_cast<CGoombaJump*>(e->obj))
 		{
 			dynamic_cast<CGoombaJump*>(e->obj)->DieFromTortoiseshell(flexDirection);
+		}
+	}
+
+	if (dynamic_cast<CBrick*>(e->obj) && state == TURTLE_STATE_RUN)
+	{
+		if (e->ny == 0 && e->nx != 0)
+		{
+			dynamic_cast<CBrick*>(e->obj)->CanOpen(2);	
 		}
 	}
 }
