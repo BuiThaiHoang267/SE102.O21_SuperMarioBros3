@@ -9,6 +9,10 @@ void CTurtle::Render()
 {
 	aniId = GetAniId();
 	CAnimations* animations = CAnimations::GetInstance();
+	if (type > 0)
+	{
+		aniId += 10;
+	}
 	animations->Get(aniId)->Render(x,y);
 	this->checkmove->Render();
 }
@@ -24,10 +28,22 @@ void CTurtle::GetBoundingBox(float& l, float& t, float& r, float& b)
 void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
+	if (vy > TURTLE_VY_MAX_FALL)
+	{
+		vy = TURTLE_VY_MAX_FALL;
+	}
+
+	if (isOnPlatform && state == TURTLE_STATE_JUMP)
+	{
+		vy = TURTLE_VY_JUMP;
+	}
 
 	//update pos checkmove
-	UpdatePosCheckMove();
-	checkmove->Update(dt,coObjects);
+	if (type == 0)
+	{
+		UpdatePosCheckMove();
+		checkmove->Update(dt,coObjects);
+	}
 	//
 
 	if (state == TURTLE_STATE_WALK && checkmove->isOnPlatform == false)
@@ -90,6 +106,13 @@ int CTurtle::GetAniId()
 	{
 		return ID_ANI_TURTLE_WAKEUP;
 	}
+	else if (state == TURTLE_STATE_JUMP)
+	{
+		if (vx <= 0)
+			return ID_ANI_TURTLE_JUMP_LEFT;
+		else
+			return ID_ANI_TURTLE_JUMP_RIGHT;
+	}
 	else {
 		return ID_ANI_TURTLE_TORTOISESHELL;
 	}
@@ -105,10 +128,12 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (e->ny != 0)
 	{
 		vy = 0;
+		isOnPlatform = true;
 	}
 	else if (e->nx != 0)
 	{
 		vx = -vx;
+		flexDirection = -flexDirection;
 	}
 
 	if (dynamic_cast<CGiftBox*>(e->obj))
@@ -124,6 +149,7 @@ void CTurtle::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
+	isOnPlatform = false;
 }
 
 void CTurtle::SetState(int state)
@@ -135,8 +161,8 @@ void CTurtle::SetState(int state)
 		isStatic = false;
 		offsetYBBox = 4;
 		y -= 5;
-		vx = -TURTLE_VX_STATE_WALK;
-		ay = TURTLE_GRAVITY;
+		vx = TURTLE_VX_STATE_WALK * flexDirection;
+		ay = TURTLE_GRAVITY * 2;
 	}
 	else if (state == TURTLE_STATE_TORTOISESHELL)
 	{
@@ -172,6 +198,14 @@ void CTurtle::SetState(int state)
 		vy = 0.0f;
 		ay = 0.0f;
 		tortoiseshell_start = GetTickCount64();
+	}
+	else if (state == TURTLE_STATE_JUMP)
+	{
+		isStatic = false;
+		offsetYBBox = 4;
+		y -= 5;
+		vx = TURTLE_VX_STATE_WALK * flexDirection;
+		ay = TURTLE_GRAVITY;
 	}
 }
 

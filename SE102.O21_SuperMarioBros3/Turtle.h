@@ -15,9 +15,13 @@
 
 #define ID_ANI_TURTLE_WAKEUP 420000
 
+#define ID_ANI_TURTLE_JUMP_LEFT 440001
+#define ID_ANI_TURTLE_JUMP_RIGHT 440002
+
 #define TURTLE_BBOX_WIDTH 16
 #define TURTLE_BBOX_HEIGHT 16
 
+#define TURTLE_STATE_JUMP 0
 #define TURTLE_STATE_WALK 1
 #define TURTLE_STATE_TORTOISESHELL 2
 #define TURTLE_STATE_RUN 3
@@ -26,8 +30,10 @@
 
 #define TURTLE_VX_STATE_WALK 0.024f
 #define TURTLE_VX_STATE_RUN 0.24f
+#define TURTLE_VY_JUMP -0.28f
+#define TURTLE_VY_MAX_FALL 0.18f
 
-#define TURTLE_GRAVITY 0.002f
+#define TURTLE_GRAVITY 0.001f
 
 #define TURTLE_RETURN_TIMEOUT 5000
 #define TURTLE_WAKEUP_TIMEOUT 2500
@@ -35,7 +41,9 @@
 #define OFFSET_CHECKMOVE_X 4
 #define OFFSET_CHECKMOVE_Y 10
 
-
+#define TURTLE_TYPE_RED 0
+#define TURTLE_TYPE_GREEN 1
+#define TURTLE_TYPE_GREEN_WING 2
 
 class CTurtle : public CGameObject {
 private:
@@ -45,7 +53,10 @@ private:
 	ULONGLONG tortoiseshell_start;
 	ULONGLONG wakeup_start;
 	CCheckMove* checkmove;
+	int type;
 	bool isStatic;
+	bool isOnPlatform;
+	int flexDirection;
 public:
 	CTurtle(float x, float y) : CGameObject(x, y) 
 	{
@@ -57,10 +68,17 @@ public:
 		this->wakeup_start = 0;
 		this->checkmove = new CCheckMove(x - OFFSET_CHECKMOVE_X, y + OFFSET_CHECKMOVE_Y,  4,  4);
 		this->isStatic = false;
-		SetState(TURTLE_STATE_WALK);
-		//SetState(TURTLE_STATE_RUN);
-		//SetState(TURTLE_STATE_TORTOISESHELL);
-		//SetState(TURTLE_STATE_RUN);
+		this->flexDirection = -1;
+		this->type = 2;
+		this->isOnPlatform = false;
+		if (type == 2) 
+		{
+			SetState(TURTLE_STATE_JUMP);
+		}
+		else
+		{
+			SetState(TURTLE_STATE_WALK);
+		}
 	}
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

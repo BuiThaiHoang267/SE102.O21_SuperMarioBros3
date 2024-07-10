@@ -260,13 +260,20 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 {
 	CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
 
-	if (turtle->GetState() == TURTLE_STATE_WALK || turtle->GetState() == TURTLE_STATE_RUN)
+	if (turtle->GetState() == TURTLE_STATE_WALK || turtle->GetState() == TURTLE_STATE_RUN || turtle->GetState() == TURTLE_STATE_JUMP)
 	{
 		if (e->ny < 0)
 		{
 			if (turtle->GetState() != TURTLE_STATE_TORTOISESHELL)
 			{
-				turtle->SetState(TURTLE_STATE_TORTOISESHELL);
+				if (turtle->GetState() == TURTLE_STATE_JUMP)
+				{
+					turtle->SetState(TURTLE_STATE_WALK);
+				}
+				else
+				{
+					turtle->SetState(TURTLE_STATE_TORTOISESHELL);
+				}
 				float mx, my;
 				turtle->GetPosition(mx, my);
 				LPGAMEOBJECT effectCoinBox = new CEffectPoint(mx, my - 16, 100);
