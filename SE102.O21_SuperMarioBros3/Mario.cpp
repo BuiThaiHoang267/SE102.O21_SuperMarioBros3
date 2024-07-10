@@ -16,6 +16,7 @@
 #include "Leaf.h"
 #include "EffectPoint.h"
 #include "Brick.h"
+#include "ButtonP.h"
 
 #include "Collision.h"
 
@@ -102,6 +103,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithFlowerEnemy(e);
 	else if (dynamic_cast<CBrick*>(e->obj))
 		OnCollisionWithBrick(e);
+	else if (dynamic_cast<CButtonP*>(e->obj))
+		OnCollisionWithButtonP(e);
 	else if (dynamic_cast<CTurtle*>(e->obj))
 	{
 		if (untouchableTurtle == 0)
@@ -344,6 +347,15 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e) {
 	dynamic_cast<CMushroom*>(e->obj)->OnCollisionWithMario(x,y - 16);
 	SetLevel(MARIO_LEVEL_BIG);
+}
+
+void CMario::OnCollisionWithButtonP(LPCOLLISIONEVENT e)
+{
+	CButtonP* b = dynamic_cast<CButtonP*>(e->obj);
+	if (e->ny < 0)
+	{
+		b->HandleClick();
+	}
 }
 
 //

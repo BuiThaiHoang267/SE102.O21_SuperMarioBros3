@@ -47,6 +47,9 @@ void CBrick::OpenMushroom()
 }
 
 void CBrick::CanOpen(int levelMario) {
+	if (state == BRICK_STATE_OPENED || state == BRICK_STATE_BEFORE_OPENED)
+		return;
+
 	// type special
 	if (typeBrick == 1 && levelMario > 1) 
 	{
@@ -60,8 +63,6 @@ void CBrick::CanOpen(int levelMario) {
 	if (levelMario > 1)
 		this->canOpen = true;
 
-	if (state == BRICK_STATE_OPENED || state == BRICK_STATE_BEFORE_OPENED)
-		return;
 	SetState(BRICK_STATE_BEFORE_OPENED);
 	vy = -0.2f;
 }
