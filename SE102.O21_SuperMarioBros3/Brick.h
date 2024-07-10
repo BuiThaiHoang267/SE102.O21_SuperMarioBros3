@@ -5,6 +5,8 @@
 #include "Animations.h"
 
 #define ID_ANI_BRICK 10000
+#define ID_ANI_BRICK_OPENED 84000
+
 #define BRICK_WIDTH 16
 #define BRICK_BBOX_WIDTH 16
 #define BRICK_BBOX_HEIGHT 16
@@ -22,11 +24,11 @@ class CBrick : public CGameObject {
 	int typeBrick;
 	bool canOpen;
 public:
-	CBrick(float x, float y) : CGameObject(x, y) {
+	CBrick(float x, float y, int type) : CGameObject(x, y) {
 		SetState(BRICK_STATE_IDLE);
 		this->posX = x;
 		this->posY = y;
-		this->typeBrick = 0;
+		this->typeBrick = type;
 		canOpen = false;
 	}
 	void Render();

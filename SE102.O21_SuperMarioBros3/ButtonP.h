@@ -11,6 +11,9 @@
 #define BUTTONP_BBOX_WIDTH 16
 #define BUTTONP_BBOX_HEIGHT 16
 
+#define BUTTONP_ANI_IDLE 21001
+#define BUTTONP_ANI_CLICKED 21002
+
 class CButtonP : public CGameObject {
 protected:
 	bool canClick;

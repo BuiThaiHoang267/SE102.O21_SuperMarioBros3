@@ -251,6 +251,7 @@ public:
 		timer_pre_canFly = -1;
 		timer_fly = -1;
 		timer_animation_fly = -1;
+		timer_not_gravity = -1;
 		untouchableTurtle = 0;
 		coin = 0;
 		isOnPlatform = false;

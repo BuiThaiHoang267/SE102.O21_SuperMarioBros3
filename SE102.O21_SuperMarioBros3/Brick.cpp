@@ -1,11 +1,21 @@
 #include "Brick.h"
 #include "Coin.h"
 #include "PlayScene.h"
+#include "ButtonP.h"
 
 void CBrick::Render()
 {
-	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(ID_ANI_BRICK)->Render(x, y);
+	if (state == BRICK_STATE_OPENED) 
+	{
+		CAnimations* animations = CAnimations::GetInstance();
+		animations->Get(ID_ANI_BRICK_OPENED)->Render(x, y);
+	}
+	else
+	{
+		CAnimations* animations = CAnimations::GetInstance();
+		animations->Get(ID_ANI_BRICK)->Render(x, y);
+	}
+	
 	//RenderBoundingBox();
 }
 
@@ -37,6 +47,16 @@ void CBrick::OpenMushroom()
 }
 
 void CBrick::CanOpen(int levelMario) {
+	// type special
+	if (typeBrick == 1 && levelMario > 1) 
+	{
+		LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+		LPGAMEOBJECT buttonP = new CButtonP(x, y - 16);
+		p->AddGameObject(buttonP);
+	}
+
+	// type normal
 	if (levelMario > 1)
 		this->canOpen = true;
 

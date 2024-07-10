@@ -4,13 +4,13 @@ void CButtonP::Render()
 {
 	if (state == BUTTONP_STATE_IDLE)
 	{
-		CAnimations* animations = CAnimations::GetInstance();
-		//animations->Get(ID_ANI_COIN)->Render(x, y);
+		CSprites* spirtes = CSprites::GetInstance();
+		spirtes->Get(BUTTONP_ANI_IDLE)->Draw(x, y);
 	}
 	else
 	{
 		CSprites* spirtes = CSprites::GetInstance();
-		//spirtes->Get(ID_NOTANI_BUTTONP)->Draw(x, y);
+		spirtes->Get(BUTTONP_ANI_CLICKED)->Draw(x, y);
 	}
 	//RenderBoundingBox();
 }
