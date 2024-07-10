@@ -2,6 +2,7 @@
 #include "Turtle.h"
 #include "EffectPoint.h"
 #include "PlayScene.h"
+#include "Block.h"
 
 CGoomba::CGoomba(float x, float y):CGameObject(x, y)
 {

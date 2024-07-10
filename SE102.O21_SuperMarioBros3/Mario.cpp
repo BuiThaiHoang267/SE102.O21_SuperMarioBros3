@@ -17,6 +17,7 @@
 #include "EffectPoint.h"
 #include "Brick.h"
 #include "ButtonP.h"
+#include "Block.h"
 
 #include "Collision.h"
 

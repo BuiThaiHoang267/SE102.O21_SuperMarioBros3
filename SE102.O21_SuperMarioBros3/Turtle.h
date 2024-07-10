@@ -18,7 +18,7 @@
 #define ID_ANI_TURTLE_JUMP_LEFT 440001
 #define ID_ANI_TURTLE_JUMP_RIGHT 440002
 
-#define TURTLE_BBOX_WIDTH 16
+#define TURTLE_BBOX_WIDTH 14
 #define TURTLE_BBOX_HEIGHT 16
 
 #define TURTLE_STATE_JUMP 0
@@ -58,7 +58,7 @@ private:
 	bool isOnPlatform;
 	int flexDirection;
 public:
-	CTurtle(float x, float y) : CGameObject(x, y) 
+	CTurtle(float x, float y, int direction, int typeTurte) : CGameObject(x, y) 
 	{
 		this->tag = TAG_ENEMY;
 		this->tortoiseshell_start = -1;
@@ -68,8 +68,8 @@ public:
 		this->wakeup_start = 0;
 		this->checkmove = new CCheckMove(x - OFFSET_CHECKMOVE_X, y + OFFSET_CHECKMOVE_Y,  4,  4);
 		this->isStatic = false;
-		this->flexDirection = -1;
-		this->type = 2;
+		this->flexDirection = direction;
+		this->type = typeTurte;
 		this->isOnPlatform = false;
 		if (type == 2) 
 		{
