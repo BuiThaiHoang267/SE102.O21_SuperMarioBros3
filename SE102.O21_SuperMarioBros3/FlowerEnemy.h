@@ -7,7 +7,6 @@
 #include "PlayScene.h"
 #include "CheckActivity.h"
 
-
 #define FLOWERENEMY_STATE_IDLE 1
 #define FLOWERENEMY_STATE_UP 2
 #define FLOWERENEMY_STATE_FIRE 3
@@ -39,7 +38,7 @@
 class CFlowerEnemy : public CGameObject {
 private:
 	int distanceY = 32;
-	int posY;
+	float posY;
 	ULONGLONG fire_start;
 	bool isLeft;
 	bool isHigh;
@@ -60,7 +59,7 @@ public:
 		this->aniId = ID_NOTANI_FLOWERENEMY_LEFT_LOW;
 		this->isFired = false;
 		this->type = typeFlower;
-
+	
 		shootRange = new CRaycast(x, y, 232, 300);
 		LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);

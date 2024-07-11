@@ -155,16 +155,16 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_BLOCK:
 		{
-			float width = (float)atof(tokens[3].c_str());
-			float height = (float)atof(tokens[4].c_str());
+			int width = atoi(tokens[3].c_str());
+			int height = atoi(tokens[4].c_str());
 			obj = new CBlock(x, y, width, height);
 			objects.push_back(obj);
 		}
 		break;	
 	case OBJECT_TYPE_BLOCK_DIE:
 		{
-			float width = (float)atof(tokens[3].c_str());
-			float height = (float)atof(tokens[4].c_str());
+			int width = atoi(tokens[3].c_str());
+			int height = atoi(tokens[4].c_str());
 			obj = new CBlockDie(x, y, width, height);
 			objects.push_back(obj);
 		}

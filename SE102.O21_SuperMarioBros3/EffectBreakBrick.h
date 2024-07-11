@@ -23,7 +23,7 @@ public:
 		ay = BREAKBRICK_GRAVITY;
 		timer_die = GetTickCount64();
 		// vx vy by angle
-		double angleInRadian = angleInit * 3.14159f / 180.0f;
+		float angleInRadian = angleInit * 3.14159f / 180.0f;
 		vx = speed * cos(angleInRadian);
 		vy = -speed * sin(angleInRadian);
 	};

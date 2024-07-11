@@ -51,7 +51,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			ax = 0.0f;
 		}
 	}
-
+	//Update pos attack zone
+	
 	CheckFly();
 	// reset untouchable timer if untouchable time has passed
 	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
@@ -615,7 +616,7 @@ int CMario::GetAniIdBig()
 
 int CMario::GetAniIdMax()
 {
-	if(GetTickCount64() - timer_waving <= 300)
+	if(GetTickCount64() - timer_waving <= 250)
 	{
 		if (flexDirection == 1)
 			return ID_ANI_MARIO_WAVING_RIGHT;
@@ -900,7 +901,7 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_IDLE:
-		if (isOnPlatform == true && vx != 0) ax = MARIO_ACCEL_FRICTION_FORCE * (-flexDirection);
+		if (isOnPlatform && vx != 0) ax = MARIO_ACCEL_FRICTION_FORCE * (-flexDirection);
 		else ax = 0.0f;
 		break;
 
