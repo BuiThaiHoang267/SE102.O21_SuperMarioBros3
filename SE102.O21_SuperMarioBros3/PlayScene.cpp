@@ -28,6 +28,7 @@
 #include "TitleMapCloud.h"
 #include "BrickManager.h"
 #include "Block.h"
+#include "BlockDie.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -158,6 +159,14 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			objects.push_back(obj);
 		}
 		break;	
+	case OBJECT_TYPE_BLOCK_DIE:
+		{
+			float width = (float)atof(tokens[3].c_str());
+			float height = (float)atof(tokens[4].c_str());
+			obj = new CBlockDie(x, y, width, height);
+			objects.push_back(obj);
+		}
+		break;
 	case OBJECT_TYPE_GIFTBOX: 
 		{
 			int type = atoi(tokens[3].c_str());

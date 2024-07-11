@@ -148,7 +148,6 @@ turtle.txt
 
 #turtle
 
-
 #Brick
 1	1447	-128	2
 
@@ -156,10 +155,12 @@ turtle.txt
 0	100	80
 
 #Enemy manager
-99	0	0
+99	100	100
 
 #Brick Manager
 13	0	0
 
 #Block
 14	-8	160	16	400
+#BlockDie
+15	0	220	3000	60

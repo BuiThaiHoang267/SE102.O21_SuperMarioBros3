@@ -10,12 +10,16 @@ protected:
 	int height;
 	int width;
 	bool isDetectedMario;
+	float posX;
+	float posY;
 public:
 	COnTriggerSpawnEnemy(float x, float y, int widthh, int heightt) : CGameObject(x, y)
 	{
 		this->width = widthh;
 		this->height = heightt;
 		this->isDetectedMario = false;
+		this->posX = x;
+		this->posY = y;
 	}
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
