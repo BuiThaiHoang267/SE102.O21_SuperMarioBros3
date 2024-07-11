@@ -113,6 +113,10 @@ int CTurtle::GetAniId()
 		else
 			return ID_ANI_TURTLE_JUMP_RIGHT;
 	}
+	else if (state == TURTLE_STATE_DIE)
+	{
+		return ID_ANI_TURTLE_DIE;
+	}
 	else {
 		return ID_ANI_TURTLE_TORTOISESHELL;
 	}
@@ -239,6 +243,10 @@ void CTurtle::OnCollisionWhenStateRun(LPCOLLISIONEVENT e)
 		{
 			dynamic_cast<CGoombaJump*>(e->obj)->DieFromTortoiseshell(flexDirection);
 		}
+		else if (dynamic_cast<CTurtle*>(e->obj))
+		{
+			dynamic_cast<CTurtle*>(e->obj)->Die(flexDirection);
+		}
 	}
 
 	if (dynamic_cast<CBrick*>(e->obj) && state == TURTLE_STATE_RUN)
@@ -248,4 +256,13 @@ void CTurtle::OnCollisionWhenStateRun(LPCOLLISIONEVENT e)
 			dynamic_cast<CBrick*>(e->obj)->CanOpen(2);	
 		}
 	}
+}
+
+void CTurtle::Die(int direction)
+{
+	SetState(TURTLE_STATE_DIE);
+	vx = TURTLE_VX_DIE * direction;
+	vy = TURTLE_VY_DIE;
+	ay = TURTLE_GRAVITY;
+	isBlock = 0;
 }

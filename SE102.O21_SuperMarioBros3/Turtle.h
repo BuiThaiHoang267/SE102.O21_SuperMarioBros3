@@ -18,6 +18,8 @@
 #define ID_ANI_TURTLE_JUMP_LEFT 440001
 #define ID_ANI_TURTLE_JUMP_RIGHT 440002
 
+#define ID_ANI_TURTLE_DIE 450001
+
 #define TURTLE_BBOX_WIDTH 14
 #define TURTLE_BBOX_HEIGHT 16
 
@@ -27,11 +29,14 @@
 #define TURTLE_STATE_RUN 3
 #define TURTLE_STATE_WAKEUP 4
 #define TURTLE_STATE_MARIO_HOLD 5
+#define TURTLE_STATE_DIE 6
 
 #define TURTLE_VX_STATE_WALK 0.024f
 #define TURTLE_VX_STATE_RUN 0.24f
 #define TURTLE_VY_JUMP -0.28f
 #define TURTLE_VY_MAX_FALL 0.18f
+#define TURTLE_VY_DIE -0.3f
+#define TURTLE_VX_DIE 0.1f
 
 #define TURTLE_GRAVITY 0.001f
 
@@ -57,6 +62,7 @@ private:
 	bool isStatic;
 	bool isOnPlatform;
 	int flexDirection;
+	int isBlock;
 public:
 	CTurtle(float x, float y, int direction, int typeTurte) : CGameObject(x, y) 
 	{
@@ -70,6 +76,7 @@ public:
 		this->isStatic = false;
 		this->flexDirection = direction;
 		this->type = typeTurte;
+		this->isBlock = 1;
 		this->isOnPlatform = false;
 		if (type == 2) 
 		{
@@ -84,7 +91,7 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	int IsBlocking() { return 0; }
-	int IsCollidable() { return 1; };
+	int IsCollidable() { return isBlock; };
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void SetState(int state);
@@ -92,4 +99,5 @@ public:
 	void UpdatePosCheckMove();
 	void SetDirectionRun(int direction);
 	void OnCollisionWhenStateRun(LPCOLLISIONEVENT e);
+	void Die(int direction);
 };
