@@ -15,7 +15,7 @@
 #define GIFTBOX_SPECIAL_STATE_STAR 1
 #define GIFTBOX_SPECIAL_STATE_FLOWERBLUE 2
 
-#define TIMER_ROTATE 100
+#define TIMER_ROTATE 150
 
 #define GIFTBOX_GRAVITY 0.002f
 
@@ -36,7 +36,6 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void OpenGiftBox();
-	void CanOpen();
 	int IsCollidable() { return 1; }
 	int GetAniId();
 };

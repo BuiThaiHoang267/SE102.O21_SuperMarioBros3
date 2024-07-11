@@ -81,7 +81,12 @@ void CMushroom::OnCollisionWithMario(float mx, float my)
 	if (state != MUSHROOM_STATE_DIE)
 	{
 		state = MUSHROOM_STATE_DIE;
-		LPGAMEOBJECT effectCoinBox = new CEffectPoint(mx, my, 1000);
+		int point;
+		if (typeMushroom == 1)
+			point = 10;
+		else
+			point = 1000;
+		LPGAMEOBJECT effectCoinBox = new CEffectPoint(mx, my, point);
 		LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 		LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
 		p->AddGameObject(effectCoinBox);

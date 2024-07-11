@@ -6,6 +6,11 @@
 
 #define ID_ANI_POINT_100 110000
 #define ID_ANI_POINT_1000 111000
+#define ID_ANI_1UP 110001
+
+#define ID_ANI_MUSHROOM_EF 120000
+#define ID_ANI_STAR_EF 120001
+#define ID_ANI_FLOWERBLUE_EF 120002
 
 #define EF_POINT_WIDTH 12
 #define EF_POINT_HEIGHT 8
@@ -23,6 +28,8 @@ public:
 		this->point = pointt;
 		this->vy = POINT_VY_START;
 		this->ay = POINT_GRAVITY_START;
+		if (point < 10)
+			this->vy = POINT_VY_START - 0.03f;
 	};
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

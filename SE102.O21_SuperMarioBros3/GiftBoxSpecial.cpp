@@ -1,9 +1,8 @@
 #include "GiftBoxSpecial.h"
-#include "Mario.h"
-#include "PlayScene.h"
-#include "Mushroom.h"
 #include "Leaf.h"
 #include "EffectCoinBox.h"
+#include "EffectPoint.h"
+#include "PlayScene.h"
 
 void CGiftBoxSpecial::Render() {
 	int aniId = GetAniId();
@@ -20,12 +19,11 @@ void CGiftBoxSpecial::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void CGiftBoxSpecial::OpenGiftBox()
 {
-	
-}
-
-void CGiftBoxSpecial::CanOpen()
-{
-	
+	LPGAMEOBJECT effectCoinBox = new CEffectPoint(x, y, this->state);
+	LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+	LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+	p->AddGameObject(effectCoinBox);
+	this->Delete();
 }
 
 void CGiftBoxSpecial::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

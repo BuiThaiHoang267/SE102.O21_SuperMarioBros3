@@ -18,6 +18,7 @@
 #include "Brick.h"
 #include "ButtonP.h"
 #include "Block.h"
+#include "GiftBoxSpecial.h"
 
 #include "Collision.h"
 
@@ -96,6 +97,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<CGiftBox*>(e->obj))
 		OnCollisionWithGiftBox(e);
+	else if (dynamic_cast<CGiftBoxSpecial*>(e->obj))
+		OnCollisionWithGiftBoxSpecial(e);
 	else if (dynamic_cast<CMushroom*>(e->obj))
 		OnCollisionWithMushroom(e);
 	else if (dynamic_cast<CBullet*>(e->obj))
@@ -340,6 +343,13 @@ void CMario::OnCollisionWithGiftBox(LPCOLLISIONEVENT e) {
 	CGiftBox* m = (CGiftBox*)e->obj;
 	if (e->ny > 0) {
 		m->CanOpen();
+	}
+}
+
+void CMario::OnCollisionWithGiftBoxSpecial(LPCOLLISIONEVENT e) {
+	CGiftBoxSpecial* m = dynamic_cast<CGiftBoxSpecial*>(e->obj);
+	if (e->ny > 0) {
+		m->OpenGiftBox();
 	}
 }
 

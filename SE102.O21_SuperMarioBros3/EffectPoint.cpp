@@ -3,6 +3,7 @@
 void CEffectPoint::Render()
 {
 	CSprites* sprites = CSprites::GetInstance();
+	CAnimations* ani = CAnimations::GetInstance();
 
 	switch (point)
 	{
@@ -11,6 +12,18 @@ void CEffectPoint::Render()
 		break;
 	case 1000:
 		sprites->Get(ID_ANI_POINT_1000)->Draw(x, y);
+		break;
+	case 10:
+		sprites->Get(ID_ANI_1UP)->Draw(x, y);
+		break;
+	case 0:
+		ani->Get(ID_ANI_MUSHROOM_EF)->Render(x, y);
+		break;
+	case 1:
+		ani->Get(ID_ANI_STAR_EF)->Render(x, y);
+		break;
+	case 2:
+		ani->Get(ID_ANI_FLOWERBLUE_EF)->Render(x, y);
 		break;
 	default:
 		sprites->Get(ID_ANI_POINT_100)->Draw(x, y);
