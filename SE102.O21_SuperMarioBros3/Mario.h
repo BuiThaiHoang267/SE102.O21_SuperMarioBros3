@@ -36,6 +36,8 @@
 
 #define MARIO_STATE_SHOOT_TORTOISESHELL 701
 
+#define MARIO_STATE_WAVING 800
+
 #pragma region ANIMATION_ID
 
 #define ID_ANI_MARIO_BIG_IDLE_RIGHT 400
@@ -132,6 +134,9 @@
 #define ID_ANI_MARIO_MAX_FLY_FALL_LEFT				1822
 #define ID_ANI_MARIO_MAX_FLY_FALL_RIGHT				1823
 
+#define ID_ANI_MARIO_WAVING_LEFT					1901
+#define ID_ANI_MARIO_WAVING_RIGHT					1902
+
 // SMALL MARIO
 #define ID_ANI_MARIO_SMALL_IDLE_RIGHT 1100
 #define ID_ANI_MARIO_SMALL_IDLE_LEFT 1102
@@ -210,6 +215,7 @@ class CMario : public CGameObject
 	bool isFlying;
 	bool isCamFollowMario;
 	bool isGravity;
+	bool canWaving;
 	ULONGLONG untouchable_start;
 	ULONGLONG untouchableTurtle_start;
 	ULONGLONG timer_shoot;
@@ -217,6 +223,7 @@ class CMario : public CGameObject
 	ULONGLONG timer_fly;
 	ULONGLONG timer_animation_fly;
 	ULONGLONG timer_not_gravity;
+	ULONGLONG timer_waving;
 
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -254,6 +261,7 @@ public:
 		timer_fly = -1;
 		timer_animation_fly = -1;
 		timer_not_gravity = -1;
+		timer_waving = -1;
 		untouchableTurtle = 0;
 		coin = 0;
 		isOnPlatform = false;
@@ -264,6 +272,7 @@ public:
 		isFlying = false;
 		isCamFollowMario = false;
 		isGravity = true;
+		canWaving = false;
 		flexDirection = 1;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -292,4 +301,6 @@ public:
 	bool GetIsFlying() { return this->isFlying; }
 	bool GetIsCamFollowMario() { return this->isCamFollowMario; }
 	void SetIsCamFollowMario(bool isFollow) { this->isCamFollowMario = isFollow; }
+	void WavingTail();
+	void SetCanWaving(bool canWaving) { this->canWaving = canWaving; }
 };

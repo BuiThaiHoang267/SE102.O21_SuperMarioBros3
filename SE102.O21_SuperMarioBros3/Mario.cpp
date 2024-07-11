@@ -615,6 +615,14 @@ int CMario::GetAniIdBig()
 
 int CMario::GetAniIdMax()
 {
+	if(GetTickCount64() - timer_waving <= 300)
+	{
+		if (flexDirection == 1)
+			return ID_ANI_MARIO_WAVING_RIGHT;
+		else
+			return ID_ANI_MARIO_WAVING_LEFT;
+	}
+
 	if (GetTickCount64() - timer_shoot <= 150)
 	{
 		if (flexDirection == 1)
@@ -769,6 +777,7 @@ int CMario::GetAniIdMax()
 
 void CMario::Render()
 {
+	//RenderBoundingBox();
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = -1;
 
@@ -790,7 +799,7 @@ void CMario::Render()
 
 	animations->Get(aniId)->Render(x, y);
 
-	//RenderBoundingBox();
+	
 	
 }
 
@@ -1048,4 +1057,10 @@ void CMario::SetIsPressA(bool press)
 	{
 		DebugOut(L"Key Up A\n");
 	}
+}
+
+void CMario::WavingTail()
+{
+	timer_waving = GetTickCount64();
+	//setstate
 }
