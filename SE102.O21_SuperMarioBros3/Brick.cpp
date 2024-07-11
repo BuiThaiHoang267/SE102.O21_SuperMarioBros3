@@ -48,6 +48,10 @@ void CBrick::OpenCoin()
 {
 	LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 	LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+	if (this == nullptr || this->IsDeleted())
+	{
+		return;
+	}
 	LPGAMEOBJECT coin = new CCoin(x, y, 0);
 	p->AddGameObject(coin);
 	this->Delete();

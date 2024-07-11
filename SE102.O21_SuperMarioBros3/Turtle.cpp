@@ -125,7 +125,7 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CTurtle*>(e->obj)) return;
 
 
-	if (e->ny != 0)
+	if (e->ny < 0)
 	{
 		vy = 0;
 		isOnPlatform = true;
@@ -139,7 +139,7 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CGiftBox*>(e->obj))
 	{
 		CGiftBox* m = (CGiftBox*)e->obj;
-		if (e->nx != 0) {
+		if (e->nx != 0 && state == TURTLE_VX_STATE_RUN) {
 			m->CanOpen();
 		}
 	}

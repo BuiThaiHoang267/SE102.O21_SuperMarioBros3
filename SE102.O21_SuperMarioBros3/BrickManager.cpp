@@ -87,7 +87,7 @@ void CBrickManager::Init()
 	p->AddGameObject(br);
 	objects.push_back(br);
 
-	br = new CBrick(2022, 112, 0);
+	br = new CBrick(2022, 98, 0);
 	p->AddGameObject(br);
 	objects.push_back(br);
 

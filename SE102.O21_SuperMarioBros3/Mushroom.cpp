@@ -3,6 +3,7 @@
 #include "Mario.h"
 #include "PlayScene.h"
 #include "EffectPoint.h"
+#include "Turtle.h"
 
 CMushroom::CMushroom(float x, float y, int type) : CGameObject(x, y) {
 	this->ax = 0;
@@ -47,6 +48,7 @@ void CMushroom::OnCollisionWith(LPCOLLISIONEVENT e) {
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CGoomba*>(e->obj)) return;
 	if (dynamic_cast<CMario*>(e->obj)) return;
+	if (dynamic_cast<CTurtle*>(e->obj)) return;
 
 	if (e->ny != 0)
 	{

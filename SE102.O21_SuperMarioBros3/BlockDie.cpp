@@ -3,6 +3,7 @@
 #include "GoombaJump.h"
 #include "Turtle.h"
 #include "Mario.h"
+#include "Mushroom.h"
 
 void CBlockDie::Render()
 {
@@ -23,6 +24,7 @@ void CBlockDie::OnCollisionWith(LPCOLLISIONEVENT e)
 		dynamic_cast<CGoomba*>(e->obj)
 		|| dynamic_cast<CGoombaJump*>(e->obj)
 		|| dynamic_cast<CTurtle*>(e->obj)
+		|| dynamic_cast<CMushroom*>(e->obj)
 		) {
 		e->obj->Delete();
 	}
@@ -36,12 +38,13 @@ void CBlockDie::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
-void CBlockDie::OnTriggerStay(LPCOLLISIONEVENT e) 
+void CBlockDie::OnTriggerStay(LPCOLLISIONEVENT e)
 {
 	if (
 		dynamic_cast<CGoomba*>(e->obj)
 		|| dynamic_cast<CGoombaJump*>(e->obj)
 		|| dynamic_cast<CTurtle*>(e->obj)
+		|| dynamic_cast<CMushroom*>(e->obj)
 		) {
 		e->obj->Delete();
 	}
