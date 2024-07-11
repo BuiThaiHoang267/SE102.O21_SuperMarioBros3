@@ -3,7 +3,7 @@
 
 void COnTriggerSpawnEnemy::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 void COnTriggerSpawnEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {

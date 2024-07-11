@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="BackGroundBlack.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlockDie.cpp" />
     <ClCompile Include="BoxColor.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="Animations.h" />
     <ClInclude Include="AssetIDs.h" />
+    <ClInclude Include="BackGroundBlack.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="BlockDie.h" />
     <ClInclude Include="BoxColor.h" />

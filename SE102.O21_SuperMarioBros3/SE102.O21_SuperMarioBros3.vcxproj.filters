@@ -144,6 +144,9 @@
     <ClCompile Include="BlockDie.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BackGroundBlack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -288,6 +291,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BlockDie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGroundBlack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

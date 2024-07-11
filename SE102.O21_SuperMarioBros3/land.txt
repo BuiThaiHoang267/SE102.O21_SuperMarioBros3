@@ -23,5 +23,9 @@
 #CLOUD collision
 68000	698	1	713	16	30
 
+#BackGround Black
+69000	2480	0	2815	207	50
+69001	0	441	63	500	50
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
