@@ -30,6 +30,7 @@
 #include "Block.h"
 #include "BlockDie.h"
 #include "BackGroundBlack.h"
+#include "GiftBoxSpecial.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -207,6 +208,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_EFFECTCOINBOX:
 		{
 			obj = new CEffectCoinBox(x, y);
+			objects.push_back(obj);
+		}
+		break;
+	case OBJECT_TYPE_GIFTBOX_SPECIAL:
+		{
+			obj = new CGiftBoxSpecial(x, y);
 			objects.push_back(obj);
 		}
 		break;
