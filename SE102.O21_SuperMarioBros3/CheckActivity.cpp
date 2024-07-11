@@ -3,7 +3,7 @@
 
 void CCheckActivity::Render() 
 {
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 void CCheckActivity::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -26,7 +26,10 @@ void CCheckActivity::OnTriggerEnter(LPCOLLISIONEVENT e)
 }
 void CCheckActivity::OnTriggerStay(LPCOLLISIONEVENT e)
 {
-
+	if (dynamic_cast<CMario*>(e->obj))
+	{
+		isDetectedMario = true;
+	}
 }
 void CCheckActivity::OnTriggerExit(LPGAMEOBJECT e)
 {

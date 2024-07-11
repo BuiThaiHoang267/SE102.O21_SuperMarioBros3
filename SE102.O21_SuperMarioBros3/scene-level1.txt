@@ -68,6 +68,11 @@ turtle.txt
 6	2167	128	48	48	74000	0
 6	2203	80	56	144	74001	8
 
+#Flower
+91	367	120	0
+91	1808	144	1
+91	1872	128	2
+
 #Platform
 #type	x	y	width	height	amount	begin mid end
 5 	8	160	16	16	39	60000	61000	62000
@@ -126,8 +131,6 @@ turtle.txt
 8	423	64	0
 8	1479	112	1
 
-#Flower
-91	367	120
 #Chimney
 #type	x	y	type(tall = 1 or short = 0 or mid = 2)
 90	367	128	1

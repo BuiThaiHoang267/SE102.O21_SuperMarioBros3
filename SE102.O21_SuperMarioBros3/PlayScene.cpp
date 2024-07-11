@@ -251,7 +251,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_FLOWERENEMY:
 		{
-			obj = new CFlowerEnemy(x, y);
+			int type = atoi(tokens[3].c_str());
+			obj = new CFlowerEnemy(x, y, type);
 			objects.push_back(obj);
 		}
 		break;

@@ -7,9 +7,20 @@ void CFlowerEnemy::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	CSprites* s = CSprites::GetInstance();
 	aniId = this->GetIdAni();
+	if (type > 0)
+	{
+		aniId += 10;
+	}
 	if (state == FLOWERENEMY_STATE_IDLE || state == FLOWERENEMY_STATE_FIRE)
 	{
-		s->Get(aniId)->Draw(x, y);
+		if (type == 1)
+		{
+			animations->Get(aniId)->Render(x, y);
+		}
+		else
+		{
+			s->Get(aniId)->Draw(x, y);
+		}
 	}
 	else {
 		animations->Get(aniId)->Render(x, y);
@@ -28,7 +39,7 @@ void CFlowerEnemy::GetBoundingBox(float& l, float& t, float& r, float& b)
 void CFlowerEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) 
 {
 	shootRange->SetPosition(this->x, this->y);
-	checkActivity->SetPosition(this->x, this->y + 8);
+	checkActivity->SetPosition(this->x, this->y + offsetYCheckActivity);
 	if (state == FLOWERENEMY_STATE_IDLE)
 	{
 		CCheckActivity* check = dynamic_cast<CCheckActivity*>(checkActivity);
@@ -55,7 +66,7 @@ void CFlowerEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		isFired = true;
 		CRaycast* range = dynamic_cast<CRaycast*>(shootRange);
-		if (range->GetIsDetectedMario()) 
+		if (range->GetIsDetectedMario() && type != 1) 
 		{
 			LPGAMEOBJECT bullet = new CBullet(x, y - 8, range->GetPosXMario(),range->GetPosYMario());
 			LPSCENE s = CGame::GetInstance()->GetCurrentScene();
@@ -102,6 +113,10 @@ int CFlowerEnemy::GetIdAni()
 		this->isHigh = range->GetIsHigh();
 	}
 	
+	if (type == 1)
+	{
+		return ID_ANI_FLOWERENEMY_NOT_FIER;
+	}
 
 	if (state == FLOWERENEMY_STATE_UP)
 	{
