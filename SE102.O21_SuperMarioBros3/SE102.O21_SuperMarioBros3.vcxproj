@@ -140,6 +140,7 @@
     <ClCompile Include="ButtonP.cpp" />
     <ClCompile Include="CheckActivity.cpp" />
     <ClCompile Include="CheckMove.cpp" />
+    <ClCompile Include="CheckRangeAttackMario.cpp" />
     <ClCompile Include="Chimney.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Collision.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="ButtonP.h" />
     <ClInclude Include="CheckActivity.h" />
     <ClInclude Include="CheckMove.h" />
+    <ClInclude Include="CheckRangeAttackMario.h" />
     <ClInclude Include="Chimney.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Collision.h" />

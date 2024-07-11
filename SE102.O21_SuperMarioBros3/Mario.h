@@ -3,6 +3,7 @@
 #include "Animation.h"
 #include "Animations.h"
 #include "PlayScene.h"
+#include "CheckRangeAttackMario.h"
 
 #include "debug.h"
 
@@ -239,6 +240,8 @@ class CMario : public CGameObject
 	void OnCollisionWithButtonP(LPCOLLISIONEVENT e);
 	void OnCollisionWithGiftBoxSpecial(LPCOLLISIONEVENT e);
 
+	LPGAMEOBJECT checkAttack;
+
 	int GetAniIdBig();
 	int GetAniIdSmall();
 	int GetAniIdMax();
@@ -274,6 +277,8 @@ public:
 		isGravity = true;
 		canWaving = false;
 		flexDirection = 1;
+
+		this->checkAttack = NULL;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();

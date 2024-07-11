@@ -150,6 +150,9 @@
     <ClCompile Include="GiftBoxSpecial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CheckRangeAttackMario.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -300,6 +303,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GiftBoxSpecial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckRangeAttackMario.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -16,7 +16,7 @@ using namespace std;
 #define BBOX_ALPHA 0.25f		// Bounding box transparency
 #define TAG_ENEMY 1
 #define VX_COLLIDER_TORTOISESHELL 0.05f
-#define VY_COLLIDER_TORTOISESHELL 0.2f
+#define VY_COLLIDER_TORTOISESHELL 0.26f
 #define GRAVITY_COLLIDER_TORTOISESHELL 0.001f
 
 

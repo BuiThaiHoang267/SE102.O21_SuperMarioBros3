@@ -19,6 +19,8 @@
 #include "ButtonP.h"
 #include "Block.h"
 #include "GiftBoxSpecial.h"
+#include "PlayScene.h"
+#include "CheckRangeAttackMario.h"
 
 #include "Collision.h"
 
@@ -52,7 +54,24 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		}
 	}
 	//Update pos attack zone
+	if (checkAttack != NULL)
+	{
+		
+		if (GetTickCount64() - timer_waving <= 250)
+		{
+			if (GetTickCount64() - timer_waving >= 125 || GetTickCount64() - timer_waving <= 175)
+			{
+				dynamic_cast<CCheckRangeAttackMario*>(checkAttack)->SetCanAttack(true);
+			}
+		}
+		if (GetTickCount64() - timer_waving >= 175)
+		{
+			dynamic_cast<CCheckRangeAttackMario*>(checkAttack)->SetCanAttack(false);
+		}
+	}
+	//
 	
+
 	CheckFly();
 	// reset untouchable timer if untouchable time has passed
 	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
@@ -1062,6 +1081,19 @@ void CMario::SetIsPressA(bool press)
 
 void CMario::WavingTail()
 {
-	timer_waving = GetTickCount64();
-	//setstate
+	if (level == MARIO_LEVEL_MAX)
+	{
+		timer_waving = GetTickCount64();
+		if (checkAttack == NULL)
+		{
+			checkAttack = new CCheckRangeAttackMario(x + (flexDirection * 12), y + 6, 8, 6);
+			LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+			LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
+			p->AddGameObject(checkAttack);
+		}
+		else
+		{
+			checkAttack->SetPosition(x + (flexDirection * 12), y + 6);
+		}
+	}
 }
