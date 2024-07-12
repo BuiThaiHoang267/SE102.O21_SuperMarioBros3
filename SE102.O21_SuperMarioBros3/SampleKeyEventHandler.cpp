@@ -18,10 +18,42 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		mario->WavingTail();
 		break;
 	case DIK_DOWN:
-		mario->SetState(MARIO_STATE_SIT);
+	{
+		if (mario->GetState() == MARIO_STATE_IDLE_MAP)
+		{
+			DebugOut(L"DOWN\n");
+			mario->CanDash(4);
+		}
+		else
+			mario->SetState(MARIO_STATE_SIT);
+	}
+		break;
+	case DIK_UP:
+		DebugOut(L"UP\n");
+		mario->CanDash(2);
+		break;
+	case DIK_LEFT:
+		DebugOut(L"LEFT\n");
+		mario->CanDash(1);
+		break;
+	case DIK_RIGHT:
+		DebugOut(L"Right\n");
+		mario->CanDash(3);
 		break;
 	case DIK_S:
-		mario->SetState(MARIO_STATE_JUMP);
+	{
+		if (mario->GetState() == MARIO_STATE_IDLE_MAP)
+		{
+			LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+			CPlayScene* scene = dynamic_cast<CPlayScene*>(s);
+			if (mario->arrow.size()-1 == mario->currentStep)
+			{
+				CGame::GetInstance()->InitiateSwitchScene(3);
+			}
+		}
+		else
+			mario->SetState(MARIO_STATE_JUMP);
+	}
 		break;
 	case DIK_W:
 		{
@@ -77,17 +109,23 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
-		if (game->IsKeyDown(DIK_A))
-			mario->SetState(MARIO_STATE_RUNNING_RIGHT);
-		else
-			mario->SetState(MARIO_STATE_WALKING_RIGHT);
+		if (mario->GetState() != MARIO_STATE_IDLE_MAP)
+		{
+			if (game->IsKeyDown(DIK_A))
+				mario->SetState(MARIO_STATE_RUNNING_RIGHT);
+			else
+				mario->SetState(MARIO_STATE_WALKING_RIGHT);
+		}
 	}
 	else if (game->IsKeyDown(DIK_LEFT))
 	{
-		if (game->IsKeyDown(DIK_A))
-			mario->SetState(MARIO_STATE_RUNNING_LEFT);
-		else
-			mario->SetState(MARIO_STATE_WALKING_LEFT);
+		if (mario->GetState() != MARIO_STATE_IDLE_MAP)
+		{
+			if (game->IsKeyDown(DIK_A))
+				mario->SetState(MARIO_STATE_RUNNING_LEFT);
+			else
+				mario->SetState(MARIO_STATE_WALKING_LEFT);
+		}
 	}
 	else if (game->IsKeyDown(DIK_UP))
 	{
@@ -98,5 +136,13 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 		mario->Teleport(1);
 	}
 	else
+	{
 		mario->SetState(MARIO_STATE_IDLE);
+		LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+		CPlayScene* scene = dynamic_cast<CPlayScene*>(s);
+		if (scene->GetIdScene() == 2)
+		{
+			mario->SetState(MARIO_STATE_IDLE_MAP);
+		}
+	}
 }

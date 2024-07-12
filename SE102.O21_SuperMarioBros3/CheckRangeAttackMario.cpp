@@ -8,7 +8,7 @@
 
 void CCheckRangeAttackMario::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 void CCheckRangeAttackMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {

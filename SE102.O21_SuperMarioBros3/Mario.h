@@ -38,6 +38,8 @@
 #define MARIO_STATE_SHOOT_TORTOISESHELL 701
 
 #define MARIO_STATE_WAVING 800
+#define MARIO_STATE_IDLE_MAP 801
+
 
 #pragma region ANIMATION_ID
 
@@ -225,6 +227,7 @@ class CMario : public CGameObject
 	bool canTele;
 	bool inAreaSpecial;
 	bool inMapHidden;
+	bool canDash;
 	ULONGLONG untouchable_start;
 	ULONGLONG untouchableTurtle_start;
 	ULONGLONG timer_shoot;
@@ -234,6 +237,9 @@ class CMario : public CGameObject
 	ULONGLONG timer_not_gravity;
 	ULONGLONG timer_waving;
 	ULONGLONG timer_tele;
+	ULONGLONG timer_dash;
+
+	
 
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -256,6 +262,12 @@ class CMario : public CGameObject
 	int GetAniIdMax();
 
 public:
+	int currentStep;
+	vector<std::pair<int, int>> arrow = {
+		{0, 3},
+		{1, 2},
+		{4, 0}
+	};
 	CMario(float x, float y) : CGameObject(x, y)
 	{
 		isSitting = false;
@@ -266,6 +278,7 @@ public:
 		//level = MARIO_LEVEL_SMALL;
 		level = 1;
 		untouchable = 0;
+		currentStep = 0;
 		untouchableTurtle_start = -1;
 		untouchable_start = -1;
 		timer_shoot = -1;
@@ -275,6 +288,7 @@ public:
 		timer_not_gravity = -1;
 		timer_waving = -1;
 		timer_tele = -1;
+		timer_dash = -1;
 		untouchableTurtle = 0;
 		coin = 0;
 		isOnPlatform = false;
@@ -289,6 +303,7 @@ public:
 		canTele = false;
 		inAreaSpecial = false;
 		inMapHidden = false;
+		canDash = false;
 		flexDirection = 1;
 
 		this->checkAttack = NULL;
@@ -323,4 +338,5 @@ public:
 	void SetCanWaving(bool canWaving) { this->canWaving = canWaving; }
 	void Teleport(int typeSence);
 	bool GetInMapHidden() { return inMapHidden; }
+	void CanDash(int direction);
 };

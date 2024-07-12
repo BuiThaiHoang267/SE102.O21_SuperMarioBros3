@@ -58,6 +58,21 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		return;
 	}
 
+	if (state == MARIO_STATE_IDLE_MAP)
+	{
+		x += vx * dt;
+		y += vy * dt;
+		if (canDash && GetTickCount64() - timer_dash > 700)
+		{
+			canDash = false;
+			vx = 0;
+			vy = 0;
+			ax = 0;
+			ay = 0;
+			DebugOut(L"het move");
+		}
+		return;
+	}
 	//Normal
 	vx += ax * dt;
 	if (isGravity)
@@ -103,7 +118,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		}
 	}
 	//
-	
 
 	CheckFly();
 	// reset untouchable timer if untouchable time has passed
@@ -439,6 +453,10 @@ void CMario::OnCollisionWithButtonP(LPCOLLISIONEVENT e)
 //
 int CMario::GetAniIdSmall()
 {
+	if (state == MARIO_STATE_IDLE_MAP)
+	{
+		return 1991;
+	}
 	if (GetTickCount64() - timer_shoot <= 150)
 	{
 		if (flexDirection == 1)
@@ -972,6 +990,10 @@ void CMario::SetState(int state)
 	case MARIO_STATE_SHOOT_TORTOISESHELL:
 		timer_shoot = GetTickCount64();
 		break;
+
+	case MARIO_STATE_IDLE_MAP:
+		ax = 0;
+		ay = 0;
 	}
 
 	CGameObject::SetState(state);
@@ -1104,7 +1126,7 @@ void CMario::CheckFly()
 	if (abs(vx) < MARIO_RUNNING_SPEED && isRunning == true)
 	{
 		isRunning = false;
-		canFly =false;
+		canFly = false;
 	}
 
 	if (GetTickCount64() - timer_pre_canFly > 500 && isRunning == true && canFly == false)
@@ -1162,7 +1184,7 @@ void CMario::Teleport(int typeSence)
 			vy = MARIO_VY_TELE;
 			ay = 0;
 		}
-		else if(typeSence == 0 && inMapHidden)
+		else if (typeSence == 0 && inMapHidden)
 		{
 			canTele = true;
 			timer_tele = GetTickCount64();
@@ -1172,3 +1194,59 @@ void CMario::Teleport(int typeSence)
 	}
 }
 
+void CMario::CanDash(int direction)
+{
+	// 1 left, 2 up, 3 right, 4 down
+	bool isDash = false;
+	int step = 0;
+
+	if (direction == arrow[currentStep].first || direction == arrow[currentStep].second)
+	{
+		isDash = true;
+	}
+
+	if (isDash && !canDash)
+	{
+		if (currentStep > 0) {
+			if (direction == 1 && arrow[currentStep - 1].second == 3) {
+				step = -1;
+			}
+			else if (direction == 2 && arrow[currentStep - 1].second == 4) {
+				step = -1;
+			}
+			else if (direction == 3 && arrow[currentStep - 1].second == 1) {
+				step = -1;
+			}
+			else if (direction == 4 && arrow[currentStep - 1].second == 2) {
+				step = -1;
+			}
+		}
+
+		if (currentStep < arrow.size() - 1) {
+			if (direction == 1 && arrow[currentStep + 1].first == 3) {
+				step = 1;
+			}
+			else if (direction == 2 && arrow[currentStep + 1].first == 4) {
+				step = 1;
+			}
+			else if (direction == 3 && arrow[currentStep + 1].first == 1) {
+				step = 1;
+			}
+			else if (direction == 4 && arrow[currentStep + 1].first == 2) {
+				step = 1;
+			}
+		}
+		DebugOut(L"can move");
+		currentStep += step;
+		timer_dash = GetTickCount64();
+		canDash = true;
+		if (direction == 1)
+			vx = -0.05f;
+		else if (direction == 2)
+			vy = -0.05f;
+		else if (direction == 3)
+			vx = 0.05f;
+		else if(direction == 4)
+			vy = 0.05f;
+	}
+}
