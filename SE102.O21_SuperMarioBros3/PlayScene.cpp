@@ -493,12 +493,12 @@ void CPlayScene::Update(DWORD dt)
 
 	if (mario->GetIsCamFollowMario())
 	{
-		if (cy > -36 && !mario->GetIsFlying())
+		if (cy > -24 && !mario->GetIsFlying())
 			mario->SetIsCamFollowMario(false);
 	}
 	else
 	{
-		cy = -36.0f;
+		cy = -24.0f;
 	}
 
 	if (cx < 0)
@@ -506,8 +506,8 @@ void CPlayScene::Update(DWORD dt)
 	else if (cx > 2550.0f)
 		cx = 2550.0f;
 
-	if (cy > -36)
-		cy = -36;
+	if (cy > -24)
+		cy = -24;
 	else if (cy < -256)
 		cy = -256;
 

@@ -329,6 +329,7 @@
     <Text Include="enemy.txt" />
     <Text Include="bullet.txt" />
     <Text Include="turtle.txt" />
+    <Text Include="scene-hidden.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="mario.ico">

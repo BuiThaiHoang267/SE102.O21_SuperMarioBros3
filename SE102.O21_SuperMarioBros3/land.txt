@@ -27,5 +27,8 @@
 69000	2480	0	2815	207	50
 69001	0	441	63	500	50
 
+#BrickBlock
+69999	1055	188	1070	203	30
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
