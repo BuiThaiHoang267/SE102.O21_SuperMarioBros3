@@ -39,6 +39,7 @@
 
 #define MARIO_STATE_WAVING 800
 #define MARIO_STATE_IDLE_MAP 801
+#define MARIO_STATE_WIN 802
 
 
 #pragma region ANIMATION_ID
@@ -238,8 +239,7 @@ class CMario : public CGameObject
 	ULONGLONG timer_waving;
 	ULONGLONG timer_tele;
 	ULONGLONG timer_dash;
-
-	
+	ULONGLONG timer_wined;
 
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);

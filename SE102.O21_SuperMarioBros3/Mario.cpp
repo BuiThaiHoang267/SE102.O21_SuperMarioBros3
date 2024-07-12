@@ -28,6 +28,16 @@
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	// State Special
+	if (state == MARIO_STATE_WIN)
+	{
+		vx = 0.06f;
+		x += vx;
+		maxVx = 0.2f;
+		if (GetTickCount64() - timer_wined > 3000)
+		{
+			CGame::GetInstance()->InitiateSwitchScene(2);
+		}
+	}
 	if (canTele)
 	{
 		y += vy * dt;
@@ -418,6 +428,7 @@ void CMario::OnCollisionWithGiftBoxSpecial(LPCOLLISIONEVENT e) {
 	CGiftBoxSpecial* m = dynamic_cast<CGiftBoxSpecial*>(e->obj);
 	if (e->ny > 0) {
 		m->OpenGiftBox();
+		this->SetState(MARIO_STATE_WIN);
 	}
 }
 
@@ -453,6 +464,10 @@ void CMario::OnCollisionWithButtonP(LPCOLLISIONEVENT e)
 //
 int CMario::GetAniIdSmall()
 {
+	if (state == MARIO_STATE_WIN)
+	{
+		return ID_ANI_MARIO_SMALL_WALKING_RIGHT;
+	}
 	if (state == MARIO_STATE_IDLE_MAP)
 	{
 		return 1991;
@@ -568,6 +583,10 @@ int CMario::GetAniIdSmall()
 //
 int CMario::GetAniIdBig()
 {
+	if (state == MARIO_STATE_WIN)
+	{
+		return ID_ANI_MARIO_BIG_WALKING_RIGHT;
+	}
 	if (GetTickCount64() - timer_shoot <= 150)
 	{
 		if (flexDirection == 1)
@@ -687,6 +706,10 @@ int CMario::GetAniIdBig()
 
 int CMario::GetAniIdMax()
 {
+	if (state == MARIO_STATE_WIN)
+	{
+		return ID_ANI_MARIO_MAX_WALKING_RIGHT;
+	}
 	if (canTele)
 	{
 		return 1903;
@@ -994,6 +1017,9 @@ void CMario::SetState(int state)
 	case MARIO_STATE_IDLE_MAP:
 		ax = 0;
 		ay = 0;
+		break;
+	case MARIO_STATE_WIN:
+		timer_wined = GetTickCount64();
 	}
 
 	CGameObject::SetState(state);

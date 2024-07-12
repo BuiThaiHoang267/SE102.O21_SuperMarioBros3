@@ -86,8 +86,11 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 void CSampleKeyHandler::OnKeyUp(int KeyCode)
 {
 	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
-
+	LPGAME game = CGame::GetInstance();
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+	if (mario->GetState() == MARIO_STATE_WIN)
+		return;
+
 	switch (KeyCode)
 	{
 	case DIK_A:
@@ -106,6 +109,8 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 {
 	LPGAME game = CGame::GetInstance();
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+	if (mario->GetState() == MARIO_STATE_WIN)
+		return;
 
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
