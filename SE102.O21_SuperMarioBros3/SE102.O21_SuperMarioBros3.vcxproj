@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="AreaSpecial.cpp" />
     <ClCompile Include="BackGroundBlack.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlockDie.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="Animations.h" />
+    <ClInclude Include="AreaSpecial.h" />
     <ClInclude Include="AssetIDs.h" />
     <ClInclude Include="BackGroundBlack.h" />
     <ClInclude Include="Block.h" />

@@ -176,9 +176,6 @@
 
 #define GROUND_Y 160.0f
 
-
-
-
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2
 #define	MARIO_LEVEL_MAX		3
@@ -193,8 +190,16 @@
 #define MARIO_SMALL_BBOX_WIDTH  13
 #define MARIO_SMALL_BBOX_HEIGHT 14
 
+#define POS_X_TETE_MAP_HIDDEN	1807
+#define POS_Y_TETE_MAP_HIDDEN	272
+
+#define POS_X_TETE_MAP_MAIN	2336
+#define POS_Y_TETE_MAP_MAIN	100	
+
+#define MARIO_VY_TELE 0.03f;
 
 #define MARIO_UNTOUCHABLE_TIME 2500
+#define MARIO_TELE_TIME 2000
 
 class CMario : public CGameObject
 {
@@ -217,6 +222,9 @@ class CMario : public CGameObject
 	bool isCamFollowMario;
 	bool isGravity;
 	bool canWaving;
+	bool canTele;
+	bool inAreaSpecial;
+	bool inMapHidden;
 	ULONGLONG untouchable_start;
 	ULONGLONG untouchableTurtle_start;
 	ULONGLONG timer_shoot;
@@ -225,6 +233,7 @@ class CMario : public CGameObject
 	ULONGLONG timer_animation_fly;
 	ULONGLONG timer_not_gravity;
 	ULONGLONG timer_waving;
+	ULONGLONG timer_tele;
 
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -265,6 +274,7 @@ public:
 		timer_animation_fly = -1;
 		timer_not_gravity = -1;
 		timer_waving = -1;
+		timer_tele = -1;
 		untouchableTurtle = 0;
 		coin = 0;
 		isOnPlatform = false;
@@ -276,6 +286,9 @@ public:
 		isCamFollowMario = false;
 		isGravity = true;
 		canWaving = false;
+		canTele = false;
+		inAreaSpecial = false;
+		inMapHidden = false;
 		flexDirection = 1;
 
 		this->checkAttack = NULL;
@@ -308,4 +321,5 @@ public:
 	void SetIsCamFollowMario(bool isFollow) { this->isCamFollowMario = isFollow; }
 	void WavingTail();
 	void SetCanWaving(bool canWaving) { this->canWaving = canWaving; }
+	void Teleport(int typeSence);
 };

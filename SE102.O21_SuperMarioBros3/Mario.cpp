@@ -21,11 +21,44 @@
 #include "GiftBoxSpecial.h"
 #include "PlayScene.h"
 #include "CheckRangeAttackMario.h"
+#include "AreaSpecial.h"
 
 #include "Collision.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+	// State Special
+	if (canTele)
+	{
+		y += vy * dt;
+		if (GetTickCount64() - timer_tele > MARIO_TELE_TIME)
+		{
+			canTele = false;
+			if (vy > 0) // tele sence hidden
+			{
+				x = POS_X_TETE_MAP_HIDDEN;
+				y = POS_Y_TETE_MAP_HIDDEN;
+				ay = MARIO_GRAVITY;
+				vy = 0;
+				vx = 0;
+				inMapHidden = true;
+				inAreaSpecial = false;
+			}
+			else
+			{
+				x = POS_X_TETE_MAP_MAIN;
+				y = POS_Y_TETE_MAP_MAIN;
+				ay = MARIO_GRAVITY;
+				vy = 0;
+				vx = 0;
+				inMapHidden = false;
+				inAreaSpecial = false;
+			}
+		}
+		return;
+	}
+
+	//Normal
 	vx += ax * dt;
 	if (isGravity)
 	{
@@ -636,6 +669,11 @@ int CMario::GetAniIdBig()
 
 int CMario::GetAniIdMax()
 {
+	if (canTele)
+	{
+		return 1903;
+	}
+
 	if(GetTickCount64() - timer_waving <= 250)
 	{
 		if (flexDirection == 1)
@@ -994,9 +1032,18 @@ void CMario::OnTriggerEnter(LPCOLLISIONEVENT e)
 		}
 		
 	}
+	if (dynamic_cast<CAreaSpecial*>(e->obj))
+	{
+		inAreaSpecial = true;
+		DebugOut(L"inAreaSpecial true\n");
+	}
 }
 void CMario::OnTriggerStay(LPCOLLISIONEVENT e)
 {
+	if (dynamic_cast<CAreaSpecial*>(e->obj))
+	{
+		inAreaSpecial = true;
+	}
 	if (dynamic_cast<CTurtle*>(e->obj))
 	{
 		CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
@@ -1038,6 +1085,11 @@ void CMario::OnTriggerExit(LPGAMEOBJECT e)
 	if (dynamic_cast<CTurtle*>(e))
 	{
 		isHoldTortoiseshell = false;
+	}
+	if (dynamic_cast<CAreaSpecial*>(e))
+	{
+		inAreaSpecial = false;
+		DebugOut(L"inAreaSpecial false\n");
 	}
 }
 
@@ -1098,3 +1150,25 @@ void CMario::WavingTail()
 		}
 	}
 }
+
+void CMario::Teleport(int typeSence)
+{
+	if (inAreaSpecial)
+	{
+		if (typeSence == 1 && !inMapHidden) // tele sence hidden
+		{
+			canTele = true;
+			timer_tele = GetTickCount64();
+			vy = MARIO_VY_TELE;
+			ay = 0;
+		}
+		else if(typeSence == 0 && inMapHidden)
+		{
+			canTele = true;
+			timer_tele = GetTickCount64();
+			vy = -MARIO_VY_TELE;
+			ay = 0;
+		}
+	}
+}
+

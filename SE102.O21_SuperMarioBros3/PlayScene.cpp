@@ -31,6 +31,7 @@
 #include "BlockDie.h"
 #include "BackGroundBlack.h"
 #include "GiftBoxSpecial.h"
+#include "AreaSpecial.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -202,6 +203,14 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			int width = atoi(tokens[3].c_str());
 			int height = atoi(tokens[4].c_str());
 			obj = new CRaycast(x, y, width, height);
+			objects.push_back(obj);
+		}
+		break;
+	case OBJECT_TYPE_AREASPECIAL:
+		{
+			int width = atoi(tokens[3].c_str());
+			int height = atoi(tokens[4].c_str());
+			obj = new CAreaSpecial(x, y, width, height);
 			objects.push_back(obj);
 		}
 		break;

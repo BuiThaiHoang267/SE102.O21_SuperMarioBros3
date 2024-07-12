@@ -153,6 +153,9 @@
     <ClCompile Include="CheckRangeAttackMario.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AreaSpecial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -306,6 +309,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CheckRangeAttackMario.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaSpecial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
