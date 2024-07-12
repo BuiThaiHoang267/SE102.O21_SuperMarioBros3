@@ -32,6 +32,7 @@
 #include "BackGroundBlack.h"
 #include "GiftBoxSpecial.h"
 #include "AreaSpecial.h"
+#include "PanelUI.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -41,6 +42,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 	CScene(id, filePath)
 {
 	player = NULL;
+	panel = NULL;
 	key_handler = new CSampleKeyHandler(this);
 }
 
@@ -362,6 +364,17 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		}
 		break;
 
+	case OBJECT_TYPE_PANEL_UI:
+		{
+			int width = atoi(tokens[3].c_str());
+			int height = atoi(tokens[4].c_str());
+			int spriteId = atoi(tokens[5].c_str());
+			obj = new CPanelUI(x, y, width, height, spriteId);
+			panel = (CPanelUI*)obj;
+			objects.push_back(obj);
+		}
+		break;
+
 	case OBJECT_TYPE_OBJECTBACKGROUND:
 		{
 			int width = atoi(tokens[3].c_str());
@@ -520,6 +533,15 @@ void CPlayScene::Update(DWORD dt)
 	else if (cy < -256)
 		cy = -256;
 
+	if (mario->GetInMapHidden())
+	{
+		cy = 216;
+	}
+
+	if (panel != NULL)
+	{
+		panel->SetPosition(cx +10 + 115 , cy + 216);
+	}
 	CGame::GetInstance()->SetCamPos(cx,cy);
 
 	PurgeDeletedObjects();
@@ -591,6 +613,7 @@ void CPlayScene::Unload()
 
 	objects.clear();
 	player = NULL;
+	panel = NULL;
 
 	DebugOut(L"[INFO] Scene %d unloaded! \n", id);
 }

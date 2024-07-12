@@ -55,7 +55,7 @@ void CEnemyManager::SpawnTurtle()
 				LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 				LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
 				turtle = new CTurtle(576, 100, -1, 0);
-				p->AddGameObjectPushBack(turtle);
+				p->AddGameObject(turtle);
 			}
 		}
 		else 
@@ -63,7 +63,7 @@ void CEnemyManager::SpawnTurtle()
 			LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 			LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
 			turtle = new CTurtle(576, 100, -1, 0);
-			p->AddGameObjectPushBack(turtle);
+			p->AddGameObject(turtle);
 		}
 	}
 }
@@ -84,7 +84,7 @@ void CEnemyManager::SpawnTurtleGreen()
 			LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 			LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
 			turtle1 = new CTurtle(1335, 40, direction, 2);
-			p->AddGameObjectPushBack(turtle1);
+			p->AddGameObject(turtle1);
 		}
 
 		if (turtle2 == NULL || (turtle2 != NULL && turtle2->IsDeleted()))
@@ -97,7 +97,7 @@ void CEnemyManager::SpawnTurtleGreen()
 			LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 			LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
 			turtle2 = new CTurtle(1384, 40, direction, 2);
-			p->AddGameObjectPushBack(turtle2);
+			p->AddGameObject(turtle2);
 		}
 
 		if (turtle3 == NULL || (turtle3 != NULL && turtle3->IsDeleted()))
@@ -110,7 +110,7 @@ void CEnemyManager::SpawnTurtleGreen()
 			LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 			LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
 			turtle3 = new CTurtle(1432, 40, direction, 2);
-			p->AddGameObjectPushBack(turtle3);
+			p->AddGameObject(turtle3);
 		}
 
 		if (turtle4 == NULL || (turtle4 != NULL && turtle4->IsDeleted()))
@@ -123,7 +123,7 @@ void CEnemyManager::SpawnTurtleGreen()
 			LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 			LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
 			turtle4 = new CTurtle(1456, 100, direction, 1);
-			p->AddGameObjectPushBack(turtle4);
+			p->AddGameObject(turtle4);
 		}
 	}
 }
@@ -140,7 +140,7 @@ void CEnemyManager::SpawnTurtleBrick()
 				LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 				LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
 				turtleBrick = new CTurtle(2104, 100, -1, 0);
-				p->AddGameObjectPushBack(turtleBrick);
+				p->AddGameObject(turtleBrick);
 			}
 		}
 		else 
@@ -148,7 +148,7 @@ void CEnemyManager::SpawnTurtleBrick()
 			LPSCENE s = CGame::GetInstance()->GetCurrentScene();
 			LPPLAYSCENE p = dynamic_cast<CPlayScene*>(s);
 			turtleBrick = new CTurtle(2104, 100, -1, 0);
-			p->AddGameObjectPushBack(turtleBrick);
+			p->AddGameObject(turtleBrick);
 		}
 	}
 }

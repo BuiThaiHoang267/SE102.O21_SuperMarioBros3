@@ -163,6 +163,7 @@
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="ObjectBackground.cpp" />
     <ClCompile Include="OnTriggerSpawnEnemy.cpp" />
+    <ClCompile Include="PanelUI.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Portal.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="ObjectBackground.h" />
     <ClInclude Include="OnTriggerSpawnEnemy.h" />
+    <ClInclude Include="PanelUI.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Portal.h" />
@@ -242,6 +244,7 @@
     <Text Include="giftbox.txt" />
     <Text Include="goomba.txt" />
     <Text Include="land.txt" />
+    <Text Include="map.txt" />
     <Text Include="mario-sample.txt" />
     <Text Include="mario.txt" />
     <Text Include="scene-hidden.txt" />
@@ -251,6 +254,7 @@
     <Text Include="scene02.txt" />
     <Text Include="specials.txt" />
     <Text Include="turtle.txt" />
+    <Text Include="ui.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="mario.ico" />

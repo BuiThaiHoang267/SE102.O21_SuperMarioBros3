@@ -23,6 +23,16 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_S:
 		mario->SetState(MARIO_STATE_JUMP);
 		break;
+	case DIK_W:
+		{
+			LPSCENE s = CGame::GetInstance()->GetCurrentScene();
+			CPlayScene* scene = dynamic_cast<CPlayScene*>(s);
+			if (scene->GetIdScene() == 4)
+			{
+				CGame::GetInstance()->InitiateSwitchScene(2);
+			}
+		}
+		break;
 	case DIK_1:
 		mario->SetLevel(MARIO_LEVEL_SMALL);
 		break;

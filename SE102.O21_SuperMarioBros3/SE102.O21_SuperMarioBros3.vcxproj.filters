@@ -156,6 +156,9 @@
     <ClCompile Include="AreaSpecial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PanelUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -314,6 +317,9 @@
     <ClInclude Include="AreaSpecial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PanelUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="brick.txt" />
@@ -336,6 +342,8 @@
     <Text Include="bullet.txt" />
     <Text Include="turtle.txt" />
     <Text Include="scene-hidden.txt" />
+    <Text Include="ui.txt" />
+    <Text Include="map.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="mario.ico">

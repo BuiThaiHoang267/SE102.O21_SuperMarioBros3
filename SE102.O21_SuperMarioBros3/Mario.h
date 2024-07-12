@@ -322,4 +322,5 @@ public:
 	void WavingTail();
 	void SetCanWaving(bool canWaving) { this->canWaving = canWaving; }
 	void Teleport(int typeSence);
+	bool GetInMapHidden() { return inMapHidden; }
 };
