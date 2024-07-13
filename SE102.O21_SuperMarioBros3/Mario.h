@@ -289,6 +289,7 @@ public:
 		timer_waving = -1;
 		timer_tele = -1;
 		timer_dash = -1;
+		timer_wined = -1;
 		untouchableTurtle = 0;
 		coin = 0;
 		isOnPlatform = false;

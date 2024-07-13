@@ -161,6 +161,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="Mushroom.cpp" />
+    <ClCompile Include="NumberText.cpp" />
     <ClCompile Include="ObjectBackground.cpp" />
     <ClCompile Include="OnTriggerSpawnEnemy.cpp" />
     <ClCompile Include="PanelUI.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="Leaf.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="Mushroom.h" />
+    <ClInclude Include="NumberText.h" />
     <ClInclude Include="ObjectBackground.h" />
     <ClInclude Include="OnTriggerSpawnEnemy.h" />
     <ClInclude Include="PanelUI.h" />
