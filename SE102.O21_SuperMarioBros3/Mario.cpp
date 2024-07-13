@@ -147,7 +147,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchableTurtle_start = 0;
 		untouchableTurtle = 0;
 	}
-	
+	if (CUIManager::GetInstance()->timer <= 1 && state != MARIO_STATE_DIE)
+	{
+		SetState(MARIO_STATE_DIE);
+	}
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 

@@ -32,7 +32,7 @@ public:
 		{
 			elapsedTime += dt;
 
-			if (elapsedTime >= 1000)
+			if (elapsedTime >= 1000 && timer >= 0)
 			{
 				//DebugOut(L"++ Timer\n");
 				timer--;  
