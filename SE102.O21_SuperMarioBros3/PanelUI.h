@@ -35,4 +35,5 @@ public:
 	int IsBlocking() { return 0; }
 	void InitUI();
 	void SetPosition(float x, float y);
+	void UpdateElements(vector<LPGAMEOBJECT>& elements, DWORD value);
 };

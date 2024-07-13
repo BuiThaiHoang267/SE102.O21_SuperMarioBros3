@@ -22,11 +22,17 @@
 #include "PlayScene.h"
 #include "CheckRangeAttackMario.h"
 #include "AreaSpecial.h"
+#include "UIManager.h"
+#include "BlockDie.h"
 
 #include "Collision.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+	if (state == MARIO_STATE_DIE && GetTickCount64() - timer_die > 1500)
+	{
+		CGame::GetInstance()->InitiateSwitchScene(2);
+	}
 	// State Special
 	if (state == MARIO_STATE_WIN)
 	{
@@ -186,6 +192,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithBrick(e);
 	else if (dynamic_cast<CButtonP*>(e->obj))
 		OnCollisionWithButtonP(e);
+	else if (dynamic_cast<CBlockDie*>(e->obj))
+		SetState(MARIO_STATE_DIE);
 	else if (dynamic_cast<CTurtle*>(e->obj))
 	{
 		if (untouchableTurtle == 0)
@@ -408,6 +416,7 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
 	coin++;
+	CUIManager::GetInstance()->coins += 1;
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
@@ -1005,6 +1014,8 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_DIE:
+		CUIManager::GetInstance()->lifes--;
+		timer_die = GetTickCount64();
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
 		vx = 0;
 		ax = 0;

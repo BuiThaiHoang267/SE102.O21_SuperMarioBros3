@@ -240,6 +240,7 @@ class CMario : public CGameObject
 	ULONGLONG timer_tele;
 	ULONGLONG timer_dash;
 	ULONGLONG timer_wined;
+	ULONGLONG timer_die;
 
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -290,6 +291,7 @@ public:
 		timer_tele = -1;
 		timer_dash = -1;
 		timer_wined = -1;
+		timer_die = -1;
 		untouchableTurtle = 0;
 		coin = 0;
 		isOnPlatform = false;

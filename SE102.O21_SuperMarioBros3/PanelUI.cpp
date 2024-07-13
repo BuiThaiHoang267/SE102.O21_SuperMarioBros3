@@ -1,6 +1,8 @@
 #include "PanelUI.h"
 #include "PlayScene.h"
 #include "debug.h"
+#include "UIManager.h"
+#include "NumberText.h"
 
 void CPanelUI::Render()
 {
@@ -24,6 +26,13 @@ void CPanelUI::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		this->InitUI();
 	}
+	else {
+		UpdateElements(timer, CUIManager::GetInstance()->timer);
+		UpdateElements(coins, CUIManager::GetInstance()->coins);
+		UpdateElements(points, CUIManager::GetInstance()->points);
+		UpdateElements(lifes, CUIManager::GetInstance()->lifes);
+	}
+	CUIManager::GetInstance()->Update(dt, coObjects);
 	CGameObject::Update(dt, coObjects);
 }
 
@@ -92,5 +101,21 @@ void CPanelUI::SetPosition(float x, float y)
 	for (int i = 0; i < energy.size(); i++)
 	{
 		energy[i]->SetPosition(x + i * 8 - 36, y - 12);
+	}
+}
+
+void CPanelUI::UpdateElements(vector<LPGAMEOBJECT>& elements, DWORD value)
+{
+	std::string valueStr = std::to_string(value);
+	while (valueStr.length() < elements.size())
+	{
+		valueStr = "0" + valueStr;
+	}
+
+	int index = elements.size() - 1;
+	for (int i = valueStr.length() - 1; i >= 0 && index >= 0; --i, --index)
+	{
+		int digit = valueStr[i] - '0'; 
+		dynamic_cast<CNumberText*>(elements[index])->SetIdSprite(530000 + digit);
 	}
 }

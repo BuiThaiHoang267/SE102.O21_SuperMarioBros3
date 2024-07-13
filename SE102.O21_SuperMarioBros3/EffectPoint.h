@@ -3,6 +3,7 @@
 #include "Animation.h"
 #include "Animations.h"
 #include "Effect.h"
+#include "UIManager.h"
 
 #define ID_ANI_POINT_100 110000
 #define ID_ANI_POINT_1000 111000
@@ -30,6 +31,9 @@ public:
 		this->ay = POINT_GRAVITY_START;
 		if (point < 10)
 			this->vy = POINT_VY_START - 0.03f;
+		if (pointt >= 100) {
+			CUIManager::GetInstance()->points += pointt;
+		}
 	};
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
